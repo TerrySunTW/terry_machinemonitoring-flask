@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+
+
+{% block contain %}
+            <div class="row height1">
+                <div class="product_text">
+                    <div class="span4">
+                    </div>
+                    <div class="span4">
+                    </div>
+                    <div class="span4 text-right" style="padding-top:10px;"><a href="/edittemplate" role="button" data-toggle="modal" class="btn btn-danger">新增Template</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-fluid height1">
+                <div id="DataSection" class="span12">
+                    
+                </div>
+            </div>
+{% endblock contain %}
+
+{% block JavaScript %}
+<script>
+	$(function() {
+		$($("#NavigationBar li")[2]).addClass("active");
+	});
+</script>
+{% endblock JavaScript %}
+
+{% block BabelScript %}
+<script type="text/babel">
+	class DataView extends React.Component {
+		constructor(props) {
+			super(props);
+			this.state = {
+				jsondata: []
+			};
+		}
+		componentDidMount() {
+			this.GetData();
+		}
+		deleteTemplate(TemplateID){
+			var self = this;
+			if(confirm('Delete the item?'+TemplateID))
+			{
+				var URL=DeleteTemplateURL.replace('{templateId}',TemplateID);
+				axios.post(URL)
+				.then(function (response) {
+					if(response.statusText!="OK")
+					{
+						alert(JSON.stringify(response));
+					}
+					else
+					{
+						self.GetData();
+					}
+				});
+			}
+			
+		}
+		GetData(){
+			var self = this;
+			var d = new Date();
+			
+			for(var ProtocolTypeArrayIndex in ProtocolTypeArray){
+				  var URL=EquipmentTemplateList.replace('{protocoltype}',ProtocolTypeArray[ProtocolTypeArrayIndex])+'?'+d.getTime();
+					axios.get(URL,{params: {protocoltype: ProtocolTypeArray[ProtocolTypeArrayIndex]}})
+					.then(function (response) {
+						var DataResult=response.data;
+						for(var DataResultIndex in DataResult){	
+							DataResult[DataResultIndex]["ProtocolType"]=response.config.params.protocoltype;
+						}
+						if(self.state.jsondata.length>0)
+						{
+							self.setState({ jsondata:DataResult.concat(self.state.jsondata) });
+						}
+						else
+						{
+							self.setState({ jsondata:DataResult });
+						}
+						
+					}); 
+			}
+			
+			
+		}
+		render() {
+			var self = this;
+			return (
+				<table id="myTable" className="tablesorter-blue">
+					<thead>
+						<tr>
+							<th>ProtocolType</th>
+							<th>templateId</th>
+							<th>功能</th>
+						</tr>
+					</thead>
+					<tbody>
+						{this.state.jsondata.map(function(dataitem, i) {
+						  return (
+							<tr key={i}>
+								<td>{dataitem.ProtocolType}</td>
+								<td><a href={"/edittemplate/"+dataitem.templateId}>{dataitem.templateId}</a></td>
+				
+								<td className="table-function-td">
+								<a href={"/edittemplate/"+dataitem.templateId} role="button" data-toggle="modal" className="btn btn-inverse">修改</a>&nbsp;
+								<a onClick={() => self.deleteTemplate(dataitem.templateId)}  href="" role="button" data-toggle="modal" className="btn btn-inverse">刪除</a></td>
+							</tr>
+						  );
+						})}
+					</tbody>
+				</table>
+			)
+		}
+	}
+		
+
+	  ReactDOM.render(
+		<DataView />,
+		document.getElementById('DataSection')
+	  );
+        
+</script>
+{% endblock BabelScript %}

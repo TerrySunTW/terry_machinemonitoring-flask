@@ -1,0 +1,135 @@
+{% extends "layout.html" %}
+
+
+{% block contain %}
+            <a id="features"></a>
+            <!--============== Main Features ==============-->
+			<div class="row-fluid height1">
+                <div class="product_text">
+                    <div class="span4">
+                        <span style="padding-right:75px;">Protocol Type:</span>
+                        <div class="btn-group margain-left1">
+                            <button id="ProtocolType" type="button" class="btn btn-primary" style="width:200px;" data-toggle="dropdown">111</button>
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <span class="dropdown-arrow"></span>
+                            <ul id="ProtocolTypeUL" class="dropdown-menu" style="width:200px;text-align:center;" role="menu">
+                                
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="span4">
+                    </div>
+
+
+                    <div class="span4 text-right" style="padding-top:10px;">
+                        <a id="AddTemplate" href="" role="button" data-toggle="modal" class="btn btn-danger">送出Template</a>
+                    </div>
+
+                </div>
+            </div>
+            <div id="TemplateEditorDiv">
+				
+			</div>
+{% endblock contain %}
+
+{% block JavaScript %}
+<script>
+	var CommandArray=[];
+	var ChannelArray=[];
+	var EditTemplateID='{{templateID}}';
+	$(function() {
+		UISetting();
+		LoadTemplateEditor();
+		
+
+		$("#AddTemplate").click(function(){
+			var SubmitData=GetPageDataObj();
+			debugger;
+			//$("#test").html(JSON.stringify(SubmitData));
+			if(EditTemplateID=='')
+			{
+				AddNewTemplate(SubmitData);
+			}
+			else
+			{
+				UpdateTemplate(SubmitData);
+			}
+		});
+	});
+	function UISetting(){
+		$("#ProtocolType").html(ProtocolTypeArray[0].toUpperCase());
+		for(var ProtocolTypeArrayIndex in ProtocolTypeArray){
+			$("#ProtocolTypeUL").append("<li><a name='ProtocolTypeOption' href='#'>"+ProtocolTypeArray[ProtocolTypeArrayIndex].toUpperCase()+"</a></li>")
+		}
+		$("a[name='ProtocolTypeOption']").bind('click', function (event) {
+			$("#ProtocolType").html(this.innerText.toUpperCase());
+			LoadTemplateEditor();
+		});
+	};
+	function LoadTemplateEditor(){
+		$( "#TemplateEditorDiv" ).html("");
+		$( "#TemplateEditorDiv" ).load( "/static/html/"+$("#ProtocolType").html().toLowerCase()+"-template-editor.html", function() {
+		});
+	};
+	function UpdateTemplate(SubmitData){
+			var SubmitJsonStringData=JSON.stringify(SubmitData);
+			console.log(SubmitJsonStringData);
+			$.ajax({
+			  type: "POST",
+			  dataType:'json',
+			  url: UpdateTemplateURL.replace('{templateId}',EditTemplateID),
+			  data: { Data: SubmitJsonStringData }
+			})
+			.done(function( msg ) {
+				if(msg=="OK"||msg=="")
+				{
+					alert( "更新完成!!");
+					$(location).attr('href', '/templatelist');
+					return;
+				}
+				else if(msg.status==500)
+				{
+					alert(msg.detail);
+				}
+				else 
+				{
+					//alert(JSON.stringify(msg));
+					alert( "更新完成!!");
+					$(location).attr('href', '/templatelist');
+				}
+			});
+		}
+		function AddNewTemplate(SubmitData){
+			var SubmitJsonStringData=JSON.stringify(SubmitData);
+			console.log(SubmitJsonStringData);
+			$.ajax({
+			  type: "POST",
+			  dataType:'json',
+			  url: CreateTemplateURL,
+			  data: {Data:SubmitJsonStringData}
+			})
+			.done(function( msg ) {
+				if(msg=="OK"||msg=="")
+				{
+					alert( "新增完成!!");
+					$(location).attr('href', '/templatelist');
+					return;
+				}
+				else if(msg.status==500)
+				{
+					alert(msg.detail);
+				}
+				else 
+				{
+					//alert(JSON.stringify(msg));
+					alert( "新增完成!!");
+					$(location).attr('href', '/templatelist');
+				}
+			});
+		}
+	
+</script>
+{% endblock JavaScript %}

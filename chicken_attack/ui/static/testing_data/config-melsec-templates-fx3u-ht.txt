@@ -1,0 +1,50 @@
+{
+  "templateId": "fx3u-ht",
+  "protocol": {
+    "frame": "1E",
+    "code": "ascii"
+  },
+  "commands": [
+    {
+      "command": "read-word",
+      "registerType": "X",
+      "address": 0,
+      "quantity": 2
+    }
+  ],
+  "channels": [
+    {
+      "channelId": "temperature_C",
+      "channelName": "溫度",
+      "raw": {
+        "registerType": "X",
+        "address": 0,
+        "quantity": 1
+      },
+      "conversion": {
+        "asType": "int16",
+        "multiplier": 0.02
+      }
+    },
+    {
+      "channelId": "humidity_percent",
+      "channelName": "濕度",
+      "raw": {
+        "registerType": "X",
+        "address": 1,
+        "quantity": 1
+      },
+      "conversion": {
+        "byteOrder": "BA",
+        "andMask": [
+          65535
+        ],
+        "orMask": [
+          0
+        ],
+        "asType": "int16",
+        "multiplier": 0.025
+      }
+    }
+  ]
+}

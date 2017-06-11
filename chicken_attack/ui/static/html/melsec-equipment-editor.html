@@ -1,0 +1,167 @@
+<!--============== Main Features ==============-->
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5"><span style="padding-right:52px;">===MELSEC===</span>
+        </div>
+    </div>
+</div>
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5"><span style="padding-right:52px;">EquipmentId:</span>
+            <input id="EquipmentId" type="text" class="form-control" placeholder="">
+        </div>
+        
+    </div>
+</div>
+
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5"><span style="padding-right:18px;">EquipmentName:</span>
+            <input id="EquipmentName" type="text" class="form-control" placeholder="">
+        </div>
+    </div>
+</div>
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5">
+            <span style="padding-right:25px;">PollingPeriodMS:</span>
+            <input id="PollingPeriodMS" type="text" class="form-control" placeholder="" value="500">
+        </div>
+    </div>
+</div>
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5">
+            <span>RequestTimeoutMS:</span>
+            <input id="RequestTimeoutMS" type="text" class="form-control" placeholder="" value="300">
+        </div>
+    </div>
+</div>
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5"><span style="padding-right:28px;">ConnectionType:</span>
+            <div class="btn-group margain-left1">
+                <button id="ConnectionType" type="button" class="btn btn-primary" style="width:200px;" data-toggle="dropdown">TCP</button>
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <span class="dropdown-arrow"></span>
+                <ul id="ConnectionTypeWapper" class="dropdown-menu" style="width:200px;text-align:center;" role="menu">
+                    <li><a name='ConnectionTypeOption' href='javascript:void(0)'>TCP</a></li>
+                    <li><a name='ConnectionTypeOption' href='javascript:void(0)'>UDP</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="tcpdiv">
+    <div class="row height3">
+    <div class="product_text">
+        <div class="span5"><span style="padding-right:126px;">TCP-Host:</span>
+            <input id="TCPHost" type="text" class="form-control" placeholder="">
+        </div>
+    </div>
+    </div>
+    <div class="row height3">
+        <div class="product_text">
+            <div class="span5">
+                <span style="padding-right:132px;">TCP-Port:</span>
+                <input id="TCPPort" type="text" class="form-control" placeholder="">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="udpdiv" style="display:none">
+    <div class="row height3">
+        <div class="product_text">
+            <div class="span5"><span style="padding-right:126px;">UDP-Remote-Host:</span>
+                <input id="UDPRemoteHost" type="text" class="form-control" placeholder="">
+            </div>
+        </div>
+    </div>
+    <div class="row height3">
+        <div class="product_text">
+            <div class="span5">
+                <span style="padding-right:132px;">UDP-Remote-Port:</span>
+                <input id="UDPRemotePort" type="text" class="form-control" placeholder="">
+            </div>
+        </div>
+    </div>
+    <div class="row height3">
+        <div class="product_text">
+            <div class="span5"><span style="padding-right:126px;">UDP-Local-Host:</span>
+                <input id="UDPLocalHost" type="text" class="form-control" placeholder="">
+            </div>
+        </div>
+    </div>
+    <div class="row height3">
+        <div class="product_text">
+            <div class="span5">
+                <span style="padding-right:132px;">UDP-Local-Port:</span>
+                <input id="UDPLocalPort" type="text" class="form-control" placeholder="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var ConnectionType="TCP";
+    $(function() {
+		$("a[name='ConnectionTypeOption']").bind('click', function (event) {
+			$("#ConnectionType").html(this.innerText);
+            ConnectionType=this.innerText;
+            $("#tcpdiv").toggle();
+            $("#udpdiv").toggle();
+            
+		});
+    });
+    function GetPageDataObj(){
+        
+        var SubmitData;
+        if(ConnectionType=="TCP")
+        {
+            SubmitData={
+                            "connection": {
+                                "tcp":{
+                                    "host": $("#TCPHost").val(),
+                                    "port": parseInt($("#TCPPort").val())
+                                }
+                            },
+                            "equipment": {
+                            "templateId": $("#TemplateID")[0].innerText,
+                            "equipmentId": $("#EquipmentId").val(),
+                            "equipmentName":$("#EquipmentName").val()
+                            },
+                            "pollingPeriodMS": parseInt($("#PollingPeriodMS").val()),
+                            "requestTimeoutMS": parseInt($("#RequestTimeoutMS").val())
+                        };
+        }
+        else
+        {
+            SubmitData={
+                            "connection": {
+                                "udp":{
+                                    "remote":{
+                                        "host": $("#UDPRemoteHost").val(),
+                                        "port": parseInt($("#UDPRemotePort").val())
+                                    },
+                                    "local":{
+                                        "host": $("#UDPLocalHost").val(),
+                                        "port": parseInt($("#UDPLocalPort").val())
+                                    }
+                                    
+                                }
+                            },
+                            "equipment": {
+                            "templateId": $("#TemplateID")[0].innerText,
+                            "equipmentId": $("#EquipmentId").val(),
+                            "equipmentName":$("#EquipmentName").val()
+                            },
+                            "pollingPeriodMS": parseInt($("#PollingPeriodMS").val()),
+                            "requestTimeoutMS": parseInt($("#RequestTimeoutMS").val())
+                        };
+        }
+        
+        return SubmitData;
+    }
+</script>

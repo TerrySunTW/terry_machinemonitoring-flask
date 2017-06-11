@@ -1,0 +1,416 @@
+{% extends "layout.html" %}
+
+
+{% block contain %}
+            <div id="DevicesDiv" class="row">
+
+            </div>
+{% endblock contain %}
+
+{% block NextContainer %}
+<div id="DetailView" class="modal hide fade LoginSignup" style="width:800px;left:40%;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3 id="DetailViewTitle" class="text-center">DetailViewTitle</h3>
+        </div>
+        <div class="modal-body">
+            <div><canvas id="DetailViewCanvas"></canvas>
+            </div>
+            <div class="modalproduct_bg">
+                <div class="modalproduct_part1">
+                    <div class="text-center modalproduct_title">目前燈號</div>
+                    <div id="DetailViewLight"></div>
+                </div>
+                <div class="modalproduct_part2">
+                    <div id="DetailViewTitle2" class="modalproduct_title1">DetailViewTitle2</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock NextContainer %}
+
+
+
+{% block JavaScript %}
+<script>
+	$(function() {
+		$($("#NavigationBar li")[0]).addClass("active");
+	});
+</script>
+<script>
+        //new for device 
+        window.Devices = [];
+        window.DevicesChannelsLatestdata = [];
+        //old need remove after checked 
+		window.SelectedDeviceID='';
+		window.SelectedChannelID='';
+		window.PageReady=false;
+        window.myObject = {
+            started: new signals.Signal()
+        };
+        
+		window.FixLightValue=function(LightValue){
+			var strlength=LightValue.lastIndexOf('.');
+			if(strlength>-1 && LightValue.length-strlength>3)
+			{
+				LightValue=LightValue.substring(0,LightValue.lastIndexOf('.')+4);
+			}
+			return LightValue;
+		}
+        function ResetDetailView(){
+             window.SelectedDeviceID='';
+		     window.SelectedChannelID='';
+        }
+        function onStarted(Devicedata, Channeldata) {
+            DetailViewRender(Devicedata, Channeldata);
+        }
+        myObject.started.add(onStarted);  
+        var DetailViewChartData = {
+            labels: ["111", "222"],
+            datasets: [{
+                type: 'line',
+                borderColor: 'rgb(54, 162, 235)',
+                fill: false,
+                data: [111, 222]
+            }]
+        };
+        function UpdateDetailViewChartData(DataArray) {
+            var DataLabelArray = [];
+            var DataValueArray = [];
+            DataArray.forEach(function (item) {
+				var StrValue=item.at;
+				var reggie = /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(.*)/;
+				var d = new Date();
+				var timezoneoffset = d.getTimezoneOffset()/60*-1;
+				var dateArray = reggie.exec(StrValue); 
+				var dateObject = new Date(
+					(+dateArray[1]),
+					(+dateArray[2])-1, // Careful, month starts at 0!
+					(+dateArray[3]),
+					(+dateArray[4]),
+					(+dateArray[5]),
+					(+dateArray[6])
+				);
+                var millisecond='';
+                if(dateArray[7].startsWith("."))
+                {
+                    millisecond=dateArray[7].substr(0,3);
+                }
+				dateObject.setHours(dateObject.getHours()+timezoneoffset);
+				var dateString=(dateObject.getUTCMonth()+1)+"-"+dateObject.getUTCDate()+" "+dateObject.getHours()+":"+dateArray[5]+":"+dateArray[6]+millisecond;
+				
+                DataLabelArray.push(dateString);
+                if(item.value.num)
+                {
+                    DataValueArray.push(item.value.num);
+                }
+                else
+                {
+                    DataValueArray.push(item.value.str);
+                }
+            });
+            DetailViewChartData.labels = DataLabelArray;
+            DetailViewChartData.datasets[0].data = DataValueArray;
+            window.myMixedChart.update();
+        }
+        var ctx = document.getElementById("DetailViewCanvas").getContext("2d");
+            window.myMixedChart = new Chart(ctx, {
+                type: 'bar',
+                data: DetailViewChartData,
+                options: {
+                    responsive: true,
+                    title: {
+                        display: false,
+                        text: ''
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: true
+                    },
+                    legend: {
+                        display: false
+                    },
+                }
+            });
+
+            $(function () {
+                $('.nav li a').bind('click', function (event) {
+                    var $anchor2 = $(this).parent();
+                    var $anchor = $(this);
+                    $('.nav  li').removeClass('active');
+                    $anchor2.addClass('active');
+
+                    $('html, body').stop().animate({
+                        scrollTop: $($anchor.attr('href')).offset().top - 50
+                    }, 1500, 'easeInOutExpo');
+                    event.preventDefault();
+                });
+                $('#DetailView').on('hidden', function () {
+                    ResetDetailView();
+                });
+                $("a[name='ProductionOption']").bind('click', function (event) {
+                    $("#SelectedProduction").html(this.innerText);
+                });
+                $("a[name='OrderNumberOption']").bind('click', function (event) {
+                    $("#OrderNumber").html(this.innerText);
+                });
+				$("a[name='ThresholdOption']").bind('click', function (event) {
+                    $("#ThresholdValue").html(this.innerText);
+                });
+            });
+</script>
+{% endblock JavaScript %}
+
+{% block BabelScript %}
+<script type="text/babel">
+	class LightView extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+        render() {
+            //var ChannelDataStoreIndexID = this.props.machinedata.equipmentId + this.props.lightdata.channelId;
+            var LightIcon="";
+            //if (LightStatus[ChannelDataStoreIndexID]) {
+                LightIcon ="static/images/green_light.png";
+            //} else {
+            //    LightIcon ="static/images/red_light.png";
+            //}
+            return (
+                <img src={LightIcon} />
+            )
+        }
+    }
+    class SingleLight extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                isSelected: false,
+                Devicedata: this.props.Devicedata
+            };
+        }
+        shouldComponentUpdate(nextProps, nextState) {
+            if ( nextProps.Channeldata.latestValue.value == this.props.Channeldata.latestValue.value && 
+                nextProps.Channeldata.latestValue.at == this.props.Channeldata.latestValue.at ) {
+                return false;
+            }
+            return true;
+        }
+        onItemClick(Channeldata) {
+            this.setState({
+                isSelected:true,
+                Devicedata: this.state.Devicedata
+            });
+            myObject.started.dispatch(this.state.Devicedata,this.props.Channeldata);
+        }
+        render() {
+            
+            var ValueView;
+            
+            var StrValue=this.props.Channeldata.latestValue.value.str;
+            if(this.props.Channeldata.latestValue.value.num)
+            {
+                StrValue=this.props.Channeldata.latestValue.value.num.toString();
+                window.FixLightValue(StrValue);
+                var StrLength=StrValue.lastIndexOf('.');
+                if(StrLength>-1 && StrValue.length-StrLength>3)
+                {
+                    StrValue=StrValue.substring(0,StrLength+4);
+                }
+            }
+            ValueView=<tr><td className="number">{StrValue}</td></tr>;
+    
+            return (
+                <div className="light_s" onClick={() => this.onItemClick(this.props.Channeldata)}>
+                    <table width="100%" cellSpacing="0" cellPadding="0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;<a href="#DetailView" role="button" data-toggle="modal">
+                                        <LightView Channeldata={this.props.Channeldata} Devicedata={this.state.Devicedata} />
+                                        <span className="light_title">{this.props.Channeldata.metadata.name}:</span>{ValueView}
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            )
+        }
+    }
+
+
+        class SingleDevice extends React.Component {
+            constructor(props) {
+                super(props);
+            }
+            render() {
+				var TypeNumber=Number(this.props.reactkey);
+				
+                var Wapper1Class="span4 height3";
+                var Wapper2Class="product_type"+(TypeNumber+1)%4;
+                var Wapper3Class="light_area";
+                var devicedata=this.props.devicedata;
+                return (
+                <div className={Wapper1Class}>
+                    <div className={Wapper2Class}>
+					
+					
+                        <div className="prodct_title">
+							<table width="100%%" border="0" cellspacing="0" cellpadding="0">
+										<tbody><tr>
+											<td>
+												<div className="icon_space"><a href={"/editmachine/"+this.props.devicedata.deviceId}><img src="static/images/editing_icon.png" alt=""/></a></div>
+											</td>
+											 <td>
+												<div className="edit">{this.props.devicedata.metadata.name}</div>
+											</td>
+										</tr>
+									   
+									</tbody></table>
+	
+						
+						</div>
+						
+						
+                        <div className={Wapper3Class}>
+							<div className="light_sub_area">
+                            {this.props.ChannelsLatestdata.map(function(obj,idx) {
+                            return <SingleLight key={idx} Channeldata={obj} Devicedata={devicedata}  />
+                            })}
+							</div>
+                        </div>
+                    </div>
+                </div>
+                )
+            }
+        }
+        class NewDeviceView extends React.Component {
+            shouldComponentUpdate(nextProps, nextState) {
+                return false;
+            }
+            render() {
+				if(this.props.ViewCount>1)
+				{
+					return null;
+				}
+                return (
+                    <div className="span4 height3">
+                         <a href="/editmachine">
+                        <div className="product_type0">
+                            <div className="prodct_title"></div>
+                            <div className="light_area4 text-center">
+                                <img src="static/images/add_icon.png" alt="logo"/>
+                            </div>
+                            <div className="text-center height1"><span className="btn btn-danger1">新增機台</span></div>
+                        </div>
+                        </a>
+                    </div>
+                )
+            }
+        }
+        class DevicesAP extends React.Component {
+            render() {
+				var fakedataitem={"channels":[{"channelId":"humidity_Percent","values":[{"at":"2016-12-09T05:52:12.000239Z","value":63.517500000000005}]},{"channelId":"temp_C","values":[{"at":"2016-12-09T05:52:12.000239Z","value":29.5875}]}],"equipmentId":"roof-fake"};
+                return (
+                    <div>
+                        {this.props.Devices.map((dataitem,idx) => (
+                            <SingleDevice key={idx} reactkey={idx} devicedata={dataitem} ChannelsLatestdata={this.props.DevicesChannelsLatestdata[dataitem.deviceId]} />
+                        ))}
+                        <NewDeviceView key="NewMachineView" ViewCount={0} />
+                    </div>
+                );
+            }
+        }
+		function PageFirstTimeRender() {
+            var d = new Date();
+            //light condition
+            axios.get(martiniApiDevicesURL+'?'+d.getTime())
+            .then(function (response) {
+                window.Devices = response.data;
+				window.PageReady = true;
+				GetLastData();
+            });
+        }
+        function GetLastData() {
+            //console.log('GetLastData()');
+			if(window.PageReady)
+			{
+				var d = new Date();
+                window.Devices.forEach(function (item) {
+                    axios.get(martiniApiDeviceChannelsLastestDataURL.replace('{deviceId}',item.deviceId)+'?'+d.getTime(),{params: {deviceId: item.deviceId}})
+                    .then(function (response) {
+                            window.DevicesChannelsLatestdata[response.config.params.deviceId]=response.data;
+                            ReactDOM.render(
+                            <DevicesAP Devices={window.Devices} DevicesChannelsLatestdata={window.DevicesChannelsLatestdata} />,
+                            document.getElementById('DevicesDiv')
+                    );
+                    });	
+                });
+			}
+        }
+        function GetDetailViewData() {
+            if(window.SelectedDeviceID!='' && window.SelectedChannelID !='')
+            {
+                //console.log('GetDetailViewData()');
+                //update chart
+                var d = new Date();
+                axios.get(martiniApiDeviceChannelDataURL.replace('{deviceId}',window.SelectedDeviceID).replace('{channelId}',window.SelectedChannelID)+'?pageSize='+martiniPagingSize+'&'+d.getTime())
+                .then(function (response) {
+                    if(response.data[0].value.num)
+                    {
+                        $(".light_detail_title").html(response.data[0].value.num);
+                    }
+                    else
+                    {
+                        $(".light_detail_title").html(response.data[0].value.str);
+                    }
+                    
+                    UpdateDetailViewChartData(response.data);
+                });
+            }
+        }
+		PageFirstTimeRender();
+        setInterval(GetLastData, 500);
+        setInterval(GetDetailViewData, 500);
+//Page View setting============================
+        
+
+
+       
+
+//Detail View setting============================
+        window.DetailViewRender = function(Devicedata, Channeldata){
+			//console.log('DetailViewRender');
+			window.SelectedDeviceID=Devicedata.deviceId;
+			window.SelectedChannelID=Channeldata.channelId;
+			var FixLigthValue=window.FixLightValue(Channeldata.latestValue.at.toString());
+			//title
+            ReactDOM.render(
+                <span>{Devicedata.metadata.name}</span>,
+                document.getElementById('DetailViewTitle')
+            );
+            ReactDOM.render(
+                <span>{Channeldata.channelId} - {Channeldata.metadata.name}</span>,
+                document.getElementById('DetailViewTitle2')
+            );
+            //light
+            ReactDOM.render(
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" className="height2">
+            <tr>
+                <td><div className="light_detail_title">{Channeldata.latestValue.value.num}</div></td>
+            </tr>
+            <tr>
+                <td className="text-center"><LightView Devicedata={Devicedata} Channeldata={Channeldata}/></td>
+            </tr>
+            <tr>
+                <td className="number">{FixLigthValue}</td>
+            </tr>
+        </table>
+                ,
+                document.getElementById('DetailViewLight')
+            );
+
+        };
+</script>
+{% endblock BabelScript %}

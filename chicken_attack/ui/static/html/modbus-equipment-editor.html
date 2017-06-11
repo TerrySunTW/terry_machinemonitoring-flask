@@ -1,0 +1,146 @@
+<!--============== Main Features ==============-->
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5"><span style="padding-right:52px;">===MODBUS===</span>
+        </div>
+    </div>
+</div>
+<!--Machine-->
+<div class="row-fluid height3">
+    <div class="span12s">
+        <table id="myTable" class="tablesorter-blue">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>equipmentId</th>
+                    <th>equipmentName</th>
+                    <th>刪除</th>
+                </tr>
+            </thead>
+            <tbody id="MachineTbody">
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5"><span style="padding-right:150px;">ID:</span>
+            <input id="EID" type="text" class="form-control" placeholder="">
+        </div>
+        
+    </div>
+</div>
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5"><span style="padding-right:52px;">EquipmentId:</span>
+            <input id="EquipmentId" type="text" class="form-control" placeholder="">
+        </div>
+        
+    </div>
+</div>
+
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5"><span style="padding-right:18px;">EquipmentName:</span>
+            <input id="EquipmentName" type="text" class="form-control" placeholder="">
+        </div>
+    </div>
+</div>
+<div class="row height3">
+    <div class="product_text">
+        <div class="span8">
+            <a id="AddSubMachine" href="javascript:void(0)" role="button" data-toggle="modal" class="btn btn-danger">Add Equipment</a>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5">
+            <span style="padding-right:25px;">PollingPeriodMS:</span>
+            <input id="PollingPeriodMS" type="text" class="form-control" placeholder="" value="500">
+        </div>
+    </div>
+</div>
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5">
+            <span>RequestTimeoutMS:</span>
+            <input id="RequestTimeoutMS" type="text" class="form-control" placeholder="" value="300">
+        </div>
+    </div>
+</div>
+<div class="row height3">
+<div class="product_text">
+    <div class="span5"><span style="padding-right:126px;">Host:</span>
+        <input id="Host" type="text" class="form-control" placeholder="">
+    </div>
+</div>
+</div>
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5">
+            <span style="padding-right:132px;">Port:</span>
+            <input id="Port" type="text" class="form-control" placeholder="">
+        </div>
+    </div>
+</div>
+
+<script>
+    var MachineArray=[];
+    var ConnectionType="TCP";
+    $(function() {
+        $("#AddSubMachine").click(function(){
+			var NewMachine=
+			{
+				"id": $("#EID").val(),
+				"templateId": $("#TemplateID")[0].innerText,
+				"equipmentId": $("#EquipmentId").val(),
+				"equipmentName": $("#EquipmentName").val()
+			};
+			MachineArray.push(NewMachine);
+			DrawMachineTable();
+    });
+    });
+    function GetPageDataObj(){
+        
+        var SubmitData={
+                            "endPoint": {
+                                    "host": $("#Host").val(),
+                                    "port": parseInt($("#Port").val())
+                            },
+                            "equipments": MachineArray,
+                            "pollingPeriodMS": parseInt($("#PollingPeriodMS").val()),
+                            "requestTimeoutMS": parseInt($("#RequestTimeoutMS").val())
+                        };
+        return SubmitData;
+    }
+    
+    function RemoveSubMachineArrayByID(ID) {
+		var selectIndex=-1;
+		for(var i=0;i<MachineArray.length;i++){
+			if(MachineArray[i].id==ID)
+			{
+				selectIndex=i;
+			}
+		}
+		if(selectIndex>-1)
+		{
+			MachineArray.splice(selectIndex,1);
+			DrawMachineTable();
+		}
+	}
+    function DrawMachineTable() {
+		var TbodyHtml="";
+		for(var i=0;i<MachineArray.length;i++){
+			TbodyHtml+="<tr>"+
+				"<td>"+MachineArray[i].id+"</td>"+
+				"<td>"+MachineArray[i].equipmentId+"</td>"+
+				"<td>"+MachineArray[i].equipmentName+"</td>"+
+				"<td><a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveSubMachineArrayByID('"+MachineArray[i].id+"')\">刪除</a></td>"+
+			"</tr>";
+		}
+		$("#MachineTbody").html(TbodyHtml);
+	}
+</script>

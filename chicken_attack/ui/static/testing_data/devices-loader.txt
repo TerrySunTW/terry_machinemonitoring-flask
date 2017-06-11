@@ -1,0 +1,11 @@
+{
+  "deviceId": "loader",
+  "creationTime": "2017-04-24T15:51:41Z",
+  "lastModifiedTime": "2017-04-24T15:51:41Z",
+  "metadata": {
+    "name": "投板機"
+  },
+  "tags": [
+    "科技服務大樓"
+  ]
+}

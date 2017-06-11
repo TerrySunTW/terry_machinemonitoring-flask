@@ -1,0 +1,17 @@
+[
+  {
+    "connection": {
+      "tcp": {
+        "host": "192.168.11.129",
+        "port": 9600
+      }
+    },
+    "equipment": {
+      "templateId": "fx3u-ht",
+      "equipmentId": "roof-01",
+      "equipmentName": "屋頂(1)"
+    },
+    "pollingPeriodMS": 500,
+    "requestTimeoutMS": 300
+  }
+]

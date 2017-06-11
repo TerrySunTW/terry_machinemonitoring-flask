@@ -1,0 +1,41 @@
+[
+  {
+    "templateId": "cs1g-45h",
+    "commands": [
+      {
+        "command": "read-word",
+        "memoryArea": "D",
+        "address": 0,
+        "quantity": 2
+      }
+    ],
+    "channels": [
+      {
+        "channelId": "temp_C",
+        "channelName": "溫度",
+        "raw": {
+          "memoryArea": "D",
+          "address": 0,
+          "quantity": 1
+        },
+        "conversion": {
+          "asType": "uint16",
+          "multiplier": 0.02
+        }
+      },
+      {
+        "channelId": "humidity_Percent",
+        "channelName": "濕度",
+        "raw": {
+          "memoryArea": "D",
+          "address": 1,
+          "quantity": 1
+        },
+        "conversion": {
+          "asType": "uint16",
+          "multiplier": 0.025
+        }
+      }
+    ]
+  }
+]

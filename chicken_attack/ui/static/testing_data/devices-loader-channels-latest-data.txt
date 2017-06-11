@@ -1,0 +1,754 @@
+[
+  {
+    "channelId": "board-count",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:38.421Z",
+      "value": {
+        "num": 30012
+      }
+    }
+  },
+  {
+    "channelId": "board-count1",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 212121
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  },
+  {
+    "channelId": "board-count2",
+    "valueType": "number",
+    "metadata": {
+      "name": "片數"
+    },
+    "tags": [
+      "raw"
+    ],
+    "latestValue": {
+      "at": "2017-03-25T08:26:33.421Z",
+      "value": {
+        "num": 22222
+      }
+    }
+  }
+]

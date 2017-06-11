@@ -1,0 +1,211 @@
+{% extends "layout.html" %}
+
+
+{% block contain %}
+            <a id="features"></a>
+			<div class="row height1">
+                <div class="product_text">
+                    <div class="span5"><span style="padding-right:87px;">Template:</span>
+                        <div class="btn-group margain-left1">
+                            <button id="TemplateID" type="button" class="btn btn-primary" style="width:200px;" data-toggle="dropdown">&nbsp;</button>
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <span class="dropdown-arrow"></span>
+                            <ul id="TemplateIDWapper" class="dropdown-menu" style="width:200px;text-align:center;" role="menu">
+                            </ul>
+                        </div>
+                    </div>                  
+                    <div class="span4 text-right">
+						<a id="AddMachine" href="#" role="button" data-toggle="modal" class="btn btn-danger">新增機台</a>
+						<a id="RemoveMachine" href="#" role="button" data-toggle="modal" class="btn btn-danger">刪除機台</a>
+                    </div>
+                </div>
+            </div>
+            <div id="EquipmentEditorDiv">
+				
+			</div>
+{% endblock contain %}
+
+{% block JavaScript %}
+<script>
+	var TemplateList=[];
+	var CurrentProtocolType;
+	var d = new Date();
+	var EditMachineID='{{machineID}}';
+	var EditSelectIndex=-1;
+	$(function() {
+		SetupTemplateSelection();
+		if(EditMachineID=='')
+		{
+			$("#RemoveMachine").hide();
+		}
+		else
+		{
+			SetupEditUI();
+		}
+		$("#AddMachine").click(function(){
+			var SubmitData=GetPageDataObj();
+			debugger;
+			//UpdateMachine(SubmitData);
+		});
+		$("#RemoveMachine").click(function(){
+			var SubmitData=GetPageDataObj();
+			debugger;
+			//RemoveMachine(SubmitData);
+		});
+	});
+	function SetupTemplateSelection(){
+
+		for(var ProtocolTypeArrayIndex in ProtocolTypeArray){
+				var URL=EquipmentTemplateList.replace('{protocoltype}',ProtocolTypeArray[ProtocolTypeArrayIndex])+'?'+d.getTime();
+				axios.get(URL,{params: {protocoltype: ProtocolTypeArray[ProtocolTypeArrayIndex]}})
+				.then(function (response) {
+					var DataResult=response.data;
+					for(var DataResultIndex in DataResult){	
+						DataResult[DataResultIndex]["ProtocolType"]=response.config.params.protocoltype;
+					}
+					if(TemplateList.length>0)
+					{
+						TemplateList=DataResult.concat(TemplateList);
+					}
+					else
+					{
+						TemplateList=DataResult;
+					}
+					var TemplateSelectionHTML='';
+					for(var i=0;i<TemplateList.length;i++)
+					{
+						TemplateSelectionHTML+="<li><a ProtocolType='"+TemplateList[i].ProtocolType+"' name='TemplateIDOption' href='#'>"+TemplateList[i].templateId+"</a></li>";
+					}
+					$("#TemplateIDWapper").html(TemplateSelectionHTML);
+					$("a[name='TemplateIDOption']").bind('click', function (event) {
+						$("#TemplateID").html(this.innerText);
+						CurrentProtocolType=this.attributes["ProtocolType"].nodeValue;
+						LoadEquipmentEditor();
+					});
+					LoadDefaultEditor();
+				}); 
+		}
+	}
+	function LoadDefaultEditor(){
+		CurrentProtocolType=TemplateList[0].ProtocolType;
+		$("#TemplateID").html(TemplateList[0].templateId);
+		LoadEquipmentEditor();
+	}
+	function LoadEquipmentEditor(){
+		$( "#EquipmentEditorDiv" ).html("");
+		$( "#EquipmentEditorDiv" ).load( "/"+CurrentProtocolType+"-equipment-editor.html?d="+d.getTime(), function() {
+		});
+	};
+	function SetupEditUI(){
+		$("a[name='ConnectionTypeOption']").bind('click', function (event) {
+			$("#ConnectionType").html(this.innerText);
+		});
+		$("#AddMachine").html("更新機台");
+		$.ajax({
+		  type: "GET",
+		  dataType: "json",
+		  url: GetEquipmentsURL
+		}).done(function( Data ) {
+			for(var i=0;i<Data.length;i++)
+			{
+				if(Data[i].equipment.equipmentId==EditMachineID)
+				{
+					EditSelectIndex=i;
+					$("#TemplateID").html(Data[i].equipment.templateId);
+					$("#Host").val(Data[i].connection.host);
+					$("#Port").val(Data[i].connection.port);
+					$("#EquipmentId").val(Data[i].equipment.equipmentId);
+					$("#EquipmentName").val(Data[i].equipment.equipmentName);
+					$("#PollingPeriodMS").val(Data[i].pollingPeriodMS);
+					$("#RequestTimeoutMS").val(Data[i].requestTimeoutMS);
+					break;
+				}
+			}
+		});
+	}
+	function RemoveMachine(SubmitData){
+		$.ajax({
+		  type: "GET",
+		  dataType: "json",
+		  url: GetEquipmentsURL
+		}).done(function( OriginalData ) {
+			var TargetIndex=-1;
+			for(var i=0;i<OriginalData.length;i++)
+			{
+				if(
+				OriginalData[i].equipment.equipmentId==SubmitData.equipment.equipmentId &&
+				OriginalData[i].equipment.templateId==SubmitData.equipment.templateId
+				)
+				{
+					TargetIndex=i;
+					break;
+				}
+			}
+			if(TargetIndex>-1)
+			{
+				OriginalData.splice(TargetIndex,1);
+				var SubmitJsonStringData=JSON.stringify(OriginalData);
+				$.ajax({
+				  type: "POST",
+				  url: PutEquipmentsURL,
+				  data: { Data:SubmitJsonStringData}
+				}).done(function( msg ) {
+					alert( "更新完成!!");
+					$(location).attr('href', '/monitor');
+				});
+			}
+			
+		});
+	}
+	function UpdateMachine(SubmitData){
+		$.ajax({
+		  type: "GET",
+		  dataType: "json",
+		  url: GetEquipmentsURL
+		}).done(function( OriginalData ) {
+			if(EditSelectIndex>-1)
+			{
+				OriginalData[EditSelectIndex].connection.host=SubmitData.connection.host;
+				OriginalData[EditSelectIndex].connection.port=SubmitData.connection.port;
+				OriginalData[EditSelectIndex].equipment.equipmentId=SubmitData.equipment.equipmentId;
+				OriginalData[EditSelectIndex].equipment.equipmentName=SubmitData.equipment.equipmentName;
+				OriginalData[EditSelectIndex].equipment.templateId=SubmitData.equipment.templateId;
+				OriginalData[EditSelectIndex].pollingPeriodMS=SubmitData.pollingPeriodMS;
+				OriginalData[EditSelectIndex].requestTimeoutMS=SubmitData.requestTimeoutMS;
+			}
+			else
+			{
+				OriginalData.push(SubmitData);
+			}
+			var SubmitJsonStringData=JSON.stringify(OriginalData);
+			$.ajax({
+			  type: "POST",
+			  url: PutEquipmentsURL,
+			  data: { Data:SubmitJsonStringData}
+			}).done(function( msg ) {
+				if(msg=="OK"||msg=="")
+				{
+					alert( "更新完成!!");
+					$(location).attr('href', '/monitor');
+					return;
+				}
+				else if(msg.status==500)
+				{
+					alert(msg.detail);
+				}
+				else 
+				{
+					//alert(JSON.stringify(msg));
+					alert( "更新完成!!");
+					$(location).attr('href', '/monitor');
+				}
+			});
+		});
+	}
+	
+	
+	
+</script>
+{% endblock JavaScript %}

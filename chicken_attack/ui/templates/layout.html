@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{WebInfo.Title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-responsive.css" rel="stylesheet" media="screen">
+    <!--==============GOOGLE FONT - OPEN SANS=================-->
+    <link href="/static/css/google-fonts.css" rel="stylesheet" />
+
+    <!--==============MAIN CSS FOR COMING SOON PAGE=================-->
+
+
+    <link href="/static/css/hosting.css" rel="stylesheet" media="all">
+
+
+    <!--==============Mordernizr =================-->
+    <script src="/static/js/modernizr.js"></script>
+    <script src="/static/js/AppConfig.js"></script>
+    <script src="/static/js/jquery-1.9.0.min.js"></script>
+    <script src="/static/js/react.min.js"></script>
+    <script src="/static/js/react-dom.min.js"></script>
+    <script src="/static/js/babel.min.js"></script>
+    <script src="/static/js/axios.min.js"></script>
+    <script src="/static/js/Signal.js"></script>
+    <script src="/static/js/SignalBinding.js"></script>
+    <script src="/static/js/Chart.bundle.min.js"></script>
+	<link rel="stylesheet" href="/static/css/theme.blue.css">
+</head>
+
+<body>
+    <a id="home"></a>
+    <!--==============HEADER =================-->
+    <div class="navbar navbar-fixed-top navbar-absolute">
+        <div class="navbar-inner">
+            <div class="container">
+
+                <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
+
+                <!-- Be sure to leave the brand out there if you want it shown -->
+                <a class="brand" href="/monitor">{{WebInfo.Title}}</a>
+
+                <!-- Everything you want hidden at 940px or less, place within here -->
+                <div class="nav-collapse collapse">
+                    <!-- .nav, .navbar-search, .navbar-form, etc -->
+
+                    <ul id="NavigationBar" class="nav pull-right">
+                        <li><a href="/monitor">生產監控</a></li>
+						<li><a href="/history">生產查詢</a></li>
+						<li><a href="/templatelist">樣版管理</a></li>
+<li>
+	<div> 
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<td id="td_date" class="time">2016/12/12</td>
+	  </tr>
+	  <tr>
+		<td id="td_time" class="text-right time">12:12:12</td>
+	  </tr>
+	</table></div>
+</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--==============Content Area=================-->
+    <div>
+        <div class="container content_height">
+            {% block contain %}{% endblock contain %}
+        </div>
+        <div class="footer">
+            <div class="container">
+
+                <div class="row-fluid copyright">
+                    <div class="pull-right"><p>{{WebInfo.Title}}</p></div>
+                    <p>Copyright &copy; 2017. </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+	{% block NextContainer %}{% endblock NextContainer %}
+
+    <!--==============BOOTSTRAP JS=================-->
+
+    <script src="/static/js/bootstrap.js"></script>
+	<script>
+		$().ready(function(){
+			setInterval(ShowTime, 500);
+		});
+		function ShowTime(){
+			var currentdate = new Date(); 
+			var dateString = currentdate.getFullYear() +"/" +padLeft((currentdate.getMonth()+1),2)
+				+ "/" +padLeft(currentdate.getDate(),2);
+			var timeString = padLeft(currentdate.getHours(),2) + ":" + padLeft(currentdate.getMinutes(),2) + ":" 
+                + padLeft(currentdate.getSeconds(),2);
+			$("#td_date").html(dateString);
+			$("#td_time").html(timeString);
+		}
+		function padLeft(str,lenght){
+			if(str.toString().length >= lenght)
+			return str;
+			else
+			return padLeft("0" +str,lenght);
+		}
+	</script>
+    {% block JavaScript %}{% endblock JavaScript %}
+    
+	{% block BabelScript %}{% endblock BabelScript %}
+	
+</body>
+
+</html>

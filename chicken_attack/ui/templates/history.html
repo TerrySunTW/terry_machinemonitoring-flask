@@ -1,0 +1,348 @@
+{% extends "layout.html" %}
+
+{% block contain %}
+<a id="features"></a>
+            <!--============== Main Features ==============-->
+            <div class="row height2">
+                 <div class="span4 title">生產資料</div>
+            </div>
+            <div id="HistoryData">
+			</div>
+{% endblock contain %}
+
+
+{% block JavaScript %}
+<script>
+	$(function() {
+		$($("#NavigationBar li")[1]).addClass("active");
+	});
+</script>
+{% endblock JavaScript %}
+
+{% block BabelScript %}
+<script type="text/babel">
+	class HistoryAP extends React.Component {
+		constructor(props) {
+			super(props);
+			this.state = {
+				SelectedDeviceID:'',
+				SelectedChannelID:'',
+				CompareType:'<',
+				CompareValue:'10',
+				jsondata: [],
+				Devices: [],
+				DeviceChannel: []
+			};
+		}
+		SelectEquipment(deviceId) {
+			this.setState({ 
+				SelectedDeviceID:deviceId,
+				SelectedChannelID:''
+			});
+		}
+		SelectChannel(ChannelId) {
+			this.setState({ SelectedChannelID:ChannelId });
+		}
+		SelectCompareType(NewCompareType) {
+			this.setState({ CompareType:NewCompareType });
+		}
+		OnCompareValueChanged(event) {
+			this.setState({ CompareValue:event.target.value });
+		}
+		componentWillMount(){
+			var that = this;
+			axios.get(martiniApiDevicesURL)
+			.then(function (response) {
+					that.setState({ Devices:response.data });
+					for (var i = 0; i < response.data.length; i++) { 
+						
+						axios.get(martiniApiDeviceChannelsURL.replace('{deviceId}',response.data[i].deviceId),
+						{params: {deviceId: response.data[i].deviceId}})
+						.then(function (response){
+							that.state.DeviceChannel[response.config.params.deviceId]=response.data;
+							that.setState({ DeviceChannel:that.state.DeviceChannel });
+						});
+					}
+			});
+		}
+		render() {
+			return (
+<div className="product_text1 span4">
+
+	<ConditionSection CompareType={this.state.CompareType} CompareValue={this.state.CompareValue} SelectCompareType={this.SelectCompareType.bind(this)} OnCompareValueChanged={this.OnCompareValueChanged.bind(this)}/>
+	<SelectDeviceSection Devices={this.state.Devices} selectedDevice={this.state.SelectedDeviceID} SelectEquipment={this.SelectEquipment.bind(this)} />
+	<SelectChannelSection DeviceChannel={this.state.DeviceChannel} SelectedChannelID={this.state.SelectedChannelID} selectedDevice={this.state.SelectedDeviceID} SelectChannel={this.SelectChannel.bind(this)} />
+	<HistoryDataSection 
+	SelectedChannelID={this.state.SelectedChannelID}
+	SelectedDevice={this.state.SelectedDeviceID} 
+	CompareType={this.state.CompareType} 
+	CompareValue={this.state.CompareValue}
+	/>
+</div>    
+			)
+		}
+	}
+	class ConditionSection extends React.Component {
+            render() {
+                return (
+<div>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td className="tdstyle">紅燈:</td>
+			<td>
+				<div className="btn-group margain-left1">
+					<button id="ThresholdValue" type="button" className="btn btn-primary" data-toggle="dropdown">{this.props.CompareType}</button>
+					<button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+						<span className="caret"></span>
+					</button>
+					<span className="dropdown-arrow"></span>
+					<ul className="dropdown-menu" role="menu">
+						<li>
+							<a name="ThresholdOption" href="#" onClick={() => this.props.SelectCompareType('>')}>></a>
+						</li>
+						<li>
+							<a name="ThresholdOption" href="#" onClick={() => this.props.SelectCompareType('<')}>&lt;</a>
+						</li>
+					</ul>
+				</div>
+				<div>
+					<input type="text" className="form-control" onChange={this.props.OnCompareValueChanged}  
+               					defaultValue={this.props.CompareValue}/>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+                );
+            }
+	}
+	class SelectDeviceSection extends React.Component {
+            render() {
+				var selectedDevice="請選擇機台ID";
+				if(this.props.selectedDevice.length>0)
+				{
+					selectedDevice=this.props.selectedDevice;
+				}
+                return (
+<div>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td className="tdstyle">機台ID:</td>
+			<td>
+				<div className="btn-group margain-left1">
+					<button type="button" className="btn btn-primary buttonstyle3" data-toggle="dropdown">{selectedDevice}</button>
+					<button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+						<span className="caret"></span>
+					</button>
+					<span className="dropdown-arrow"></span>
+					<DeviceSelectOption Devices={this.props.Devices} SelectEquipment={this.props.SelectEquipment} />
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+                );
+            }
+	}
+	class DeviceSelectOption extends React.Component {
+		render() {
+			return (
+<ul className="dropdown-menu dropdown-menustyle" role="menu">
+	{this.props.Devices.map((dataitem,idx) => (
+						<li><a key={idx} onClick={() => this.props.SelectEquipment(dataitem.deviceId)}>{dataitem.deviceId}</a></li>
+						))}
+</ul>
+			)
+		}
+	}
+	class SelectChannelSection extends React.Component {
+            render() {
+				var SelectedChannelText="請選擇ChannelID";
+				if(this.props.SelectedChannelID.length>0)
+				{
+					SelectedChannelText=this.props.SelectedChannelID;
+				}
+                return (
+<div className="height2 ">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td className="tdstyle">點位ID:</td>
+			<td>
+				<div className="btn-group margain-left1">
+					<button type="button" className="btn btn-primary buttonstyle3" data-toggle="dropdown">{SelectedChannelText}</button>
+					<button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+						<span className="caret"></span>
+					</button>
+					<span className="dropdown-arrow"></span>
+	<ChannelSelectOption DeviceChannel={this.props.DeviceChannel} 
+	selectedDevice={this.props.selectedDevice} 
+	SelectChannel = {this.props.SelectChannel}
+	/>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+                );
+            }
+	}
+	
+	class ChannelSelectOption extends React.Component {
+		render() {
+			var SelectedChannelArray=[];
+			if(this.props.DeviceChannel[this.props.selectedDevice]!=undefined)
+			{
+				SelectedChannelArray=this.props.DeviceChannel[this.props.selectedDevice];
+			}
+
+			return (
+<ul className="dropdown-menu dropdown-menustyle" role="menu">
+				{SelectedChannelArray.map((dataitem,idx) => (
+				<li><a key={idx} onClick={() => this.props.SelectChannel(dataitem.channelId)}>{dataitem.channelId}</a></li>
+				))}
+</ul>
+			)
+		}
+	}
+	class HistoryDataSection extends React.Component {
+			constructor(props) {
+				super(props);
+				this.state = {
+					jsondata: []
+				};
+			}
+			componentWillMount() {
+			}
+			componentDidMount() {
+			}
+			componentWillReceiveProps(nextProps) {
+
+				this.GetData(nextProps.SelectedDevice,nextProps.SelectedChannelID);
+				
+			}
+			shouldComponentUpdate(nextProps, nextState) {
+				console.log('HistoryDataSection shouldComponentUpdate');
+				return true;
+			}
+			componentWillUpdate(nextProps, nextState) {
+			}
+			componentDidUpdate(prevProps,prevState) {			
+			}
+			componentDidMount(){
+			}
+			GetData(SelectedDevice,SelectedChannelID){
+				var self = this;
+				if(SelectedChannelID.length>0)
+				{
+					var URL=martiniApiDeviceChannelDataURL
+					.replace('{deviceId}',SelectedDevice)
+					.replace('{channelId}',SelectedChannelID);
+					axios.get(URL)
+					.then(function (response) {
+						self.setState({ jsondata:response.data });
+					});
+				}
+				else
+				{
+					self.setState({ jsondata:[]});
+				}
+			}
+            render() {
+			console.log('HistoryDataSection.render');
+                return (
+<div className="height2" >
+	<table id="myTable" className="tablesorter-blue">
+		<thead>
+			<tr>
+				<th width="70%">資料記錄時間</th>
+				<th width="30%">數值</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+		{this.state.jsondata.map((dataitem,idx) => (
+				<HistoryDataRow 
+					key={idx} 
+					time={dataitem.at} 
+					data={dataitem.value} 
+					CompareType={this.props.CompareType} 
+					CompareValue={this.props.CompareValue}
+				/>
+				))}
+		</tbody>
+	</table>
+</div>
+                );
+            }
+	}
+	class HistoryDataRow extends React.Component {
+			FixLightValue(LightValue){
+				if(LightValue.length-LightValue.lastIndexOf('.')>3)
+				{
+					LightValue=LightValue.substring(0,LightValue.lastIndexOf('.')+4);
+				}
+				return LightValue;
+			}
+            render() {
+				var tdclass="";
+				
+				var dateString = this.props.time.toString();
+				var reggie = /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(.*)/;
+				var d = new Date();
+				var timezoneoffset = d.getTimezoneOffset()/60*-1;
+				var dateArray = reggie.exec(dateString); 
+				var dateObject = new Date(
+					(+dateArray[1]),
+					(+dateArray[2])-1, // Careful, month starts at 0!
+					(+dateArray[3]),
+					(+dateArray[4]),
+					(+dateArray[5]),
+					(+dateArray[6])
+				);
+                var millisecond='';
+                if(dateArray[7].startsWith("."))
+                {
+                    millisecond=dateArray[7].substr(0,3);
+                }
+				dateObject.setHours(dateObject.getHours()+timezoneoffset);
+				var dateString=(dateObject.getUTCMonth()+1)+"-"+dateObject.getUTCDate()+" "+dateObject.getHours()+":"+dateArray[5]+":"+dateArray[6]+millisecond;
+				var datavalue=this.props.data.str;
+				if(this.props.data.str)
+				{
+					datavalue=this.props.data.str;
+				}
+				else
+				{
+					//number
+					datavalue=this.props.data.num.toString();
+					if(datavalue.length-datavalue.lastIndexOf('.')>3)
+					{
+						datavalue=datavalue.substring(0,datavalue.lastIndexOf('.')+4);
+					}
+					if(this.props.CompareType=='>' && this.props.data.num>this.props.CompareValue)
+					{
+						tdclass="tdredstyle";
+					}
+					else if(this.props.CompareType=='<' && this.props.data.num<this.props.CompareValue)
+					{
+						tdclass="tdredstyle";
+					}
+				}
+				
+                return (
+					<tr><td width="70%" >{dateString}</td><td width="30%" className={tdclass}>{datavalue}</td></tr>
+                );
+            }
+	}
+
+
+	ReactDOM.render(
+	<div className="row height2">
+		<HistoryAP key="1" />
+		<HistoryAP key="2" />
+		<HistoryAP key="3" />
+	</div>,
+                    document.getElementById('HistoryData'));
+	
+</script>
+{% endblock BabelScript %}
