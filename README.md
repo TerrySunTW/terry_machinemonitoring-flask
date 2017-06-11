@@ -5,6 +5,16 @@ https://www.python.org/ftp/python/3.6.1/python-3.6.1-amd64.exe
 pip install flask
 
 
+
+
+
+
+
+
+
+
+
+
 This README would normally document whatever steps are necessary to get your application up and running.
 
 ### What is this repository for? ###
