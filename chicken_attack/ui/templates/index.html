@@ -1,0 +1,13 @@
+<html>
+    <head>
+        <script
+            type = "text/javascript"
+            src = "{{ url_for('ui_route.static', filename = 'js/hello.js') }}" >
+        </script>
+    </head>
+
+    <body>
+        <input type = "button" onclick = "sayHello()" value = "Say Hello" />
+        <input type = "button" onclick = "test()" value = "test_api" />
+    </body>
+</html>
