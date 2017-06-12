@@ -402,10 +402,10 @@
             {
                 DeviceName=Devicedata.metadata.name;
             }
-            var ChannelName=Channeldata.channelId;
+            var ChannelName='';
             if(Channeldata.metadata&&Channeldata.metadata.name)
             {
-                ChannelName=Channeldata.metadata.name;
+                ChannelName='('+Channeldata.metadata.name+')';
             }
 
 			//title
@@ -414,7 +414,7 @@
                 document.getElementById('DetailViewTitle')
             );
             ReactDOM.render(
-                <span>{Channeldata.channelId} - {ChannelName}</span>,
+                <span>{Channeldata.channelId}{ChannelName}</span>,
                 document.getElementById('DetailViewTitle2')
             );
             //light
