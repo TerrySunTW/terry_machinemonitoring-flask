@@ -92,11 +92,12 @@
 					(+dateArray[5]),
 					(+dateArray[6])
 				);
-                var millisecond='';
+                var millisecond='.00';
                 if(dateArray[7].startsWith("."))
                 {
                     millisecond=dateArray[7].substr(0,3);
                 }
+                
 				dateObject.setHours(dateObject.getHours()+timezoneoffset);
 				var dateString=(dateObject.getUTCMonth()+1)+"-"+dateObject.getUTCDate()+" "+dateObject.getHours()+":"+dateArray[5]+":"+dateArray[6]+millisecond;
 				
@@ -375,7 +376,8 @@
                     {
                         $(".light_detail_title").html(response.data[0].value.str);
                     }
-                    
+                    $("#detailtime").html(window.FixLightValue(response.data[0].at));
+                   
                     UpdateDetailViewChartData(response.data);
                 });
             }
@@ -425,7 +427,7 @@
                 <td className="text-center"><LightView Devicedata={Devicedata} Channeldata={Channeldata}/></td>
             </tr>
             <tr>
-                <td className="number">{FixLigthValue}</td>
+                <td id="detailtime" className="number">{FixLigthValue}</td>
             </tr>
         </table>
                 ,
