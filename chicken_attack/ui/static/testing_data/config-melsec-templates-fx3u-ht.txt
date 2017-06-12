@@ -1,8 +1,8 @@
 {
   "templateId": "fx3u-ht",
   "protocol": {
-    "frame": "1E",
-    "code": "ascii"
+    "frame": "3E",
+    "code": "binary"
   },
   "commands": [
     {

@@ -8,7 +8,7 @@
                     </div>
                     <div class="span4">
                     </div>
-                    <div class="span4 text-right" style="padding-top:10px;"><a href="/edittemplate" role="button" data-toggle="modal" class="btn btn-danger">新增Template</a>
+                    <div class="span4 text-right" style="padding-top:10px;"><a href="/edittemplate" role="button" class="btn btn-danger">新增Template</a>
                     </div>
                 </div>
             </div>
@@ -40,12 +40,12 @@
 		componentDidMount() {
 			this.GetData();
 		}
-		deleteTemplate(TemplateID){
+		deleteTemplate(TemplateID,ProtocolType){
 			var self = this;
 			if(confirm('Delete the item?'+TemplateID))
 			{
-				var URL=DeleteTemplateURL.replace('{templateId}',TemplateID);
-				axios.post(URL)
+				var URL=QonfigApiDataSoureceUrl.replace('{protocoltype}',ProtocolType).replace('{templateId}',TemplateID);
+				axios.delete(URL)
 				.then(function (response) {
 					if(response.statusText!="OK")
 					{
@@ -104,8 +104,8 @@
 								<td><a href={"/edittemplate/"+dataitem.templateId}>{dataitem.templateId}</a></td>
 				
 								<td className="table-function-td">
-								<a href={"/edittemplate/"+dataitem.templateId} role="button" data-toggle="modal" className="btn btn-inverse">修改</a>&nbsp;
-								<a onClick={() => self.deleteTemplate(dataitem.templateId)}  href="" role="button" data-toggle="modal" className="btn btn-inverse">刪除</a></td>
+								<a href={"/edittemplate/"+dataitem.templateId+"/"+dataitem.ProtocolType} role="button" data-toggle="modal" className="btn btn-inverse">修改</a>&nbsp;
+								<a onClick={() => self.deleteTemplate(dataitem.templateId,dataitem.ProtocolType)}  href="" role="button" data-toggle="modal" className="btn btn-inverse">刪除</a></td>
 							</tr>
 						  );
 						})}

@@ -25,9 +25,9 @@ def templatelist_html():
     return render_template('templatelist.html',WebInfo=WebInfo)
 
 @UI_ROUTE.route('/edittemplate')
-@UI_ROUTE.route('/edittemplate/<templateID>')
-def edittemplate_html(templateID=''):
-    return render_template('edittemplate.html',WebInfo=WebInfo,templateID=templateID)
+@UI_ROUTE.route('/edittemplate/<templateID>/<protocoltype>')
+def edittemplate_html(templateID='',protocoltype=''):
+    return render_template('edittemplate.html',WebInfo=WebInfo,templateID=templateID,protocoltype=protocoltype)
 
 @UI_ROUTE.route('/editmachine')
 @UI_ROUTE.route('/editmachine/<machineID>')

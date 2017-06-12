@@ -40,16 +40,16 @@
 										<span class="dropdown-arrow"></span>
 										<ul class="dropdown-menu" style="width:200px;text-align:center;" role="menu">
 											<li>
-												<a name="CommandOption" href="#">read-coils</a>
+												<a name="CommandOption" href="javascript:void(0)">read-coils</a>
 											</li>
 											<li>
-												<a name="CommandOption" href="#">read-discrete-inputs</a>
+												<a name="CommandOption" href="javascript:void(0)">read-discrete-inputs</a>
 											</li>
                                             <li>
-												<a name="CommandOption" href="#">read-input-registers</a>
+												<a name="CommandOption" href="javascript:void(0)">read-input-registers</a>
 											</li>
                                             <li>
-												<a name="CommandOption" href="#">read-holding-registers</a>
+												<a name="CommandOption" href="javascript:void(0)">read-holding-registers</a>
 											</li>
 										</ul>
 									</div>
@@ -120,7 +120,7 @@
                                         <span class="dropdown-arrow"></span>
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
-                                                <a name="ChannelMemoryAreaOption" href="#">D</a>
+                                                <a name="ChannelMemoryAreaOption" href="javascript:void(0)">D</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -149,13 +149,13 @@
                                         <span class="dropdown-arrow"></span>
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
-                                                <a name="byteOrderOption" href="#">BA</a>
+                                                <a name="byteOrderOption" href="javascript:void(0)">BA</a>
                                             </li>
                                             <li>
-                                                <a name="byteOrderOption" href="#">DCBA</a>
+                                                <a name="byteOrderOption" href="javascript:void(0)">DCBA</a>
                                             </li>
                                             <li>
-                                                <a name="byteOrderOption" href="#">CDAB</a>
+                                                <a name="byteOrderOption" href="javascript:void(0)">CDAB</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -180,28 +180,28 @@
                                         <span class="dropdown-arrow"></span>
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
-                                                <a name="asTypeOption" href="#">int16</a>
+                                                <a name="asTypeOption" href="javascript:void(0)">int16</a>
                                             </li>
                                             <li>
-                                                <a name="asTypeOption" href="#">int32</a>
+                                                <a name="asTypeOption" href="javascript:void(0)">int32</a>
                                             </li>
                                             <li>
-                                                <a name="asTypeOption" href="#">int64</a>
+                                                <a name="asTypeOption" href="javascript:void(0)">int64</a>
                                             </li>
                                             <li>
-                                                <a name="asTypeOption" href="#">uint16</a>
+                                                <a name="asTypeOption" href="javascript:void(0)">uint16</a>
                                             </li>
                                             <li>
-                                                <a name="asTypeOption" href="#">uint32</a>
+                                                <a name="asTypeOption" href="javascript:void(0)">uint32</a>
                                             </li>
                                             <li>
-                                                <a name="asTypeOption" href="#">uint64</a>
+                                                <a name="asTypeOption" href="javascript:void(0)">uint64</a>
                                             </li>
                                             <li>
-                                                <a name="asTypeOption" href="#">float32</a>
+                                                <a name="asTypeOption" href="javascript:void(0)">float32</a>
                                             </li>
                                             <li>
-                                                <a name="asTypeOption" href="#">float64</a>
+                                                <a name="asTypeOption" href="javascript:void(0)">float64</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -264,16 +264,11 @@
 			$.ajax({
 			  type: "GET",
 			  dataType: "json",
-			  url: GetTemplateURL.replace('{templateId}',EditTemplateID)
+			  url: QonfigConfigTemplatesURL.replace('{ProtocolType}',EditTemplateProtocoltype).replace('{templateId}',EditTemplateID)
 			}).done(function( Data ) {
 				CommandArray=Data.commands;
 				ChannelArray=Data.channels;
 				$("#templateID").val(Data.templateId);
-				$("#ProtocolFrame").html(Data.protocol.frame);
-				$("#ProtocolCode").html(Data.protocol.code);
-				$("#TemplateRegisterType").html(Data.commands[0].registerType);
-				$("#TemplateAddress").val(Data.commands[0].address);
-				$("#TemplateLength").val(Data.commands[0].length);
 				DrawTable();
 			});
 			
@@ -285,7 +280,6 @@
 			var NewCommand=
 			{
 				"command": $("#Command")[0].innerText,
-				"memoryArea": $("#CommandMemoryArea")[0].innerText,
 				"address": parseInt($("#Commandaddress").val()),
 				"quantity": parseInt($("#Commandquantity").val())
 			};
@@ -377,7 +371,6 @@
 		for(var i=0;i<CommandArray.length;i++){
 			TbodyHtml+="<tr>"+
 				"<td>"+CommandArray[i].command+"</td>"+
-				"<td>"+CommandArray[i].memoryArea+"</td>"+
 				"<td>"+CommandArray[i].address+"</td>"+
 				"<td>"+CommandArray[i].quantity+"</td>"+
 				"<td><a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveCommandArrayByAddress('"+CommandArray[i].address+"')\">刪除</a></td>"+
@@ -410,17 +403,6 @@
 		}
 		$("#ChannelTbody").html(ChannelHtml);
 		
-		var CommandHtml="";
-		for(var i=0;i<CommandArray.length;i++){
-			var Item=CommandArray[i];
-			CommandHtml+="<tr>"+
-				"<td>"+Item.command+"</td>"+
-				"<td>"+Item.registerType+"</td>"+
-				"<td>"+Item.address+"</td>"+
-				"<td>"+Item.length+"</td>"+
-				"<td><a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveCommandArrayByAddress('"+CommandArray[i].address+"')\">刪除</a></td>"+
-			"</tr>";
-		}
-		$("#CommandTbody").html(CommandHtml);
+		DrawCommandTable();
 	}
 </script>

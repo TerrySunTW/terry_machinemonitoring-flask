@@ -15,6 +15,9 @@ var martiniApiDevicesURL = martiniApiDataSoureceUrl + "/devices";
 var martiniApiDeviceChannelsURL = martiniApiDataSoureceUrl + "/devices/{deviceId}/channels";
 var martiniApiDeviceChannelDataURL = martiniApiDataSoureceUrl + "/devices/{deviceId}/channels/{channelId}/data";
 var martiniApiDeviceChannelsLastestDataURL = martiniApiDataSoureceUrl + "/devices/{deviceId}/channels/latest-data";
+
+var QonfigConfigTemplatesURL = QonfigApiDataSoureceUrl + "/config/{ProtocolType}/templates/{templateId}";
+
 var ReadingEquipmentLatestURL = DataSoureceUrl + "/reading/equipments/{equipmentId}/channels/{channelId}/latest";
 var GetAllTemplateURL = DataSoureceUrl + "/config/melsec/templates";
 var GetTemplateURL = DataSoureceUrl + "/config/melsec/templates/{templateId}";
@@ -47,6 +50,9 @@ if(Debug)
 	martiniApiDeviceChannelsURL=martiniApiDataSoureceUrl + "/static/testing_data/martini-device-{deviceId}-channels.txt";
 	martiniApiDeviceChannelDataURL=martiniApiDataSoureceUrl + "/static/testing_data/martini-device-{deviceId}-channels-{channelId}-data.txt";
 	martiniApiDeviceChannelsLastestDataURL = martiniApiDataSoureceUrl + "/static/testing_data/devices-{deviceId}-channels-latest-data.txt";
+
+	QonfigConfigTemplatesURL = QonfigApiDataSoureceUrl + "/static/testing_data/config-{ProtocolType}-templates-{templateId}.txt";
+
 	ReadingEquipmentLatestURL = DataSoureceUrl + "/test_ReadingEquipmentLatest_{equipmentId}_{channelId}.txt";
 	GetTemplateURL = DataSoureceUrl + "/test_GetTemplate_{templateId}.txt";
 	GetAllTemplateURL = DataSoureceUrl + "/test_GetAllTemplate.txt";
