@@ -99,15 +99,42 @@
 
 <script>
     var ConnectionType="TCP";
+    var EditMachinePotocolType='fins';
     $(function() {
 		$("a[name='ConnectionTypeOption']").bind('click', function (event) {
 			$("#ConnectionType").html(this.innerText);
             ConnectionType=this.innerText;
             $("#tcpdiv").toggle();
             $("#udpdiv").toggle();
-            
 		});
+        if(EditMachineObj)
+        {
+            UpdateEditObj();
+        }
+        
+		
     });
+    function UpdateEditObj(){
+        if(EditMachineObj.connection.tcp)
+        {
+            $("#ConnectionType").html("TCP");
+            $("#TCPHost").val(EditMachineObj.connection.tcp.host);
+            $("#TCPPort").val(EditMachineObj.connection.tcp.port);
+        }
+        else
+        {
+            $("#ConnectionType").html("UDP");
+            $("#UDPHost").val(EditMachineObj.connection.udp.host);
+            $("#UDPPort").val(EditMachineObj.connection.udp.port);
+            $("#UDPNode").val(EditMachineObj.connection.udp.node);
+        }
+        $("#TemplateID").html(EditMachineObj.equipment.templateId);
+        $("#EquipmentId").val(EditMachineObj.equipment.equipmentId);
+        $("#EquipmentName").val(EditMachineObj.equipment.equipmentName);
+        $("#PollingPeriodMS").val(EditMachineObj.pollingPeriodMS);
+        $("#requestTimeoutMS").val(EditMachineObj.requestTimeoutMS);
+        
+    }
     function GetPageDataObj(){
         
         var SubmitData;

@@ -8,7 +8,7 @@
     },
     "equipment": {
       "templateId": "fx3u-ht",
-      "equipmentId": "roof-01",
+      "equipmentId": "loader",
       "equipmentName": "屋頂(1)"
     },
     "pollingPeriodMS": 500,

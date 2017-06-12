@@ -90,6 +90,8 @@
 <script>
     var MachineArray=[];
     var ConnectionType="TCP";
+    var EditMachinePotocolType='modbus';
+    var d = new Date();
     $(function() {
         $("#AddSubMachine").click(function(){
 			var NewMachine=
@@ -101,8 +103,43 @@
 			};
 			MachineArray.push(NewMachine);
 			DrawMachineTable();
+        });
+
+        if(EditMachineObj)
+        {
+            UpdateEditObj();
+        }
     });
-    });
+    function UpdateEditObj(){
+        $("#TemplateID").html(EditMachineObj.equipments[0].templateId);
+        $("#Host").val(EditMachineObj.endPoint.host);
+        $("#Port").val(EditMachineObj.endPoint.port);
+        $("#PollingPeriodMS").val(EditMachineObj.pollingPeriodMS);
+        $("#requestTimeoutMS").val(EditMachineObj.requestTimeoutMS);
+        MachineArray=EditMachineObj.equipments;
+        DrawMachineTable();
+    }
+    function SetupEditTemplateSelection(){
+            var URL=EquipmentTemplateList.replace('{protocoltype}',EditMachinePotocolType)+'?'+d.getTime();
+            axios.get(URL,{params: {protocoltype: EditMachinePotocolType}})
+            .then(function (response) {
+                var DataResult=response.data;
+
+                var TemplateSelectionHTML='';
+                for(var i=0;i<DataResult.length;i++)
+                {
+                    TemplateSelectionHTML+="<li><a ProtocolType='"+DataResult[i].ProtocolType+"' name='TemplateIDOption' href='#'>"+TemplateList[i].templateId+"</a></li>";
+                }
+                $("#TemplateIDWapper").html(TemplateSelectionHTML);
+                $("a[name='TemplateIDOption']").bind('click', function (event) {
+                    $("#TemplateID").html(this.innerText);
+                    CurrentProtocolType=this.attributes["ProtocolType"].nodeValue;
+                    LoadEquipmentEditor();
+                });
+                LoadDefaultEditor();
+            }); 
+		
+	}
     function GetPageDataObj(){
         
         var SubmitData={

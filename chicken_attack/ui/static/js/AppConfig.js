@@ -17,6 +17,7 @@ var martiniApiDeviceChannelDataURL = martiniApiDataSoureceUrl + "/devices/{devic
 var martiniApiDeviceChannelsLastestDataURL = martiniApiDataSoureceUrl + "/devices/{deviceId}/channels/latest-data";
 
 var QonfigConfigTemplatesURL = QonfigApiDataSoureceUrl + "/config/{ProtocolType}/templates/{templateId}";
+var QonfigConfigEquipmentsURL = QonfigApiDataSoureceUrl + "/config/{ProtocolType}/equipments";
 
 var ReadingEquipmentLatestURL = DataSoureceUrl + "/reading/equipments/{equipmentId}/channels/{channelId}/latest";
 var GetAllTemplateURL = DataSoureceUrl + "/config/melsec/templates";
@@ -52,6 +53,7 @@ if(Debug)
 	martiniApiDeviceChannelsLastestDataURL = martiniApiDataSoureceUrl + "/static/testing_data/devices-{deviceId}-channels-latest-data.txt";
 
 	QonfigConfigTemplatesURL = QonfigApiDataSoureceUrl + "/static/testing_data/config-{ProtocolType}-templates-{templateId}.txt";
+	QonfigConfigEquipmentsURL = QonfigApiDataSoureceUrl + "/static/testing_data/config-{ProtocolType}-equipments.txt";
 
 	ReadingEquipmentLatestURL = DataSoureceUrl + "/test_ReadingEquipmentLatest_{equipmentId}_{channelId}.txt";
 	GetTemplateURL = DataSoureceUrl + "/test_GetTemplate_{templateId}.txt";

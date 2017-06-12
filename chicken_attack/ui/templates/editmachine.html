@@ -17,8 +17,8 @@
                         </div>
                     </div>                  
                     <div class="span4 text-right">
-						<a id="AddMachine" href="#" role="button" data-toggle="modal" class="btn btn-danger">新增機台</a>
-						<a id="RemoveMachine" href="#" role="button" data-toggle="modal" class="btn btn-danger">刪除機台</a>
+						<a id="AddMachine" href="javascript:void(0)" role="button" class="btn btn-danger">新增機台</a>
+						<a id="RemoveMachine" href="javascript:void(0)" role="button" class="btn btn-danger">刪除機台</a>
                     </div>
                 </div>
             </div>
@@ -33,16 +33,19 @@
 	var CurrentProtocolType;
 	var d = new Date();
 	var EditMachineID='{{machineID}}';
+	var EditMachinePotocolType='';
+	var EditMachineObj;
 	var EditSelectIndex=-1;
 	$(function() {
-		SetupTemplateSelection();
+		
 		if(EditMachineID=='')
 		{
+			SetupTemplateSelection();
 			$("#RemoveMachine").hide();
 		}
 		else
 		{
-			SetupEditUI();
+			GetPotocolType();
 		}
 		$("#AddMachine").click(function(){
 			var SubmitData=GetPageDataObj();
@@ -55,6 +58,40 @@
 			//RemoveMachine(SubmitData);
 		});
 	});
+	function GetPotocolType(){
+		for(var ProtocolTypeArrayIndex in ProtocolTypeArray){
+				var ProtocolType=ProtocolTypeArray[ProtocolTypeArrayIndex];
+				var URL=QonfigConfigEquipmentsURL.replace('{ProtocolType}',ProtocolType);
+				axios.get(URL,{params: {protocoltype:ProtocolType }})
+				.then(function (response) {
+					var DataResult=response.data;
+					for(var DataResultIndex in DataResult){	
+						if(DataResult[DataResultIndex].equipment)
+						{
+							if(DataResult[DataResultIndex].equipment.equipmentId==EditMachineID)
+							{
+								EditMachinePotocolType=response.config.params.protocoltype;
+								CurrentProtocolType=EditMachinePotocolType;
+								EditMachineObj=DataResult[DataResultIndex];
+								SetupEditUI();
+								break;
+							}
+						}
+						if(DataResult[DataResultIndex].equipments)
+						{
+							if(DataResult[DataResultIndex].equipments[0].equipmentId==EditMachineID)
+							{
+								EditMachinePotocolType=response.config.params.protocoltype;
+								CurrentProtocolType=EditMachinePotocolType;
+								EditMachineObj=DataResult[DataResultIndex];
+								SetupEditUI();
+								break;
+							}
+						}
+					}
+				});
+		}
+	}
 	function SetupTemplateSelection(){
 
 		for(var ProtocolTypeArrayIndex in ProtocolTypeArray){
@@ -95,35 +132,12 @@
 	}
 	function LoadEquipmentEditor(){
 		$( "#EquipmentEditorDiv" ).html("");
-		$( "#EquipmentEditorDiv" ).load( "/"+CurrentProtocolType+"-equipment-editor.html?d="+d.getTime(), function() {
+		$( "#EquipmentEditorDiv" ).load( "/static/html/"+CurrentProtocolType+"-equipment-editor.html?d="+d.getTime(), function() {
 		});
 	};
 	function SetupEditUI(){
-		$("a[name='ConnectionTypeOption']").bind('click', function (event) {
-			$("#ConnectionType").html(this.innerText);
-		});
 		$("#AddMachine").html("更新機台");
-		$.ajax({
-		  type: "GET",
-		  dataType: "json",
-		  url: GetEquipmentsURL
-		}).done(function( Data ) {
-			for(var i=0;i<Data.length;i++)
-			{
-				if(Data[i].equipment.equipmentId==EditMachineID)
-				{
-					EditSelectIndex=i;
-					$("#TemplateID").html(Data[i].equipment.templateId);
-					$("#Host").val(Data[i].connection.host);
-					$("#Port").val(Data[i].connection.port);
-					$("#EquipmentId").val(Data[i].equipment.equipmentId);
-					$("#EquipmentName").val(Data[i].equipment.equipmentName);
-					$("#PollingPeriodMS").val(Data[i].pollingPeriodMS);
-					$("#RequestTimeoutMS").val(Data[i].requestTimeoutMS);
-					break;
-				}
-			}
-		});
+		LoadEquipmentEditor();
 	}
 	function RemoveMachine(SubmitData){
 		$.ajax({

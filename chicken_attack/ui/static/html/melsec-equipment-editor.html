@@ -106,6 +106,7 @@
 
 <script>
     var ConnectionType="TCP";
+    var d = new Date();
     $(function() {
 		$("a[name='ConnectionTypeOption']").bind('click', function (event) {
 			$("#ConnectionType").html(this.innerText);
@@ -114,7 +115,34 @@
             $("#udpdiv").toggle();
             
 		});
+        if(EditMachineObj)
+        {
+            UpdateEditObj();
+        }
     });
+    function UpdateEditObj(){
+        if(EditMachineObj.connection.tcp)
+        {
+            $("#ConnectionType").html("TCP");
+            $("#TCPHost").val(EditMachineObj.connection.tcp.host);
+            $("#TCPPort").val(EditMachineObj.connection.tcp.port);
+        }
+        else
+        {
+            $("#ConnectionType").html("UDP");
+            $("#UDPRemoteHost").val(EditMachineObj.connection.udp.remote.host);
+            $("#UDPRemotePort").val(EditMachineObj.connection.udp.remote.port);
+            $("#UDPLocalHost").val(EditMachineObj.connection.udp.local.host);
+            $("#UDPLocalPort").val(EditMachineObj.connection.udp.local.port);
+
+        }
+        $("#TemplateID").html(EditMachineObj.equipment.templateId);
+        $("#EquipmentId").val(EditMachineObj.equipment.equipmentId);
+        $("#EquipmentName").val(EditMachineObj.equipment.equipmentName);
+        $("#PollingPeriodMS").val(EditMachineObj.pollingPeriodMS);
+        $("#requestTimeoutMS").val(EditMachineObj.requestTimeoutMS);
+        
+    }
     function GetPageDataObj(){
         
         var SubmitData;

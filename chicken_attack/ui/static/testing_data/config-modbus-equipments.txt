@@ -1,17 +1,24 @@
 [
   {
-    "connection": {
-      "tcp": {
-        "host": "192.168.1.1",
-        "port": 9600
+    "endPoint": {
+      "host": "192.168.11.123",
+      "port": 502
+    },
+    "equipments": [
+      {
+        "id": 48,
+        "templateId": "agile-metech-baw",
+        "equipmentId": "energy-meter-001",
+        "equipmentName": "電錶(一)"
+      },
+      {
+        "id": 49,
+        "templateId": "agile-metech-baw",
+        "equipmentId": "energy-meter-002",
+        "equipmentName": "電錶(二)"
       }
-    },
-    "equipment": {
-      "templateId": "cs1g-45h",
-      "equipmentId": "roof-01",
-      "equipmentName": "屋頂(1)"
-    },
-    "pollingPeriodMS": 100,
-    "requestTimeoutMS": 100
+    ],
+    "pollingPeriodMS": 1000,
+    "requestTimeoutMS": 3000
   }
 ]

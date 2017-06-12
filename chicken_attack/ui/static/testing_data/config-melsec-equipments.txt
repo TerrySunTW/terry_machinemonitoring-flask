@@ -1,24 +1,17 @@
 [
   {
-    "endPoint": {
-      "host": "192.168.11.123",
-      "port": 502
-    },
-    "equipments": [
-      {
-        "id": 48,
-        "templateId": "agile-metech-baw",
-        "equipmentId": "energy-meter-001",
-        "equipmentName": "電錶(一)"
-      },
-      {
-        "id": 49,
-        "templateId": "agile-metech-baw",
-        "equipmentId": "energy-meter-002",
-        "equipmentName": "電錶(二)"
+    "connection": {
+      "tcp": {
+        "host": "192.168.11.129",
+        "port": 9600
       }
-    ],
-    "pollingPeriodMS": 1000,
-    "requestTimeoutMS": 3000
+    },
+    "equipment": {
+      "templateId": "fx3u-ht",
+      "equipmentId": "roof-01",
+      "equipmentName": "屋頂(1)"
+    },
+    "pollingPeriodMS": 500,
+    "requestTimeoutMS": 300
   }
 ]
