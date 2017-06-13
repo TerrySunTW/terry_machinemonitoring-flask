@@ -15,6 +15,7 @@ var martiniApiDeviceChannelsURL = martiniApiDataSoureceUrl + "/devices/{deviceId
 var martiniApiDeviceChannelDataURL = martiniApiDataSoureceUrl + "/devices/{deviceId}/channels/{channelId}/data";
 var martiniApiDeviceChannelsLastestDataURL = martiniApiDataSoureceUrl + "/devices/{deviceId}/channels/latest-data";
 
+var QonfigConfigCreateTemplatesURL = QonfigApiDataSoureceUrl + "/config/{ProtocolType}/templates";
 var QonfigConfigTemplatesURL = QonfigApiDataSoureceUrl + "/config/{ProtocolType}/templates/{templateId}";
 var QonfigConfigEquipmentsURL = QonfigApiDataSoureceUrl + "/config/{ProtocolType}/equipments";
 
