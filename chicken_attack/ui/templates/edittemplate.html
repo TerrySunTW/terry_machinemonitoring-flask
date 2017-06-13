@@ -51,6 +51,7 @@
 			//$("#test").html(JSON.stringify(SubmitData));
 			if(EditTemplateID=='')
 			{
+				EditTemplateProtocoltype=$("#ProtocolType").html().toLowerCase();
 				AddNewTemplate(SubmitData);
 			}
 			else
@@ -86,7 +87,7 @@
 	};
 	function UpdateTemplate(SubmitData){
 			var SubmitJsonStringData=JSON.stringify(SubmitData);
-			console.log(SubmitJsonStringData);
+			//console.log(SubmitJsonStringData);
 			$.ajax({
 			  type: "PUT",
 			  dataType:'json',
@@ -114,12 +115,12 @@
 		}
 		function AddNewTemplate(SubmitData){
 			var SubmitJsonStringData=JSON.stringify(SubmitData);
-			console.log(SubmitJsonStringData);
+			//console.log(SubmitJsonStringData);
 			$.ajax({
 			  type: "POST",
 			  dataType:'json',
-			  url: QonfigConfigTemplatesURL.replace('{ProtocolType}',EditTemplateProtocoltype).replace('{templateId}',EditTemplateID),
-			  data: {Data:SubmitJsonStringData}
+			  url: QonfigConfigCreateTemplatesURL.replace('{ProtocolType}',EditTemplateProtocoltype),
+			  data: SubmitJsonStringData
 			})
 			.done(function( msg ) {
 				if(msg=="OK"||msg=="")

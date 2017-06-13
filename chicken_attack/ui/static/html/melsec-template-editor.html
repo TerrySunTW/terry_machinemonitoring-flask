@@ -57,7 +57,7 @@
                         <thead>
                             <tr>
                                 <th>Command</th>
-                                <th>MemoryArea</th>
+                                <th>RegisterType</th>
                                 <th>address</th>
                                 <th>quantity</th>
                                 <th>刪除</th>
@@ -93,16 +93,16 @@
 									</div>
                                 </td>
                                 <td width="17%" scope="row">
-                                    <span>MemoryArea:</span>
+                                    <span>RegisterType:</span>
                                     <div class="btn-group margain-left1">
-										<button id="CommandMemoryArea" type="button" class="btn btn-primary" style="width:100px;" data-toggle="dropdown">D</button>
+										<button id="CommandRegisterType" type="button" class="btn btn-primary" style="width:100px;" data-toggle="dropdown">D</button>
 										<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 											<span class="caret"></span>
 										</button>
 										<span class="dropdown-arrow"></span>
 										<ul class="dropdown-menu" style="width:100px;text-align:center;" role="menu">
 											<li>
-												<a name="CommandMemoryAreaOption" href="javascript:void(0)">D</a>
+												<a name="CommandRegisterTypeOption" href="javascript:void(0)">D</a>
 											</li>
 										</ul>
 									</div>
@@ -313,8 +313,8 @@
 		$("a[name='CommandOption']").bind('click', function (event) {
 			$("#Command").html(this.innerText);
 		});
-		$("a[name='CommandMemoryAreaOption']").bind('click', function (event) {
-			$("#CommandMemoryArea").html(this.innerText);
+		$("a[name='CommandCommandRegisterTypeOption']").bind('click', function (event) {
+			$("#CommandRegisterType").html(this.innerText);
 		});
 		//======
 		$("a[name='byteOrderOption']").bind('click', function (event) {
@@ -352,7 +352,7 @@
 			var NewCommand=
 			{
 				"command": $("#Command")[0].innerText,
-				"registerType": $("#ChannelregisterType")[0].innerText,
+				"registerType": $("#CommandRegisterType")[0].innerText,
 				"address": parseInt($("#Commandaddress").val()),
 				"quantity": parseInt($("#Commandquantity").val())
 			};
@@ -448,7 +448,7 @@
 		for(var i=0;i<CommandArray.length;i++){
 			TbodyHtml+="<tr>"+
 				"<td>"+CommandArray[i].command+"</td>"+
-				"<td>"+CommandArray[i].memoryArea+"</td>"+
+				"<td>"+CommandArray[i].registerType+"</td>"+
 				"<td>"+CommandArray[i].address+"</td>"+
 				"<td>"+CommandArray[i].quantity+"</td>"+
 				"<td><a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveCommandArrayByAddress('"+CommandArray[i].address+"')\">刪除</a></td>"+
