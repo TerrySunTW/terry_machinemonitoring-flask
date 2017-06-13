@@ -56,6 +56,7 @@
 			}
 			else
 			{
+				
 				UpdateTemplate(SubmitData);
 			}
 		});
@@ -86,61 +87,51 @@
 		});
 	};
 	function UpdateTemplate(SubmitData){
-			var SubmitJsonStringData=JSON.stringify(SubmitData);
-			//console.log(SubmitJsonStringData);
-			$.ajax({
-			  type: "PUT",
-			  dataType:'json',
-			  url: QonfigConfigTemplatesURL.replace('{ProtocolType}',EditTemplateProtocoltype).replace('{templateId}',EditTemplateID),
-			  data: { Data: SubmitJsonStringData }
-			})
-			.done(function( msg ) {
-				if(msg=="OK"||msg=="")
-				{
-					alert( "更新完成!!");
-					$(location).attr('href', '/templatelist');
-					return;
-				}
-				else if(msg.status==500)
-				{
-					alert(msg.detail);
-				}
-				else 
-				{
-					//alert(JSON.stringify(msg));
-					alert( "更新完成!!");
-					$(location).attr('href', '/templatelist');
-				}
-			});
-		}
-		function AddNewTemplate(SubmitData){
-			var SubmitJsonStringData=JSON.stringify(SubmitData);
-			//console.log(SubmitJsonStringData);
-			$.ajax({
-			  type: "POST",
-			  dataType:'json',
-			  url: QonfigConfigCreateTemplatesURL.replace('{ProtocolType}',EditTemplateProtocoltype),
-			  data: SubmitJsonStringData
-			})
-			.done(function( msg ) {
-				if(msg=="OK"||msg=="")
-				{
-					alert( "新增完成!!");
-					$(location).attr('href', '/templatelist');
-					return;
-				}
-				else if(msg.status==500)
-				{
-					alert(msg.detail);
-				}
-				else 
-				{
-					//alert(JSON.stringify(msg));
-					alert( "新增完成!!");
-					$(location).attr('href', '/templatelist');
-				}
-			});
-		}
+		var SubmitJsonStringData=JSON.stringify(SubmitData);
+		//console.log(SubmitJsonStringData);
+		$.ajax({
+			type: "PUT",
+			contentType: "application/json",
+			dataType:'json',
+			url: QonfigConfigCreateTemplatesURL.replace('{ProtocolType}',EditTemplateProtocoltype).replace('{templateId}',EditTemplateID),
+			data: SubmitJsonStringData
+		})
+		.done(function( response ) {
+			if(response.data=="")
+			{
+				alert( "更新完成!!");
+				$(location).attr('href', '/templatelist');
+				return;
+			}
+			else
+			{
+				alert(response);
+			}
+		});
+	}
+	function AddNewTemplate(SubmitData){
+		var SubmitJsonStringData=JSON.stringify(SubmitData);
+		//console.log(SubmitJsonStringData);
+		$.ajax({
+			type: "POST",
+			contentType: "application/json",
+			dataType:'json',
+			url: QonfigConfigCreateTemplatesURL.replace('{ProtocolType}',EditTemplateProtocoltype),
+			data: SubmitJsonStringData
+		})
+		.done(function( response ) {
+			if(response.data=="")
+			{
+				alert( "新增完成!!");
+				$(location).attr('href', '/templatelist');
+				return;
+			}
+			else
+			{
+				alert(response);
+			}
+		});
+	}
 	
 </script>
 {% endblock JavaScript %}
