@@ -44,16 +44,16 @@
 			var self = this;
 			if(confirm('Delete the item?'+TemplateID))
 			{
-				var URL=QonfigApiDataSoureceUrl.replace('{protocoltype}',ProtocolType).replace('{templateId}',TemplateID);
+				var URL=QonfigConfigTemplatesURL.replace('{ProtocolType}',ProtocolType).replace('{templateId}',TemplateID);
 				axios.delete(URL)
 				.then(function (response) {
-					if(response.statusText!="OK")
+					if(response.data=="")
 					{
-						alert(JSON.stringify(response));
+						self.GetData();
 					}
 					else
 					{
-						self.GetData();
+						alert(JSON.stringify(response));
 					}
 				});
 			}
@@ -104,8 +104,8 @@
 								<td><a href={"/edittemplate/"+dataitem.templateId}>{dataitem.templateId}</a></td>
 				
 								<td className="table-function-td">
-								<a href={"/edittemplate/"+dataitem.templateId+"/"+dataitem.ProtocolType} role="button" data-toggle="modal" className="btn btn-inverse">修改</a>&nbsp;
-								<a onClick={() => self.deleteTemplate(dataitem.templateId,dataitem.ProtocolType)}  href="" role="button" data-toggle="modal" className="btn btn-inverse">刪除</a></td>
+								<a href={"/edittemplate/"+dataitem.templateId+"/"+dataitem.ProtocolType} role="button" className="btn btn-inverse">修改</a>&nbsp;
+								<a onClick={() => self.deleteTemplate(dataitem.templateId,dataitem.ProtocolType)}  href="" role="button" className="btn btn-inverse">刪除</a></td>
 							</tr>
 						  );
 						})}
