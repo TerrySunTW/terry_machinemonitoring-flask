@@ -270,6 +270,7 @@
 		$($("#NavigationBar li")[2]).addClass("active");
 		if(EditTemplateID!='')
 		{
+            $("#templateID").prop('disabled', true);
 			$("#AddTemplate").html("更新Template");
 			$.ajax({
 			  type: "GET",
