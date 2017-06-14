@@ -41,14 +41,22 @@
 		}
 		$("#AddMachine").click(function(){
 			var SubmitData=GetPageDataObj();
-			if(EditMachineID=='')
+			if(CheckIDPattern($("#EquipmentId").val()))
 			{
-				//no new 
+				if(EditMachineID=='')
+				{
+					//no new 
+				}
+				else
+				{
+					UpdateMachine(SubmitData);
+				}
 			}
 			else
 			{
-				UpdateMachine(SubmitData);
+				alert("ID需以英文開頭!!");
 			}
+			
 		});
 	});
 	function GetPotocolType(){
@@ -153,7 +161,15 @@
 			}
 		})
 	}
-	
+	function CheckIDPattern(inputtxt) {
+		var phoneno = /^[a-zA-Z].*$/;
+		if(inputtxt.match(phoneno)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 	
 	
 </script>

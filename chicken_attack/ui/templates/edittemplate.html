@@ -47,6 +47,12 @@
 		
 
 		$("#AddTemplate").click(function(){
+			if(!CheckIDPattern($("#templateID").val()))
+			{
+				alert("ID需以英文開頭!!");
+                return;
+			}
+			
 			var SubmitData=GetPageDataObj();
 			//$("#test").html(JSON.stringify(SubmitData));
 			if(EditTemplateID=='')
@@ -59,6 +65,7 @@
 				
 				UpdateTemplate(SubmitData);
 			}
+		
 		});
 	});
 	function UISetting(){
@@ -131,6 +138,14 @@
 			}
 		});
 	}
-	
+	function CheckIDPattern(inputtxt) {
+		var phoneno = /^[a-zA-Z].*$/;
+		if(inputtxt.match(phoneno)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 </script>
 {% endblock JavaScript %}
