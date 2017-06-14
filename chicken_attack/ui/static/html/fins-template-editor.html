@@ -150,14 +150,15 @@
                                 <td width="22%" scope="row">
                                     <span>byteOrder:</span>
                                     <div class="btn-group margain-left1">
-                                        <button id="byteOrder" type="button" class="btn btn-primary" style="width:100px;" data-toggle="dropdown">
-                                            BA
-                                        </button>
+                                        <button id="byteOrder" type="button" class="btn btn-primary" style="width:100px;" data-toggle="dropdown">&nbsp;</button>
                                         <button type="button" class="btn btn-primary dropdown-toggle" style="width:30px;" data-toggle="dropdown">
                                             <span class="caret"></span>
                                         </button>
                                         <span class="dropdown-arrow"></span>
                                         <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <a name="byteOrderOption" href="javascript:void(0)">&nbsp;</a>
+                                            </li>
                                             <li>
                                                 <a name="byteOrderOption" href="javascript:void(0)">BA</a>
                                             </li>
@@ -309,10 +310,15 @@
 				"quantity": Number($("#Channelquantity").val())
 			  },
 			  "conversion": {
-                "byteOrder":$("#byteOrder")[0].innerText,
+                
 				"asType": $("#asType")[0].innerText,
 			  }
 			};
+            if($("#byteOrder")[0].innerText.trim().length>0)
+            {
+                NewChannel.conversion.byteOrder=$("#byteOrder")[0].innerText;
+            }
+            
 			if($("#andMask").val().trim().length>0)
 			{
 				var andMaskArray=$("#andMask").val().split(",");
