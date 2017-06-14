@@ -18,7 +18,6 @@
                     </div>                  
                     <div class="span4 text-right">
 						<a id="AddMachine" href="javascript:void(0)" role="button" class="btn btn-danger">新增機台</a>
-						<a id="RemoveMachine" href="javascript:void(0)" role="button" class="btn btn-danger">刪除機台</a>
                     </div>
                 </div>
             </div>
@@ -35,27 +34,21 @@
 	var EditMachineID='{{machineID}}';
 	var EditMachinePotocolType='';
 	var EditMachineObj;
-	var EditSelectIndex=-1;
 	$(function() {
-		
-		if(EditMachineID=='')
-		{
-			SetupTemplateSelection();
-			$("#RemoveMachine").hide();
-		}
-		else
+		if(EditMachineID!='')
 		{
 			GetPotocolType();
 		}
 		$("#AddMachine").click(function(){
 			var SubmitData=GetPageDataObj();
-			debugger;
-			//UpdateMachine(SubmitData);
-		});
-		$("#RemoveMachine").click(function(){
-			var SubmitData=GetPageDataObj();
-			debugger;
-			//RemoveMachine(SubmitData);
+			if(EditMachineID=='')
+			{
+				//no new 
+			}
+			else
+			{
+				UpdateMachine(SubmitData);
+			}
 		});
 	});
 	function GetPotocolType(){
@@ -77,7 +70,7 @@
 								break;
 							}
 						}
-						if(DataResult[DataResultIndex].equipments)
+						else if(DataResult[DataResultIndex].equipments)
 						{
 							if(DataResult[DataResultIndex].equipments[0].equipmentId==EditMachineID)
 							{
@@ -93,42 +86,34 @@
 		}
 	}
 	function SetupTemplateSelection(){
-
-		for(var ProtocolTypeArrayIndex in ProtocolTypeArray){
-				var URL=EquipmentTemplateList.replace('{protocoltype}',ProtocolTypeArray[ProtocolTypeArrayIndex])+'?'+d.getTime();
-				axios.get(URL,{params: {protocoltype: ProtocolTypeArray[ProtocolTypeArrayIndex]}})
-				.then(function (response) {
-					var DataResult=response.data;
-					for(var DataResultIndex in DataResult){	
-						DataResult[DataResultIndex]["ProtocolType"]=response.config.params.protocoltype;
-					}
-					if(TemplateList.length>0)
-					{
-						TemplateList=DataResult.concat(TemplateList);
-					}
-					else
-					{
-						TemplateList=DataResult;
-					}
-					var TemplateSelectionHTML='';
-					for(var i=0;i<TemplateList.length;i++)
-					{
-						TemplateSelectionHTML+="<li><a ProtocolType='"+TemplateList[i].ProtocolType+"' name='TemplateIDOption' href='#'>"+TemplateList[i].templateId+"</a></li>";
-					}
-					$("#TemplateIDWapper").html(TemplateSelectionHTML);
-					$("a[name='TemplateIDOption']").bind('click', function (event) {
-						$("#TemplateID").html(this.innerText);
-						CurrentProtocolType=this.attributes["ProtocolType"].nodeValue;
-						LoadEquipmentEditor();
-					});
-					LoadDefaultEditor();
-				}); 
-		}
-	}
-	function LoadDefaultEditor(){
-		CurrentProtocolType=TemplateList[0].ProtocolType;
-		$("#TemplateID").html(TemplateList[0].templateId);
-		LoadEquipmentEditor();
+			var URL=EquipmentTemplateList.replace('{protocoltype}',CurrentProtocolType)+'?'+d.getTime();
+			axios.get(URL,{params: {protocoltype: CurrentProtocolType}})
+			.then(function (response) {
+				var DataResult=response.data;
+				for(var DataResultIndex in DataResult){	
+					DataResult[DataResultIndex]["ProtocolType"]=response.config.params.protocoltype;
+				}
+				if(TemplateList.length>0)
+				{
+					TemplateList=DataResult.concat(TemplateList);
+				}
+				else
+				{
+					TemplateList=DataResult;
+				}
+				var TemplateSelectionHTML='';
+				for(var i=0;i<TemplateList.length;i++)
+				{
+					TemplateSelectionHTML+="<li><a ProtocolType='"+TemplateList[i].ProtocolType+"' name='TemplateIDOption' href='#'>"+TemplateList[i].templateId+"</a></li>";
+				}
+				$("#TemplateIDWapper").html(TemplateSelectionHTML);
+				$("a[name='TemplateIDOption']").bind('click', function (event) {
+					$("#TemplateID").html(this.innerText);
+					CurrentProtocolType=this.attributes["ProtocolType"].nodeValue;
+					LoadEquipmentEditor();
+				});
+			}); 
+		
 	}
 	function LoadEquipmentEditor(){
 		$( "#EquipmentEditorDiv" ).html("");
@@ -137,86 +122,36 @@
 	};
 	function SetupEditUI(){
 		$("#AddMachine").html("更新機台");
+		SetupTemplateSelection();
 		LoadEquipmentEditor();
 	}
-	function RemoveMachine(SubmitData){
-		$.ajax({
-		  type: "GET",
-		  dataType: "json",
-		  url: GetEquipmentsURL
-		}).done(function( OriginalData ) {
-			var TargetIndex=-1;
-			for(var i=0;i<OriginalData.length;i++)
-			{
-				if(
-				OriginalData[i].equipment.equipmentId==SubmitData.equipment.equipmentId &&
-				OriginalData[i].equipment.templateId==SubmitData.equipment.templateId
-				)
-				{
-					TargetIndex=i;
-					break;
-				}
-			}
-			if(TargetIndex>-1)
-			{
-				OriginalData.splice(TargetIndex,1);
-				var SubmitJsonStringData=JSON.stringify(OriginalData);
-				$.ajax({
-				  type: "POST",
-				  url: PutEquipmentsURL,
-				  data: { Data:SubmitJsonStringData}
-				}).done(function( msg ) {
-					alert( "更新完成!!");
-					$(location).attr('href', '/monitor');
-				});
-			}
-			
-		});
-	}
+	
+	
 	function UpdateMachine(SubmitData){
+		var SubmitJsonStringData=JSON.stringify(SubmitData);
 		$.ajax({
-		  type: "GET",
+		  type: "PUT",
+		  contentType: "application/json",
 		  dataType: "json",
-		  url: GetEquipmentsURL
-		}).done(function( OriginalData ) {
-			if(EditSelectIndex>-1)
-			{
-				OriginalData[EditSelectIndex].connection.host=SubmitData.connection.host;
-				OriginalData[EditSelectIndex].connection.port=SubmitData.connection.port;
-				OriginalData[EditSelectIndex].equipment.equipmentId=SubmitData.equipment.equipmentId;
-				OriginalData[EditSelectIndex].equipment.equipmentName=SubmitData.equipment.equipmentName;
-				OriginalData[EditSelectIndex].equipment.templateId=SubmitData.equipment.templateId;
-				OriginalData[EditSelectIndex].pollingPeriodMS=SubmitData.pollingPeriodMS;
-				OriginalData[EditSelectIndex].requestTimeoutMS=SubmitData.requestTimeoutMS;
+		  data: SubmitJsonStringData,
+		  url: QonfigConfigEquipmentsURL.replace('{ProtocolType}',CurrentProtocolType),
+		  statusCode : {
+				200: function (data, textStatus, jqxhr) {
+						alert( "更新完成!!");
+						window.location.href = "/monitor";
+						return;
+					},
+				204: function (data, textStatus, jqxhr) {
+						alert( "更新完成!!");
+						window.location.href = "/monitor";
+						return;
+					},
+				500: function (data, textStatus, jqxhr) {
+						alert(data);
+					}
+
 			}
-			else
-			{
-				OriginalData.push(SubmitData);
-			}
-			var SubmitJsonStringData=JSON.stringify(OriginalData);
-			$.ajax({
-			  type: "POST",
-			  url: PutEquipmentsURL,
-			  data: { Data:SubmitJsonStringData}
-			}).done(function( msg ) {
-				if(msg=="OK"||msg=="")
-				{
-					alert( "更新完成!!");
-					$(location).attr('href', '/monitor');
-					return;
-				}
-				else if(msg.status==500)
-				{
-					alert(msg.detail);
-				}
-				else 
-				{
-					//alert(JSON.stringify(msg));
-					alert( "更新完成!!");
-					$(location).attr('href', '/monitor');
-				}
-			});
-		});
+		})
 	}
 	
 	
