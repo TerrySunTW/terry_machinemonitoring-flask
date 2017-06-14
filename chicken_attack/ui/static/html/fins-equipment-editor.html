@@ -136,7 +136,7 @@
         
     }
     function GetPageDataObj(){
-        
+        var SubmitDataArray=[];
         var SubmitData;
         if(ConnectionType=="TCP")
         {
@@ -176,6 +176,7 @@
                         };
         }
         
-        return SubmitData;
+        SubmitDataArray[0]=SubmitData;
+        return SubmitDataArray;
     }
 </script>

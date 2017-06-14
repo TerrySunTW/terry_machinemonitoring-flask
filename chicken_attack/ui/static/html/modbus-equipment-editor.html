@@ -141,7 +141,7 @@
 		
 	}
     function GetPageDataObj(){
-        
+        var SubmitDataArray=[];
         var SubmitData={
                             "endPoint": {
                                     "host": $("#Host").val(),
@@ -151,7 +151,8 @@
                             "pollingPeriodMS": parseInt($("#PollingPeriodMS").val()),
                             "requestTimeoutMS": parseInt($("#RequestTimeoutMS").val())
                         };
-        return SubmitData;
+        SubmitDataArray[0]=SubmitData;
+        return SubmitDataArray;
     }
     
     function RemoveSubMachineArrayByID(ID) {

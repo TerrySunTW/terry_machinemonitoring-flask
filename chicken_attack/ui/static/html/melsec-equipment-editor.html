@@ -144,7 +144,7 @@
         
     }
     function GetPageDataObj(){
-        
+        var SubmitDataArray=[];
         var SubmitData;
         if(ConnectionType=="TCP")
         {
@@ -189,7 +189,7 @@
                             "requestTimeoutMS": parseInt($("#RequestTimeoutMS").val())
                         };
         }
-        
-        return SubmitData;
+        SubmitDataArray[0]=SubmitData;
+        return SubmitDataArray;
     }
 </script>
