@@ -101,7 +101,7 @@
 						  return (
 							<tr key={i}>
 								<td>{dataitem.ProtocolType}</td>
-								<td><a href={"/edittemplate/"+dataitem.templateId}>{dataitem.templateId}</a></td>
+								<td><a href={"/edittemplate/"+dataitem.templateId+"/"+dataitem.ProtocolType}>{dataitem.templateId}</a></td>
 				
 								<td className="table-function-td">
 								<a href={"/edittemplate/"+dataitem.templateId+"/"+dataitem.ProtocolType} role="button" className="btn btn-inverse">修改</a>&nbsp;
