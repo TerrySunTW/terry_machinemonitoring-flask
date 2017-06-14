@@ -25,7 +25,7 @@
 
 
                     <div class="span4 text-right" style="padding-top:10px;">
-                        <a id="AddTemplate" href="" role="button" class="btn btn-danger">送出Template</a>
+                        <a id="AddTemplate" href="javascript:void(0)" role="button" class="btn btn-danger">送出Template</a>
                     </div>
 
                 </div>
@@ -94,20 +94,20 @@
 			contentType: "application/json",
 			dataType:'json',
 			url: QonfigConfigCreateTemplatesURL.replace('{ProtocolType}',EditTemplateProtocoltype).replace('{templateId}',EditTemplateID),
-			data: SubmitJsonStringData
-		})
-		.done(function( response ) {
-			if(response.data=="")
-			{
-				alert( "更新完成!!");
-				$(location).attr('href', '/templatelist');
-				return;
-			}
-			else
-			{
-				alert(response);
+			data: SubmitJsonStringData,
+			statusCode : {
+				204: function (data, textStatus, jqxhr) {
+						alert( "更新完成!!");
+						window.location.href = "/templatelist";
+						return;
+					},
+				500: function (data, textStatus, jqxhr) {
+						alert(data);
+					}
+
 			}
 		});
+
 	}
 	function AddNewTemplate(SubmitData){
 		var SubmitJsonStringData=JSON.stringify(SubmitData);
@@ -117,18 +117,17 @@
 			contentType: "application/json",
 			dataType:'json',
 			url: QonfigConfigCreateTemplatesURL.replace('{ProtocolType}',EditTemplateProtocoltype),
-			data: SubmitJsonStringData
-		})
-		.done(function( response ) {
-			if(response.data=="")
-			{
-				alert( "新增完成!!");
-				$(location).attr('href', '/templatelist');
-				return;
-			}
-			else
-			{
-				alert(response);
+			data: SubmitJsonStringData,
+			statusCode : {
+				204: function (data, textStatus, jqxhr) {
+						alert( "新增完成!!");
+						window.location.href = "/templatelist";
+						return;
+					},
+				500: function (data, textStatus, jqxhr) {
+						alert(data);
+					}
+
 			}
 		});
 	}
