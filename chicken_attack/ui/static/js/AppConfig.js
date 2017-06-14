@@ -39,9 +39,9 @@ if(Debug)
 	QonfigConfigTemplatesURL = QonfigApiDataSoureceUrl + "/static/testing_data/config-{ProtocolType}-templates-{templateId}.txt";
 	QonfigConfigEquipmentsURL = QonfigApiDataSoureceUrl + "/static/testing_data/config-{ProtocolType}-equipments.txt";
 
-	EquipmentConfiguration = WebServiceUrl + "/static/testing_data/config-{protocoltype}-equipments.txt";
-	EquipmentTemplateList = WebServiceUrl + "/static/testing_data/config-{protocoltype}-templates.txt";
-	EquipmentTemplate = WebServiceUrl + "/static/testing_data/config-{protocoltype}-templates-{templateId}.txt";
+	EquipmentConfiguration = DataSoureceUrl + "/static/testing_data/config-{protocoltype}-equipments.txt";
+	EquipmentTemplateList = DataSoureceUrl + "/static/testing_data/config-{protocoltype}-templates.txt";
+	EquipmentTemplate = DataSoureceUrl + "/static/testing_data/config-{protocoltype}-templates-{templateId}.txt";
 	
 }
 
