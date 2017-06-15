@@ -5,6 +5,24 @@
         </div>
     </div>
 </div>
+<!--Machine-->
+<div class="row-fluid height3">
+    <div class="span12s">
+        <table id="myTable" class="tablesorter-blue">
+            <thead>
+                <tr>
+                    <th>Equipment Id</th>
+                    <th>Equipment Name</th>
+                    <th>Equipment Settings</th>
+                    <th>刪除</th>
+                </tr>
+            </thead>
+            <tbody id="MachineTbody">
+                
+            </tbody>
+        </table>
+    </div>
+</div>
 <div class="row height3">
     <div class="product_text">
         <div class="span5"><span style="padding-right:52px;">EquipmentId:</span>
@@ -96,6 +114,13 @@
     </div>
    
 </div>
+<div class="row height3">
+    <div class="product_text">
+        <div class="span8">
+            <a id="AddSubMachine" href="javascript:void(0)" role="button" class="btn btn-danger">Add/Update Equipment</a>
+        </div>
+    </div>
+</div>
 
 <script>
     var ConnectionType="TCP";
@@ -111,7 +136,36 @@
         {
             UpdateEditObj();
         }
-        
+        else
+        {
+            DrawMachineTable();
+        }
+        $("#AddSubMachine").click(function(){
+            if(!CheckIDPattern($("#EquipmentId").val()))
+			{
+                alert("ID需以英文開頭!!");
+                return;
+            }
+            var NewMachineObj=GetPageDataObj();
+            var selectIndex=-1;
+            for(var i=0;i<ServerMachineObj.length;i++){
+                if(ServerMachineObj[i].equipment.equipmentId==NewMachineObj.equipment.equipmentId)
+                {
+                    selectIndex=i;
+                    break;
+                }
+            }
+            if(selectIndex>-1)
+            {
+                ServerMachineObj[selectIndex]=NewMachineObj;
+            }
+            else
+            {
+                ServerMachineObj.push(NewMachineObj);
+            }
+			
+			DrawMachineTable();
+        });
 		
     });
     function UpdateEditObj(){
@@ -133,10 +187,12 @@
         $("#EquipmentName").val(EditMachineObj.equipment.equipmentName);
         $("#PollingPeriodMS").val(EditMachineObj.pollingPeriodMS);
         $("#requestTimeoutMS").val(EditMachineObj.requestTimeoutMS);
-        
+        DrawMachineTable();
+    }
+    function GetFinalDataObj(){
+        return ServerMachineObj;
     }
     function GetPageDataObj(){
-        var SubmitDataArray=[];
         var SubmitData;
         if(ConnectionType=="TCP")
         {
@@ -175,8 +231,45 @@
                             "requestTimeoutMS": parseInt($("#RequestTimeoutMS").val())
                         };
         }
-        
-        SubmitDataArray[0]=SubmitData;
-        return SubmitDataArray;
+        return SubmitData;
     }
+    function DrawMachineTable() {
+		var TbodyHtml="";
+		for(var i=0;i<ServerMachineObj.length;i++){
+            var Setting=JSON.stringify(ServerMachineObj[i], null, '\t');
+			TbodyHtml+="<tr>"+
+				"<td>"+ServerMachineObj[i].equipment.equipmentId+"</td>"+
+				"<td>"+ServerMachineObj[i].equipment.equipmentName+"</td>"+
+                "<td><pre style='overflow-x: auto; height: 100px;'>"+Setting+"</pre></td>"+
+				"<td>"+
+                "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"EditSubMachineArrayByID('"+ServerMachineObj[i].equipment.equipmentId+"')\">編輯</a>"+
+                "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveSubMachineArrayByID('"+ServerMachineObj[i].equipment.equipmentId+"')\">刪除</a>"+
+                "</td>"+
+			"</tr>";
+		}
+		$("#MachineTbody").html(TbodyHtml);
+	}
+    function EditSubMachineArrayByID(equipmentId) {
+        for(var i=0;i<ServerMachineObj.length;i++){
+			if(ServerMachineObj[i].equipment.equipmentId==equipmentId)
+			{
+				EditMachineObj=ServerMachineObj[i];
+			}
+		}
+        UpdateEditObj();
+	}
+    function RemoveSubMachineArrayByID(equipmentId) {
+		var selectIndex=-1;
+		for(var i=0;i<ServerMachineObj.length;i++){
+			if(ServerMachineObj[i].equipment.equipmentId==equipmentId)
+			{
+				selectIndex=i;
+			}
+		}
+		if(selectIndex>-1)
+		{
+			ServerMachineObj.splice(selectIndex,1);
+			DrawMachineTable();
+		}
+	}
 </script>

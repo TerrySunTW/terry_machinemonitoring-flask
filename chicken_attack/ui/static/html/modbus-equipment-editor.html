@@ -50,7 +50,7 @@
 <div class="row height3">
     <div class="product_text">
         <div class="span8">
-            <a id="AddSubMachine" href="javascript:void(0)" role="button" data-toggle="modal" class="btn btn-danger">Add Equipment</a>
+            <a id="AddSubMachine" href="javascript:void(0)" role="button" class="btn btn-danger">Add Equipment</a>
         </div>
     </div>
 </div>
@@ -93,22 +93,54 @@
     var EditMachinePotocolType='modbus';
     var d = new Date();
     $(function() {
+        if(EditMachineObj)
+        {
+            UpdateEditObj();
+        }
+        else
+        {
+            MachineArray=ServerMachineObj[0].equipments;
+            if(ServerMachineObj[0].endPoint)
+            {
+                $("#Host").val(ServerMachineObj[0].endPoint.host);
+                $("#Port").val(ServerMachineObj[0].endPoint.port);
+                $("#PollingPeriodMS").val(ServerMachineObj[0].pollingPeriodMS);
+                $("#requestTimeoutMS").val(ServerMachineObj[0].requestTimeoutMS);
+                DrawMachineTable();    
+            }
+            
+        }
         $("#AddSubMachine").click(function(){
-			var NewMachine=
+            if(!CheckIDPattern($("#EquipmentId").val()))
+			{
+                alert("ID需以英文開頭!!");
+                return;
+            }
+            var SubMachineID=$("#EID").val();
+            var selectIndex=-1;
+            for(var i=0;i<MachineArray.length;i++){
+                if(MachineArray[i].id==SubMachineID)
+                {
+                    selectIndex=i;
+                }
+            }
+            var NewMachine=
 			{
 				"id": $("#EID").val(),
 				"templateId": $("#TemplateID")[0].innerText,
 				"equipmentId": $("#EquipmentId").val(),
 				"equipmentName": $("#EquipmentName").val()
 			};
-			MachineArray.push(NewMachine);
+            if(selectIndex>-1)
+            {
+                MachineArray[selectIndex]=NewMachine;
+            }
+            else
+            {
+                MachineArray.push(NewMachine);
+            }
 			DrawMachineTable();
         });
-
-        if(EditMachineObj)
-        {
-            UpdateEditObj();
-        }
     });
     function UpdateEditObj(){
         $("#TemplateID").html(EditMachineObj.equipments[0].templateId);
@@ -140,8 +172,10 @@
             }); 
 		
 	}
+    function GetFinalDataObj(){
+        return GetPageDataObj();
+    }
     function GetPageDataObj(){
-        var SubmitDataArray=[];
         var SubmitData={
                             "endPoint": {
                                     "host": $("#Host").val(),
@@ -151,10 +185,18 @@
                             "pollingPeriodMS": parseInt($("#PollingPeriodMS").val()),
                             "requestTimeoutMS": parseInt($("#RequestTimeoutMS").val())
                         };
-        SubmitDataArray[0]=SubmitData;
-        return SubmitDataArray;
+        return SubmitData;
     }
-    
+    function EditSubMachineArrayByID(Id) {
+        for(var i=0;i<MachineArray.length;i++){
+			if(MachineArray[i].id==Id)
+			{
+				$("#EID").val(MachineArray[i].id);
+				$("#EquipmentId").val(MachineArray[i].equipmentId);
+				$("#EquipmentName").val(MachineArray[i].equipmentName);
+			}
+		}
+	}
     function RemoveSubMachineArrayByID(ID) {
 		var selectIndex=-1;
 		for(var i=0;i<MachineArray.length;i++){
@@ -176,7 +218,10 @@
 				"<td>"+MachineArray[i].id+"</td>"+
 				"<td>"+MachineArray[i].equipmentId+"</td>"+
 				"<td>"+MachineArray[i].equipmentName+"</td>"+
-				"<td><a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveSubMachineArrayByID('"+MachineArray[i].id+"')\">刪除</a></td>"+
+				"<td>"+
+                    "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"EditSubMachineArrayByID('"+MachineArray[i].id+"')\">編輯</a>"+
+                    "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveSubMachineArrayByID('"+MachineArray[i].id+"')\">刪除</a>"+
+                "</td>"+
 			"</tr>";
 		}
 		$("#MachineTbody").html(TbodyHtml);

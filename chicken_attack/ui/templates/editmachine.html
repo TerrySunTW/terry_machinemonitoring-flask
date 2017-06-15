@@ -17,7 +17,7 @@
                         </div>
                     </div>                  
                     <div class="span4 text-right">
-						<a id="AddMachine" href="javascript:void(0)" role="button" class="btn btn-danger">新增機台</a>
+						<a id="AddMachine" href="javascript:void(0)" role="button" class="btn btn-danger">送出目前機台設定</a>
                     </div>
                 </div>
             </div>
@@ -34,29 +34,20 @@
 	var EditMachineID='{{machineID}}';
 	var EditMachinePotocolType='';
 	var EditMachineObj;
+	var ServerMachineObj;
 	$(function() {
-		if(EditMachineID!='')
+		if(EditMachineID=='')
+		{
+			SetupAllTemplateSelection();
+			$("#RemoveMachine").hide();
+		}
+		else
 		{
 			GetPotocolType();
 		}
 		$("#AddMachine").click(function(){
-			var SubmitData=GetPageDataObj();
-			if(CheckIDPattern($("#EquipmentId").val()))
-			{
-				if(EditMachineID=='')
-				{
-					//no new 
-				}
-				else
-				{
-					UpdateMachine(SubmitData);
-				}
-			}
-			else
-			{
-				alert("ID需以英文開頭!!");
-			}
-			
+			var SubmitData=GetFinalDataObj();
+			UpdateMachine(SubmitData);
 		});
 	});
 	function GetPotocolType(){
@@ -66,11 +57,13 @@
 				axios.get(URL,{params: {protocoltype:ProtocolType }})
 				.then(function (response) {
 					var DataResult=response.data;
+					
 					for(var DataResultIndex in DataResult){	
 						if(DataResult[DataResultIndex].equipment)
 						{
 							if(DataResult[DataResultIndex].equipment.equipmentId==EditMachineID)
 							{
+								ServerMachineObj=response.data;
 								EditMachinePotocolType=response.config.params.protocoltype;
 								CurrentProtocolType=EditMachinePotocolType;
 								EditMachineObj=DataResult[DataResultIndex];
@@ -82,6 +75,7 @@
 						{
 							if(DataResult[DataResultIndex].equipments[0].equipmentId==EditMachineID)
 							{
+								ServerMachineObj=response.data;
 								EditMachinePotocolType=response.config.params.protocoltype;
 								CurrentProtocolType=EditMachinePotocolType;
 								EditMachineObj=DataResult[DataResultIndex];
@@ -92,6 +86,37 @@
 					}
 				});
 		}
+	}
+	function SetupAllTemplateSelection(){
+		for(var ProtocolTypeArrayIndex in ProtocolTypeArray){
+			var URL=EquipmentTemplateList.replace('{protocoltype}',ProtocolTypeArray[ProtocolTypeArrayIndex])+'?'+d.getTime();
+			axios.get(URL,{params: {protocoltype: ProtocolTypeArray[ProtocolTypeArrayIndex]}})
+			.then(function (response) {
+				var DataResult=response.data;
+				for(var DataResultIndex in DataResult){    
+					DataResult[DataResultIndex]["ProtocolType"]=response.config.params.protocoltype;
+				}
+				if(TemplateList.length>0)
+				{
+					TemplateList=DataResult.concat(TemplateList);
+				}
+				else
+				{
+					TemplateList=DataResult;
+				}
+				var TemplateSelectionHTML='';
+				for(var i=0;i<TemplateList.length;i++)
+				{
+					TemplateSelectionHTML+="<li><a ProtocolType='"+TemplateList[i].ProtocolType+"' name='TemplateIDOption' href='#'>"+TemplateList[i].templateId+"</a></li>";
+				}
+				$("#TemplateIDWapper").html(TemplateSelectionHTML);
+				$("a[name='TemplateIDOption']").bind('click', function (event) {
+					$("#TemplateID").html(this.innerText);
+					CurrentProtocolType=this.attributes["ProtocolType"].nodeValue;
+					LoadEquipmentEditor();
+				});
+			}); 
+        }
 	}
 	function SetupTemplateSelection(){
 			var URL=EquipmentTemplateList.replace('{protocoltype}',CurrentProtocolType)+'?'+d.getTime();
@@ -125,41 +150,46 @@
 	}
 	function LoadEquipmentEditor(){
 		$( "#EquipmentEditorDiv" ).html("");
-		$( "#EquipmentEditorDiv" ).load( "/static/html/"+CurrentProtocolType+"-equipment-editor.html?d="+d.getTime(), function() {
+		axios.get(EquipmentConfiguration.replace('{protocoltype}',CurrentProtocolType),{params: {protocoltype: CurrentProtocolType}})
+			.then(function (response) {
+				ServerMachineObj=response.data;
+				$( "#EquipmentEditorDiv" ).load( "/static/html/"+CurrentProtocolType+"-equipment-editor.html?d="+d.getTime());
 		});
+		
+		
 	};
 	function SetupEditUI(){
-		$("#AddMachine").html("更新機台");
 		SetupTemplateSelection();
 		LoadEquipmentEditor();
 	}
 	
-	
 	function UpdateMachine(SubmitData){
-		var SubmitJsonStringData=JSON.stringify(SubmitData);
-		$.ajax({
-		  type: "PUT",
-		  contentType: "application/json",
-		  dataType: "json",
-		  data: SubmitJsonStringData,
-		  url: QonfigConfigEquipmentsURL.replace('{ProtocolType}',CurrentProtocolType),
-		  statusCode : {
-				200: function (data, textStatus, jqxhr) {
-						alert( "更新完成!!");
-						window.location.href = "/monitor";
-						return;
-					},
-				204: function (data, textStatus, jqxhr) {
-						alert( "更新完成!!");
-						window.location.href = "/monitor";
-						return;
-					},
-				500: function (data, textStatus, jqxhr) {
-						alert(data);
-					}
 
-			}
-		})
+			//put all equipment to server
+			var SubmitJsonStringData=JSON.stringify(SubmitData);
+			$.ajax({
+			type: "PUT",
+			contentType: "application/json",
+			dataType: "json",
+			data: SubmitJsonStringData,
+			url: QonfigConfigEquipmentsURL.replace('{ProtocolType}',CurrentProtocolType),
+			statusCode : {
+					200: function (data, textStatus, jqxhr) {
+							alert( "更新完成!!");
+							window.location.href = "/monitor";
+							return;
+						},
+					204: function (data, textStatus, jqxhr) {
+							alert( "更新完成!!");
+							window.location.href = "/monitor";
+							return;
+						},
+					500: function (data, textStatus, jqxhr) {
+							alert(data.statusText);
+						}
+
+				}
+			});
 	}
 	function CheckIDPattern(inputtxt) {
 		var phoneno = /^[a-zA-Z].*$/;
