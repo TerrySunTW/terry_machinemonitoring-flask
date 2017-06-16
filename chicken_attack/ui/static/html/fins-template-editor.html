@@ -302,7 +302,7 @@
 		$("#AddChannel").click(function(){
             if(!CheckIDPattern($("#ChannelId").val()))
 			{
-				alert("ID需以英文開頭!!");
+				alert(IDCheckMessage);
                 return;
 			}
 			var NewChannel=

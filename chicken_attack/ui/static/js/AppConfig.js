@@ -2,6 +2,7 @@
 var DataSoureceUrl = "http://192.168.11.130:9487/v1";
 var martiniApiDataSoureceUrl = "http://125.227.156.104/martini/0.2/api";
 var QonfigApiDataSoureceUrl = "http://125.227.156.104/v2";
+var IDCheckMessage="ID需長度大於3並以英文字母開頭!!";
 
 if(Debug)
 {

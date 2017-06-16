@@ -113,7 +113,7 @@
         $("#AddSubMachine").click(function(){
             if(!CheckIDPattern($("#EquipmentId").val()))
 			{
-                alert("ID需以英文開頭!!");
+                alert(IDCheckMessage);
                 return;
             }
             var SubMachineID=$("#EID").val();

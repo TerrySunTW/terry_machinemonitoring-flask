@@ -192,8 +192,8 @@
 			});
 	}
 	function CheckIDPattern(inputtxt) {
-		var phoneno = /^[a-zA-Z].*$/;
-		if(inputtxt.match(phoneno)) {
+		var ID_rule = /^[a-zA-Z].{2,}$/;
+		if(inputtxt.match(ID_rule)) {
 			return true;
 		}
 		else {
