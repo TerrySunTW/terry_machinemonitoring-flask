@@ -83,8 +83,7 @@
                             <tr>
                                 <th>ChannelId</th>
                                 <th>Name</th>
-                                <th>RAW</th>
-                                <th>Conversion</th>
+                                <th>Settings</th>
                                 <th>刪除</th>
                             </tr>
                         </thead>
@@ -108,30 +107,16 @@
                                     <span>Name:</span>
                                     <input id="ChannelName" type="text1" class="form-control" placeholder="">
                                 </td>
-                                <td width="17%" scope="row">
-                                    <span>memoryArea:</span>
-                                    <div class="btn-group margain-left1">
-                                        <button id="ChannelMemoryArea" type="button" class="btn btn-primary" style="width:100px;" data-toggle="dropdown">
-                                            D
-                                        </button>
-                                        <button type="button" class="btn btn-primary dropdown-toggle" style="width:30px;" data-toggle="dropdown">
-                                            <span class="caret"></span>
-                                        </button>
-                                        <span class="dropdown-arrow"></span>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li>
-                                                <a name="ChannelMemoryAreaOption" href="javascript:void(0)">D</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
                                 <td width="22%" scope="row">
-                                    <span>address:</span>
-                                    <input id="Channeladdress" class="numbersOnly" type="text1" class="form-control" placeholder="" value="0">
+                                    <span>reference:</span>
+                                    <input id="Channelreference" class="numbersOnly" type="text1" class="form-control" placeholder="" value="0">
                                 </td>
                                 <td width="22%" scope="row">
                                     <span>quantity:</span>
                                     <input id="Channelquantity" class="numbersOnly" type="text1" class="form-control" placeholder="" value="1">
+                                </td>
+                                <td width="17%" scope="row">
+                                    &nbsp;
                                 </td>
                                 
                              
@@ -219,7 +204,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="text-align:center"  colspan="5" id="AddChannel"><a href="#Signup" role="button" data-toggle="modal" class="btn btn-danger">新增Channel</a></td>
+                                <td style="text-align:center"  colspan="5" id="AddChannel"><a href="#Signup" role="button" data-toggle="modal" class="btn btn-danger">Add/Update Channel</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -271,7 +256,8 @@
 				CommandArray=Data.commands;
 				ChannelArray=Data.channels;
 				$("#templateID").val(Data.templateId);
-				DrawTable();
+                DrawCommandTable();
+				DrawChannelTable();
 			});
 			
 		}
@@ -299,8 +285,7 @@
 			  "channelId": $("#ChannelId").val(),
               "channelName": $("#ChannelName").val(),
 			  "raw": {
-				"memoryArea": $("#ChannelMemoryArea")[0].innerText,
-				"address": Number($("#Channeladdress").val()),
+				"reference": $("#Channelreference").val(),
 				"quantity": Number($("#Channelquantity").val())
 			  },
 			  "conversion": {
@@ -332,8 +317,22 @@
 			{
 				NewChannel.conversion.offset=Number($("#Channeloffset").val());
 			}
-			ChannelArray.push(NewChannel);
-			DrawTable();
+            var selectIndex=-1;
+            for(var i=0;i<ChannelArray.length;i++){
+			    if(ChannelArray[i].channelId==NewChannel.channelId)
+			    {
+                    selectIndex=i;
+                }
+            }
+            if(selectIndex>-1)
+		    {
+                ChannelArray[selectIndex]=NewChannel;
+            }
+            else
+            {
+                ChannelArray.push(NewChannel);
+            }
+			DrawChannelTable();
 		});
 	});
 	function GetPageDataObj() {
@@ -359,7 +358,25 @@
 			DrawCommandTable();
 		}
 	}
+	function EditChannelArrayByChannelID(ChannelID) {
+		var selectIndex=-1;
+		for(var i=0;i<ChannelArray.length;i++){
+			if(ChannelArray[i].channelId==ChannelID)
+			{
+				$("#ChannelId").val(ChannelArray[i].channelId);
+                $("#ChannelName").val(ChannelArray[i].channelName);
+				$("#Channelreference").val(ChannelArray[i].raw.reference);
+				$("#Channelquantity").val(ChannelArray[i].raw.quantity);
+                $("#asType").html(ChannelArray[i].conversion.asType);
+                $("#byteOrder").html(ChannelArray[i].conversion.byteOrder?ChannelArray[i].conversion.byteOrder:'&nbsp;');
+			    $("#andMask").val(ChannelArray[i].conversion.andMask?ChannelArray[i].conversion.andMask.join():'');
+                $("#orMask").val(ChannelArray[i].conversion.orMask?ChannelArray[i].conversion.orMask.join():'');
+                $("#multiplier").val(ChannelArray[i].conversion.multiplier?ChannelArray[i].conversion.multiplier:'');
+                $("#Channeloffset").val(ChannelArray[i].conversion.offset?ChannelArray[i].conversion.offset:'');
+			}
+		}
 	
+	}
 	function RemoveChannelArrayByChannelID(ChannelID) {
 		var selectIndex=-1;
 		for(var i=0;i<ChannelArray.length;i++){
@@ -371,7 +388,7 @@
 		if(selectIndex>-1)
 		{
 			ChannelArray.splice(selectIndex,1);
-			DrawTable();
+			DrawChannelTable();
 		}
 	}
 	
@@ -388,31 +405,23 @@
 		}
 		$("#CommandTbody").html(TbodyHtml);
 	}
-	function DrawTable() {
+	function DrawChannelTable() {
 		$("#ChannelTbody").html("Loading...");
 		var ChannelHtml="";
 		for(var i=0;i<ChannelArray.length;i++){
+            var Setting=JSON.stringify(ChannelArray[i], null, '\t');
 			ChannelHtml+="<tr>"+
 				"<td>"+ChannelArray[i].channelId+"</td>"+
 				"<td>"+ChannelArray[i].channelName+"</td>"+
 				"<td>"+
-                "memoryArea:<b>"+ChannelArray[i].raw.memoryArea+"</b><br>"+
-                "address:<b>"+ChannelArray[i].raw.address+"</b><br>"+
-                "quantity:<b>"+ChannelArray[i].raw.quantity+"</b><br>"+
+                "<pre style='overflow-x: auto; height: 100px;'>"+Setting+"</pre>"+
                 "</td>"+
-                "<td>"+
-                "byteOrder:<b>"+ChannelArray[i].conversion.byteOrder+"</b><br>"+
-                "andMask:<b>"+ChannelArray[i].conversion.andMask+"</b><br>"+
-                "orMask:<b>"+ChannelArray[i].conversion.orMask+"</b><br>"+
-                "asType:<b>"+ChannelArray[i].conversion.asType+"</b><br>"+
-                "multiplier:<b>"+ChannelArray[i].conversion.multiplier+"</b><br>"+
-                "offset:<b>"+ChannelArray[i].conversion.offset+"</b><br>"+
+				"<td>"+
+                "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"EditChannelArrayByChannelID('"+ChannelArray[i].channelId+"')\">編輯</a>"+
+                "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveChannelArrayByChannelID('"+ChannelArray[i].channelId+"')\">刪除</a>"+
                 "</td>"+
-				"<td><a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveChannelArrayByChannelID('"+ChannelArray[i].channelId+"')\">刪除</a></td>"+
 			"</tr>";
 		}
 		$("#ChannelTbody").html(ChannelHtml);
-		
-		DrawCommandTable();
 	}
 </script>
