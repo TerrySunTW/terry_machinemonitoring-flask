@@ -113,40 +113,12 @@
 				$("a[name='TemplateIDOption']").bind('click', function (event) {
 					$("#TemplateID").html(this.innerText);
 					CurrentProtocolType=this.attributes["ProtocolType"].nodeValue;
+					EditMachineID='';
+					EditMachineObj=null;
 					LoadEquipmentEditor();
 				});
 			}); 
         }
-	}
-	function SetupTemplateSelection(){
-			var URL=EquipmentTemplateList.replace('{protocoltype}',CurrentProtocolType)+'?'+d.getTime();
-			axios.get(URL,{params: {protocoltype: CurrentProtocolType}})
-			.then(function (response) {
-				var DataResult=response.data;
-				for(var DataResultIndex in DataResult){	
-					DataResult[DataResultIndex]["ProtocolType"]=response.config.params.protocoltype;
-				}
-				if(TemplateList.length>0)
-				{
-					TemplateList=DataResult.concat(TemplateList);
-				}
-				else
-				{
-					TemplateList=DataResult;
-				}
-				var TemplateSelectionHTML='';
-				for(var i=0;i<TemplateList.length;i++)
-				{
-					TemplateSelectionHTML+="<li><a ProtocolType='"+TemplateList[i].ProtocolType+"' name='TemplateIDOption' href='#'>"+TemplateList[i].templateId+"</a></li>";
-				}
-				$("#TemplateIDWapper").html(TemplateSelectionHTML);
-				$("a[name='TemplateIDOption']").bind('click', function (event) {
-					$("#TemplateID").html(this.innerText);
-					CurrentProtocolType=this.attributes["ProtocolType"].nodeValue;
-					LoadEquipmentEditor();
-				});
-			}); 
-		
 	}
 	function LoadEquipmentEditor(){
 		$( "#EquipmentEditorDiv" ).html("");
@@ -159,7 +131,7 @@
 		
 	};
 	function SetupEditUI(){
-		SetupTemplateSelection();
+		SetupAllTemplateSelection();
 		LoadEquipmentEditor();
 	}
 	
