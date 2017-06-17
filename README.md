@@ -13,8 +13,11 @@ http://125.227.156.104/v2/config/melsec/equipments
 http://125.227.156.104/martini/0.2/api/devices/roof-01/channels
 
 SWAGGER v1
+
 http://terryphptest.azurewebsites.net/swagger13.txt
 
 SWAGGER v2
+
 http://terryphptest.azurewebsites.net/swagger-martini.txt
+
 http://terryphptest.azurewebsites.net/swagger-qonfig.txt
