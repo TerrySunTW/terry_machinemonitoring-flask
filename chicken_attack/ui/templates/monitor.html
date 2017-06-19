@@ -327,8 +327,9 @@
                         {this.props.Devices.map((dataitem,idx) => (
                             <SingleDevice key={idx} reactkey={idx} devicedata={dataitem} ChannelsLatestdata={this.props.DevicesChannelsLatestdata[dataitem.deviceId]} />
                         ))}
-                        <NewDeviceView key="NewMachineView" ViewCount={0} />
-
+                        {this.props.Devices.length<3&&
+                            <NewDeviceView key="NewMachineView" ViewCount={0} />
+                        }
                     </div>
                 );
             }
