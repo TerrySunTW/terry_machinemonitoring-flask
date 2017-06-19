@@ -108,6 +108,16 @@
 						window.location.href = "/templatelist";
 						return;
 					},
+				201: function (data, textStatus, jqxhr) {
+						alert( "更新完成!!");
+						window.location.href = "/templatelist";
+						return;
+					},
+				204: function (data, textStatus, jqxhr) {
+						alert( "更新完成!!");
+						window.location.href = "/templatelist";
+						return;
+					},
 				500: function (data, textStatus, jqxhr) {
 						alert(data);
 					}
@@ -126,8 +136,18 @@
 			url: QonfigConfigCreateTemplatesURL.replace('{ProtocolType}',EditTemplateProtocoltype),
 			data: SubmitJsonStringData,
 			statusCode : {
-				204: function (data, textStatus, jqxhr) {
+				200: function (data, textStatus, jqxhr) {
+						alert( "更新完成!!");
+						window.location.href = "/templatelist";
+						return;
+					},
+				201: function (data, textStatus, jqxhr) {
 						alert( "新增完成!!");
+						window.location.href = "/templatelist";
+						return;
+					},
+				204: function (data, textStatus, jqxhr) {
+						alert( "更新完成!!");
 						window.location.href = "/templatelist";
 						return;
 					},
