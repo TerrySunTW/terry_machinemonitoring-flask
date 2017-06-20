@@ -371,7 +371,8 @@
                 .then(function (response) {
                     if(response.data[0].value.num)
                     {
-                        $(".light_detail_title").html(response.data[0].value.num);
+                        var num = new Number(response.data[0].value.num);
+                        $(".light_detail_title").html(num.toFixed(3));
                     }
                     else
                     {
@@ -418,6 +419,18 @@
                 <span>{Channeldata.channelId}{ChannelName}</span>,
                 document.getElementById('DetailViewTitle2')
             );
+
+            var LightFirstValue;
+            if(Channeldata.latestValue.value.num)
+            {
+                LightFirstValue = new Number(Channeldata.latestValue.value.num);
+                LightFirstValue = LightFirstValue.toFixed(3);
+            }
+            else
+            {
+                LightFirstValue = Channeldata.latestValue.value.str;
+            }
+
             //light
             ReactDOM.render(
         <table width="100%" border="0" cellspacing="0" cellpadding="0" className="height2">
