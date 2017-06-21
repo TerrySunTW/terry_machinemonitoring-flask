@@ -47,7 +47,10 @@
 		}
 		$("#AddMachine").click(function(){
 			var SubmitData=GetFinalDataObj();
-			UpdateMachine(SubmitData);
+			if(SubmitData!=null)
+			{
+				UpdateMachine(SubmitData);
+			}
 		});
 	});
 	function GetPotocolType(){
