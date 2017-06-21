@@ -173,6 +173,11 @@
 		
 	}
     function GetFinalDataObj(){
+        if(ServerMachineObj==null || ServerMachineObj[0].equipments.length==0)
+        {
+            alert("Equipment number should greater than 0");
+            return null;
+        }
         return GetPageDataObj();
     }
     function GetPageDataObj(){

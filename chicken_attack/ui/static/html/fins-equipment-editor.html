@@ -190,6 +190,11 @@
         DrawMachineTable();
     }
     function GetFinalDataObj(){
+        if(ServerMachineObj==null || ServerMachineObj.length==0)
+        {
+            alert("Equipment number should greater than 0");
+            return null;
+        }
         return ServerMachineObj;
     }
     function GetPageDataObj(){
