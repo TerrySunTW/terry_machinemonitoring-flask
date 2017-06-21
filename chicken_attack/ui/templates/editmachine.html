@@ -156,6 +156,9 @@
 							window.location.href = "/monitor";
 							return;
 						},
+					400: function (data, textStatus, jqxhr) {
+							alert(data.message);
+						},
 					500: function (data, textStatus, jqxhr) {
 							alert(data.statusText);
 						}
