@@ -1,29 +1,25 @@
 ﻿var Debug=false;
-var DataSoureceUrl = "http://192.168.11.130:9487/v1";
-var martiniApiDataSoureceUrl = "http://125.227.156.104/martini/0.2/api";
-var QonfigApiDataSoureceUrl = "http://125.227.156.104/v2";
+var ApiDataSoureceUrl = "http://125.227.156.104/api/v1";
 var IDCheckMessage="ID需長度大於3並以英文字母開頭!!";
 
 if(Debug)
 {
-	DataSoureceUrl = "http://localhost:5000";
-	martiniApiDataSoureceUrl = "http://localhost:5000";
-	QonfigApiDataSoureceUrl = "http://localhost:5000";
+	ApiDataSoureceUrl = "http://localhost:5000";
 }
 var martiniPagingSize=20;
-var martiniApiDevicesURL = martiniApiDataSoureceUrl + "/devices";
-var martiniApiDeviceChannelsURL = martiniApiDataSoureceUrl + "/devices/{deviceId}/channels";
-var martiniApiDeviceChannelDataURL = martiniApiDataSoureceUrl + "/devices/{deviceId}/channels/{channelId}/data";
-var martiniApiDeviceChannelsLastestDataURL = martiniApiDataSoureceUrl + "/devices/{deviceId}/channels/latest-data";
+var martiniApiDevicesURL = ApiDataSoureceUrl + "/devices";
+var martiniApiDeviceChannelsURL = ApiDataSoureceUrl + "/devices/{deviceId}/channels";
+var martiniApiDeviceChannelDataURL = ApiDataSoureceUrl + "/devices/{deviceId}/channels/{channelId}/data";
+var martiniApiDeviceChannelsLastestDataURL = ApiDataSoureceUrl + "/devices/{deviceId}/channels/latest-data";
 
-var QonfigConfigCreateTemplatesURL = QonfigApiDataSoureceUrl + "/config/{ProtocolType}/templates";
-var QonfigConfigTemplatesURL = QonfigApiDataSoureceUrl + "/config/{ProtocolType}/templates/{templateId}";
-var QonfigConfigEquipmentsURL = QonfigApiDataSoureceUrl + "/config/{ProtocolType}/equipments";
+var QonfigConfigCreateTemplatesURL = ApiDataSoureceUrl + "/config/{ProtocolType}/templates";
+var QonfigConfigTemplatesURL = ApiDataSoureceUrl + "/config/{ProtocolType}/templates/{templateId}";
+var QonfigConfigEquipmentsURL = ApiDataSoureceUrl + "/config/{ProtocolType}/equipments";
 
 var ProtocolTypeArray = ["fins", "melsec", "modbus"];
-var EquipmentConfiguration = QonfigApiDataSoureceUrl + "/config/{protocoltype}/equipments";
-var EquipmentTemplateList = QonfigApiDataSoureceUrl + "/config/{protocoltype}/templates";
-var EquipmentTemplate = QonfigApiDataSoureceUrl + "/config/{protocoltype}/templates/{templateId}";
+var EquipmentConfiguration = ApiDataSoureceUrl + "/config/{protocoltype}/equipments";
+var EquipmentTemplateList = ApiDataSoureceUrl + "/config/{protocoltype}/templates";
+var EquipmentTemplate = ApiDataSoureceUrl + "/config/{protocoltype}/templates/{templateId}";
 
 //chart setting 
 var ChartLength=30;
@@ -32,17 +28,17 @@ var ChartLength=30;
 //only for testing
 if(Debug)
 {
-	martiniApiDevicesURL = martiniApiDataSoureceUrl + "/static/testing_data/martini-devices.txt";
-	martiniApiDeviceChannelsURL=martiniApiDataSoureceUrl + "/static/testing_data/martini-device-{deviceId}-channels.txt";
-	martiniApiDeviceChannelDataURL=martiniApiDataSoureceUrl + "/static/testing_data/martini-device-{deviceId}-channels-{channelId}-data.txt";
-	martiniApiDeviceChannelsLastestDataURL = martiniApiDataSoureceUrl + "/static/testing_data/devices-{deviceId}-channels-latest-data.txt";
+	martiniApiDevicesURL = ApiDataSoureceUrl + "/static/testing_data/martini-devices.txt";
+	martiniApiDeviceChannelsURL=ApiDataSoureceUrl + "/static/testing_data/martini-device-{deviceId}-channels.txt";
+	martiniApiDeviceChannelDataURL=ApiDataSoureceUrl + "/static/testing_data/martini-device-{deviceId}-channels-{channelId}-data.txt";
+	martiniApiDeviceChannelsLastestDataURL = ApiDataSoureceUrl + "/static/testing_data/devices-{deviceId}-channels-latest-data.txt";
 
-	QonfigConfigTemplatesURL = QonfigApiDataSoureceUrl + "/static/testing_data/config-{ProtocolType}-templates-{templateId}.txt";
-	QonfigConfigEquipmentsURL = QonfigApiDataSoureceUrl + "/static/testing_data/config-{ProtocolType}-equipments.txt";
+	QonfigConfigTemplatesURL = ApiDataSoureceUrl + "/static/testing_data/config-{ProtocolType}-templates-{templateId}.txt";
+	QonfigConfigEquipmentsURL = ApiDataSoureceUrl + "/static/testing_data/config-{ProtocolType}-equipments.txt";
 
-	EquipmentConfiguration = DataSoureceUrl + "/static/testing_data/config-{protocoltype}-equipments.txt";
-	EquipmentTemplateList = DataSoureceUrl + "/static/testing_data/config-{protocoltype}-templates.txt";
-	EquipmentTemplate = DataSoureceUrl + "/static/testing_data/config-{protocoltype}-templates-{templateId}.txt";
+	EquipmentConfiguration = ApiDataSoureceUrl + "/static/testing_data/config-{protocoltype}-equipments.txt";
+	EquipmentTemplateList = ApiDataSoureceUrl + "/static/testing_data/config-{protocoltype}-templates.txt";
+	EquipmentTemplate = ApiDataSoureceUrl + "/static/testing_data/config-{protocoltype}-templates-{templateId}.txt";
 	
 }
 
