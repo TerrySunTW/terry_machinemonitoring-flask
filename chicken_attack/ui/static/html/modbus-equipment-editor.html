@@ -23,12 +23,14 @@
         </table>
     </div>
 </div>
+<div id="editinfo" class="alert alert-warning" style="display:none">
+    <strong>Info!</strong> Please modify item here directly.
+</div>
 <div class="row height3">
     <div class="product_text">
         <div class="span5"><span style="padding-right:150px;">ID:</span>
-            <input id="EID" type="text" class="form-control" placeholder="">
+            <input id="EID" type="text" class="form-control">
         </div>
-        
     </div>
 </div>
 <div class="row height3">
@@ -50,7 +52,7 @@
 <div class="row height3">
     <div class="product_text">
         <div class="span8">
-            <a id="AddSubMachine" href="javascript:void(0)" role="button" class="btn btn-danger">Add Equipment</a>
+            <a id="AddSubMachine" href="javascript:void(0)" role="button" class="btn btn-danger">Add/Update Equipment</a>
         </div>
     </div>
 </div>
@@ -144,6 +146,7 @@
                 MachineArray.push(NewMachine);
             }
 			DrawMachineTable();
+            $("#editinfo").hide();
         });
     });
     function UpdateEditObj(){
@@ -205,6 +208,8 @@
 				$("#EquipmentName").val(MachineArray[i].equipmentName);
 			}
 		}
+        $("#editinfo").show();
+        $('html, body').animate({ scrollTop: $('#editinfo').offset().top }, 'slow');
 	}
     function RemoveSubMachineArrayByID(ID) {
 		var selectIndex=-1;

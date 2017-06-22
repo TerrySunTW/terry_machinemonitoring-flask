@@ -22,6 +22,9 @@
         </table>
     </div>
 </div>
+<div id="editinfo" class="alert alert-warning" style="display:none">
+    <strong>Info!</strong> Please modify item here directly.
+</div>
 <div class="row height3">
     <div class="product_text">
         <div class="span5"><span style="padding-right:52px;">EquipmentId:</span>
@@ -172,7 +175,7 @@
             {
                 ServerMachineObj.push(NewMachineObj);
             }
-			
+			$("#editinfo").hide();
 			DrawMachineTable();
         });
     });
@@ -278,6 +281,8 @@
 				EditMachineObj=ServerMachineObj[i];
 			}
 		}
+        $("#editinfo").show();
+        $('html, body').animate({ scrollTop: $('#editinfo').offset().top }, 'slow');
         UpdateEditObj();
 	}
     function RemoveSubMachineArrayByID(equipmentId) {
