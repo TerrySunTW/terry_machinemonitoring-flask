@@ -46,7 +46,7 @@
     <div class="product_text">
         <div class="span5">
             <span style="padding-right:25px;">PollingPeriodMS:</span>
-            <input id="PollingPeriodMS" type="text" class="form-control" placeholder="" value="500">
+            <input class="numbersOnly" id="PollingPeriodMS" type="text" class="form-control" placeholder="" value="500">
         </div>
     </div>
 </div>
@@ -54,7 +54,7 @@
     <div class="product_text">
         <div class="span5">
             <span>RequestTimeoutMS:</span>
-            <input id="RequestTimeoutMS" type="text" class="form-control" placeholder="" value="300">
+            <input class="numbersOnly" id="RequestTimeoutMS" type="text" class="form-control" placeholder="" value="300">
         </div>
     </div>
 </div>
@@ -129,6 +129,9 @@
     var ConnectionType="TCP";
     var EditMachinePotocolType='fins';
     $(function() {
+        $('.numbersOnly').keyup(function () { 
+			this.value = this.value.replace(/[^0-9\.]/g,'');
+		});
 		$("a[name='ConnectionTypeOption']").bind('click', function (event) {
 			$("#ConnectionType").html(this.innerText);
             ConnectionType=this.innerText;

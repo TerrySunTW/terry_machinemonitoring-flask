@@ -1,2 +1,3 @@
 dist/
 chicken_attack.egg-info/
+chicken_attack/ui/__pycache__/
