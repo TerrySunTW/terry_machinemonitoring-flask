@@ -118,6 +118,9 @@
 						window.location.href = "/templatelist";
 						return;
 					},
+				400: function (data, textStatus, jqxhr) {
+						alert(data.message);
+					},
 				500: function (data, textStatus, jqxhr) {
 						alert(data);
 					}
@@ -150,6 +153,9 @@
 						alert( "更新完成!!");
 						window.location.href = "/templatelist";
 						return;
+					},
+				400: function (data, textStatus, jqxhr) {
+						alert(data.message);
 					},
 				500: function (data, textStatus, jqxhr) {
 						alert(data);

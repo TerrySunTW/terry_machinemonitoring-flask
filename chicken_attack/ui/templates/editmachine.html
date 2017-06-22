@@ -47,7 +47,10 @@
 		}
 		$("#AddMachine").click(function(){
 			var SubmitData=GetFinalDataObj();
-			UpdateMachine(SubmitData);
+			if(SubmitData!=null)
+			{
+				UpdateMachine(SubmitData);
+			}
 		});
 	});
 	function GetPotocolType(){
@@ -155,6 +158,9 @@
 							alert( "更新完成!!");
 							window.location.href = "/monitor";
 							return;
+						},
+					400: function (data, textStatus, jqxhr) {
+							alert(data.message);
 						},
 					500: function (data, textStatus, jqxhr) {
 							alert(data.statusText);
