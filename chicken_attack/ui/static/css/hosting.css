@@ -44,6 +44,7 @@ a:focus {
 
 .content_height {
     min-height: 768px;
+    padding-top: 40px;
 }
 .content_height1 {
     min-height: 880px;
