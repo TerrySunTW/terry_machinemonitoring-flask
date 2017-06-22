@@ -99,15 +99,19 @@
         }
         else
         {
-            MachineArray=ServerMachineObj[0].equipments;
-            if(ServerMachineObj[0].endPoint)
+            if(ServerMachineObj.length>0)
             {
-                $("#Host").val(ServerMachineObj[0].endPoint.host);
-                $("#Port").val(ServerMachineObj[0].endPoint.port);
-                $("#PollingPeriodMS").val(ServerMachineObj[0].pollingPeriodMS);
-                $("#requestTimeoutMS").val(ServerMachineObj[0].requestTimeoutMS);
-                DrawMachineTable();    
+                MachineArray=ServerMachineObj[0].equipments;
+                if(ServerMachineObj[0].endPoint)
+                {
+                    $("#Host").val(ServerMachineObj[0].endPoint.host);
+                    $("#Port").val(ServerMachineObj[0].endPoint.port);
+                    $("#PollingPeriodMS").val(ServerMachineObj[0].pollingPeriodMS);
+                    $("#requestTimeoutMS").val(ServerMachineObj[0].requestTimeoutMS);
+                    DrawMachineTable();    
+                }
             }
+            
             
         }
         $("#AddSubMachine").click(function(){
