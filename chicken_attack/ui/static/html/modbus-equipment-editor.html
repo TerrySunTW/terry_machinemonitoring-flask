@@ -182,15 +182,14 @@
             }); 
 	}
     function GetFinalDataObj(){
-        if(MachineArray==null || MachineArray.length==0)
-        {
-            alert("Equipment number should greater than 0");
-            return null;
-        }
         return GetPageDataObj();
     }
     function GetPageDataObj(){
-        var SubmitData={
+        var SubmitData=[];
+        if(MachineArray==null || MachineArray.length==0)
+        {
+            SubmitData=[{
+            
                             "endPoint": {
                                     "host": $("#Host").val(),
                                     "port": parseInt($("#Port").val())
@@ -198,7 +197,9 @@
                             "equipments": MachineArray,
                             "pollingPeriodMS": parseInt($("#PollingPeriodMS").val()),
                             "requestTimeoutMS": parseInt($("#RequestTimeoutMS").val())
-                        };
+                        }];
+        }
+        
         return SubmitData;
     }
     function EditSubMachineArrayByID(Id) {
