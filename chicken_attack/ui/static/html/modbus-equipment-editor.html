@@ -116,8 +116,6 @@
                     DrawMachineTable();    
                 }
             }
-            
-            
         }
         $("#AddSubMachine").click(function(){
             if(!CheckIDPattern($("#EquipmentId").val()))
@@ -152,6 +150,10 @@
             $("#editinfo").hide();
         });
     });
+    function ResetEditForm(){
+        $("#Host").val('');
+        $("#Port").val('');
+    }
     function UpdateEditObj(){
         $("#TemplateID").html(EditMachineObj.equipments[0].templateId);
         $("#Host").val(EditMachineObj.endPoint.host);
@@ -227,6 +229,7 @@
 			MachineArray.splice(selectIndex,1);
 			DrawMachineTable();
 		}
+        ResetEditForm();
 	}
     function DrawMachineTable() {
 		var TbodyHtml="";

@@ -182,6 +182,13 @@
 			DrawMachineTable();
         });
     });
+    function ResetEditForm(){
+        $("#ConnectionType").html("TCP");
+        $("#TCPHost").val('');
+        $("#TCPPort").val('');
+        $("#EquipmentId").val('');
+        $("#EquipmentName").val('');
+    }
     function UpdateEditObj(){
         if(EditMachineObj.connection.tcp)
         {
@@ -296,5 +303,6 @@
 			ServerMachineObj.splice(selectIndex,1);
 			DrawMachineTable();
 		}
+        ResetEditForm();
 	}
 </script>
