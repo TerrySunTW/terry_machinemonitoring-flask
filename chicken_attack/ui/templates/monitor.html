@@ -46,6 +46,7 @@
 		window.SelectedDeviceID='';
 		window.SelectedChannelID='';
 		window.PageReady=false;
+        window.AvaliableDeviceIDs=[];
         window.myObject = {
             started: new signals.Signal()
         };
@@ -75,6 +76,28 @@
                 data: [111, 222]
             }]
         };
+        function GetPotocolEquipmentArray(){
+            for(var ProtocolTypeArrayIndex in ProtocolTypeArray){
+                    var ProtocolType=ProtocolTypeArray[ProtocolTypeArrayIndex];
+                    var URL=QonfigConfigEquipmentsURL.replace('{ProtocolType}',ProtocolType);
+                    axios.get(URL,{params: {protocoltype:ProtocolType }})
+                    .then(function (response) {
+                        var DataResult=response.data;
+                        for(var DataResultIndex in DataResult){	
+                            if(DataResult[DataResultIndex].equipment)
+                            {
+                                window.AvaliableDeviceIDs.push(DataResult[DataResultIndex].equipment.equipmentId);
+                            }
+                            else if(DataResult[DataResultIndex].equipments)
+                            {
+                                DataResult[DataResultIndex].equipments.forEach(function (item) {
+                                    window.AvaliableDeviceIDs.push(item.equipmentId);
+                                });
+                            }
+                        }
+                    });
+            }
+        }
         function UpdateDetailViewChartData(DataArray) {
             var DataLabelArray = [];
             var DataValueArray = [];
@@ -251,8 +274,8 @@
                 super(props);
             }
             render() {
+                //IF doesn't exist , don't display
 				var TypeNumber=Number(this.props.reactkey);
-				
                 var Wapper1Class="span4 height3";
                 var Wapper2Class="product_type"+(TypeNumber+1)%4;
                 var Wapper3Class="light_area";
@@ -262,13 +285,17 @@
                 {
                     DeviceName=this.props.devicedata.metadata.name;
                 }
+                if(window.AvaliableDeviceIDs.indexOf(this.props.devicedata.deviceId)<0)
+                {
+                    return (null);
+                }
                 return (
                 <div className={Wapper1Class}>
                     <div className={Wapper2Class}>
 					
 					
                         <div className="prodct_title">
-							<table width="100%%" border="0" cellspacing="0" cellpadding="0">
+							<table width="100%" border="0" cellspacing="0" cellpadding="0">
 										<tbody><tr>
 											<td>
 												<div className="icon_space"><a href={"/editmachine/"+this.props.devicedata.deviceId}><img src="static/images/editing_icon.png" alt=""/></a></div>
@@ -327,7 +354,7 @@
                         {this.props.Devices.map((dataitem,idx) => (
                             <SingleDevice key={idx} reactkey={idx} devicedata={dataitem} ChannelsLatestdata={this.props.DevicesChannelsLatestdata[dataitem.deviceId]} />
                         ))}
-                        {this.props.Devices.length<3&&
+                        {window.AvaliableDeviceIDs.length<3&&
                             <NewDeviceView key="NewMachineView" ViewCount={0} />
                         }
                     </div>
@@ -339,9 +366,10 @@
             //light condition
             axios.get(martiniApiDevicesURL+'?'+d.getTime())
             .then(function (response) {
+                GetPotocolEquipmentArray();
                 window.Devices = response.data;
 				window.PageReady = true;
-				GetLastData();
+                GetLastData();
             });
         }
         function GetLastData() {
@@ -394,7 +422,7 @@
        
 
 //Detail View setting============================
-        window.DetailViewRender = function(Devicedata, Channeldata){
+            window.DetailViewRender = function(Devicedata, Channeldata){
 			//console.log('DetailViewRender');
 			window.SelectedDeviceID=Devicedata.deviceId;
 			window.SelectedChannelID=Channeldata.channelId;
