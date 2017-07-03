@@ -125,7 +125,7 @@
 				var dateString=(dateObject.getUTCMonth()+1)+"-"+dateObject.getUTCDate()+" "+dateObject.getHours()+":"+dateArray[5]+":"+dateArray[6]+millisecond;
 				
                 DataLabelArray.push(dateString);
-                if(item.value.num)
+                if(item.value.num!=undefined)
                 {
                     DataValueArray.push(item.value.num);
                 }
@@ -232,11 +232,12 @@
             var ValueView;
             
             var StrValue=this.props.Channeldata.latestValue.value.str;
-            if(this.props.Channeldata.latestValue.value.num)
+            if(this.props.Channeldata.latestValue.value.num!=undefined)
             {
                 StrValue=this.props.Channeldata.latestValue.value.num.toString();
                 window.FixLightValue(StrValue);
                 var StrLength=StrValue.lastIndexOf('.');
+                debugger;
                 if(StrLength>-1 && StrValue.length-StrLength>3)
                 {
                     StrValue=StrValue.substring(0,StrLength+4);
@@ -397,7 +398,7 @@
                 var d = new Date();
                 axios.get(martiniApiDeviceChannelDataURL.replace('{deviceId}',window.SelectedDeviceID).replace('{channelId}',window.SelectedChannelID)+'?pageSize='+martiniPagingSize+'&'+d.getTime())
                 .then(function (response) {
-                    if(response.data[0].value.num)
+                    if(response.data[0].value.num!=undefined)
                     {
                         var num = new Number(response.data[0].value.num);
                         $(".light_detail_title").html(num.toFixed(3));
@@ -449,7 +450,7 @@
             );
 
             var LightFirstValue;
-            if(Channeldata.latestValue.value.num)
+            if(Channeldata.latestValue.value.num!=undefined)
             {
                 LightFirstValue = new Number(Channeldata.latestValue.value.num);
                 LightFirstValue = LightFirstValue.toFixed(3);
