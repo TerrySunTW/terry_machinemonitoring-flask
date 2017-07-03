@@ -237,7 +237,6 @@
                 StrValue=this.props.Channeldata.latestValue.value.num.toString();
                 window.FixLightValue(StrValue);
                 var StrLength=StrValue.lastIndexOf('.');
-                debugger;
                 if(StrLength>-1 && StrValue.length-StrLength>3)
                 {
                     StrValue=StrValue.substring(0,StrLength+4);
