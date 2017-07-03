@@ -21,3 +21,22 @@ SWAGGER v2
 http://terryphptest.azurewebsites.net/swagger-martini.txt
 
 http://terryphptest.azurewebsites.net/swagger-qonfig.txt
+
+
+
+
+test equipment data
+{
+	"connection": {
+		"tcp": {
+			"host": "192.168.20.61",
+			"port": 9600
+		}
+	},
+	"equipment": {
+		"equipmentId": "roof-01",
+		"templateId": "fx3u-ht"
+	},
+	"pollingPeriodMS": 500,
+	"requestTimeoutMS": 500
+}

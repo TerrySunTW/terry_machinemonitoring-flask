@@ -379,14 +379,17 @@
 			{
 				var d = new Date();
                 window.Devices.forEach(function (item) {
-                    axios.get(martiniApiDeviceChannelsLastestDataURL.replace('{deviceId}',item.deviceId)+'?'+d.getTime(),{params: {deviceId: item.deviceId}})
-                    .then(function (response) {
-                            window.DevicesChannelsLatestdata[response.config.params.deviceId]=response.data;
-                            ReactDOM.render(
-                            <DevicesAP Devices={window.Devices} DevicesChannelsLatestdata={window.DevicesChannelsLatestdata} />,
-                            document.getElementById('DevicesDiv')
-                    );
-                    });	
+                    if(window.AvaliableDeviceIDs.indexOf(item.deviceId)>-1)
+                    {
+                        axios.get(martiniApiDeviceChannelsLastestDataURL.replace('{deviceId}',item.deviceId)+'?'+d.getTime(),{params: {deviceId: item.deviceId}})
+                        .then(function (response) {
+                                window.DevicesChannelsLatestdata[response.config.params.deviceId]=response.data;
+                                ReactDOM.render(
+                                <DevicesAP Devices={window.Devices} DevicesChannelsLatestdata={window.DevicesChannelsLatestdata} />,
+                                document.getElementById('DevicesDiv')
+                        );
+                        });	
+                    }
                 });
 			}
         }

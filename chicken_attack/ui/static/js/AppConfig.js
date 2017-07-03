@@ -1,5 +1,5 @@
 ﻿var Debug=false;
-var ApiDataSoureceUrl = "http://125.227.156.104/api/v1";
+var ApiDataSoureceUrl = "/api/v1";
 var IDCheckMessage="ID需長度大於3並以英文字母開頭!!";
 
 if(Debug)
