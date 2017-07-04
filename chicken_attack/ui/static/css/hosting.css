@@ -550,7 +550,9 @@ input[type="checkbox"] {
     text-align: left;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 100%;
+    width: 120px;
+    height: 16px;
+    display : inline-block;
 }
 .light_detail_title {
     color: #11ffff;
