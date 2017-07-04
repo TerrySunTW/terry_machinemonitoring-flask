@@ -328,10 +328,6 @@
                 return false;
             }
             render() {
-				if(this.props.ViewCount>1)
-				{
-					return null;
-				}
                 return (
                     <div className="span4 height3">
                          <a href="/editmachine">
@@ -355,7 +351,7 @@
                             <SingleDevice key={idx} reactkey={idx} devicedata={dataitem} ChannelsLatestdata={this.props.DevicesChannelsLatestdata[dataitem.deviceId]} />
                         ))}
                         {window.AvaliableDeviceIDs.length<3&&
-                            <NewDeviceView key="NewMachineView" ViewCount={0} />
+                            <NewDeviceView key="NewMachineView" />
                         }
                     </div>
                 );
