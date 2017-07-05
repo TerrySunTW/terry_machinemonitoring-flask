@@ -97,7 +97,7 @@
                 </div>
             </div>
             <!--Channel-->
-            <div class="modal fade" id="ChannelEditDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-left: -150px;">
+            <div class="modal fade" id="ChannelEditDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-left: -150px;z-index:0;">
                 <div class="vertical-alignment-helper">
                     <div class="modal-dialog vertical-align-center">
                         <div class="modal-content">
@@ -255,7 +255,9 @@
 		$("a[name='ChannelMemoryAreaOption']").bind('click', function (event) {
 			$("#ChannelMemoryArea").html(this.innerText);
 		});
-		
+		$('#ChannelEditDiv').on('hidden', function () {
+            $('#ChannelEditDiv').css('z-index', 0);
+        })
 		$($("#NavigationBar li")[2]).addClass("active");
 		if(EditTemplateID!='')
 		{
@@ -286,8 +288,7 @@
             $("#orMask").val('');
             $("#multiplier").val('');
             $("#Channeloffset").val('');
-            var myModal = $('#ChannelEditDiv');
-            myModal.modal({ show: true });
+            ShowChannelEditDiv();
 		});
 		$("#AddCommand").click(function(){
 			var NewCommand=
@@ -358,10 +359,14 @@
                 ChannelArray.push(NewChannel);
             }
 			DrawChannelTable();
-            var myModal = $('#ChannelEditDiv');
-            myModal.modal({ show: false });
+            ShowChannelEditDiv();
 		});
 	});
+    function ShowChannelEditDiv(){
+        var myModal = $('#ChannelEditDiv');
+        myModal.css('z-index', 2000);
+        myModal.modal({ show: true });
+    }
 	function GetPageDataObj() {
 		var SubmitData=
 			{
