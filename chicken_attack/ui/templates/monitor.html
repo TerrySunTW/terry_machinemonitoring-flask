@@ -376,7 +376,8 @@
                 window.Devices.forEach(function (item) {
                     if(window.AvaliableDeviceIDs.indexOf(item.deviceId)>-1)
                     {
-                        axios.get(martiniApiDeviceChannelsLastestDataURL.replace('{deviceId}',item.deviceId)+'?'+d.getTime(),{params: {deviceId: item.deviceId}})
+
+                        axios.get(martiniApiDeviceChannelsLastestDataURL.replace('{deviceId}',item.deviceId)+'?'+d.getTime(),{params: {deviceId: item.deviceId,pageSize:1000}})
                         .then(function (response) {
                                 window.DevicesChannelsLatestdata[response.config.params.deviceId]=response.data;
                                 ReactDOM.render(
