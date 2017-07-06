@@ -40,3 +40,5 @@ test equipment data
 	"pollingPeriodMS": 500,
 	"requestTimeoutMS": 500
 }
+
+cNzVoz3v0tm8ukpkK2n0
