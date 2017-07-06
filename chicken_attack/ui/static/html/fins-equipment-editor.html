@@ -135,8 +135,17 @@
 		$("a[name='ConnectionTypeOption']").bind('click', function (event) {
 			$("#ConnectionType").html(this.innerText);
             ConnectionType=this.innerText;
-            $("#tcpdiv").toggle();
-            $("#udpdiv").toggle();
+            if(this.innerText=="TCP")
+            {
+                $("#tcpdiv").show();
+                $("#udpdiv").hide();
+            }
+            else
+            {
+                $("#tcpdiv").hide();
+                $("#udpdiv").show();
+            }
+            
 		});
         if(EditMachineObj)
         {
@@ -184,12 +193,16 @@
     function UpdateEditObj(){
         if(EditMachineObj.connection.tcp)
         {
+            $("#tcpdiv").show();
+            $("#udpdiv").hide();
             $("#ConnectionType").html("TCP");
             $("#TCPHost").val(EditMachineObj.connection.tcp.host);
             $("#TCPPort").val(EditMachineObj.connection.tcp.port);
         }
         else
         {
+            $("#tcpdiv").hide();
+            $("#udpdiv").show();
             $("#ConnectionType").html("UDP");
             $("#UDPHost").val(EditMachineObj.connection.udp.host);
             $("#UDPPort").val(EditMachineObj.connection.udp.port);
