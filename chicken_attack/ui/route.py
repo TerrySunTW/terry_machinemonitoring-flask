@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask import render_template
 
 class WebInfo:
-    Title = '欣興桃園廠生產資料系統'
+    Title = '機聯網系統'
 
 UI_ROUTE = Blueprint(
     'ui_route',
