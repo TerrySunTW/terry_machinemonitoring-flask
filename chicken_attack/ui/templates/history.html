@@ -57,7 +57,7 @@
 					for (var i = 0; i < response.data.length; i++) { 
 						
 						axios.get(martiniApiDeviceChannelsURL.replace('{deviceId}',response.data[i].deviceId),
-						{params: {deviceId: response.data[i].deviceId}})
+						{params: {deviceId: response.data[i].deviceId,pageSize:1000}})
 						.then(function (response){
 							that.state.DeviceChannel[response.config.params.deviceId]=response.data;
 							that.setState({ DeviceChannel:that.state.DeviceChannel });
@@ -237,7 +237,7 @@
 					var URL=martiniApiDeviceChannelDataURL
 					.replace('{deviceId}',SelectedDevice)
 					.replace('{channelId}',SelectedChannelID);
-					axios.get(URL)
+					axios.get(URL,{params: {pageSize:1000}})
 					.then(function (response) {
 						self.setState({ jsondata:response.data });
 					});
