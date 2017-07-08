@@ -149,7 +149,7 @@
 			return (
 <ul className="dropdown-menu dropdown-menustyle" role="menu">
 	{this.props.Devices.map((dataitem,idx) => (
-						<li><a key={idx} onClick={() => this.props.SelectEquipment(dataitem.deviceId)}>{dataitem.deviceId}</a></li>
+						<li><a className="AutoHide" key={idx} onClick={() => this.props.SelectEquipment(dataitem.deviceId)}>{dataitem.deviceId}</a></li>
 						))}
 </ul>
 			)
@@ -198,7 +198,7 @@
 			return (
 <ul className="dropdown-menu dropdown-menustyle" role="menu">
 				{SelectedChannelArray.map((dataitem,idx) => (
-				<li><a key={idx} onClick={() => this.props.SelectChannel(dataitem.channelId)}>{dataitem.channelId}</a></li>
+				<li><a className="AutoHide" key={idx} onClick={() => this.props.SelectChannel(dataitem.channelId)}>{dataitem.channelId}</a></li>
 				))}
 </ul>
 			)

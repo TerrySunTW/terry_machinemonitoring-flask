@@ -875,12 +875,18 @@ input[type="checkbox"] {
 }
 .buttonstyle1{
 	width:100px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .buttonstyle2{
 	width:30px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .buttonstyle3{
 	width:200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .tdredstyle { 
 	background-color: #f00!important;
@@ -919,4 +925,9 @@ input[type="checkbox"] {
     /* To center horizontally */
     margin: 0 auto;
     pointer-events: all;
+}
+
+.AutoHide {
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
