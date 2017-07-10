@@ -281,7 +281,7 @@
 			$("#ChannelMemoryArea").html(this.innerText);
 		});
 		$('#ChannelEditDiv').on('hidden', function () {
-            $('#ChannelEditDiv').css('z-index', 0);
+            $('#ChannelEditDiv').css('z-index', -150);
         })
 		$($("#NavigationBar li")[2]).addClass("active");
 		if(EditTemplateID!='')

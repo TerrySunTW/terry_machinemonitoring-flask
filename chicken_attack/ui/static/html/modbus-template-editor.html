@@ -256,7 +256,7 @@
 			$("#ChannelMemoryArea").html(this.innerText);
 		});
 		$('#ChannelEditDiv').on('hidden', function () {
-            $('#ChannelEditDiv').css('z-index', 0);
+            $('#ChannelEditDiv').css('z-index', -150);
         })
 		$($("#NavigationBar li")[2]).addClass("active");
 		if(EditTemplateID!='')
@@ -407,10 +407,13 @@
                 $("#Channeloffset").val(ChannelArray[i].conversion.offset?ChannelArray[i].conversion.offset:'');
 			}
 		}
-        var myModal = $('#ChannelEditDiv');
-        myModal.modal({ show: true });
-       
+	    ShowChannelEditDiv();
 	}
+    function ShowChannelEditDiv(){
+        var myModal = $('#ChannelEditDiv');
+        myModal.css('z-index', 2000);
+        myModal.modal({ show: true });
+    }
 	function RemoveChannelArrayByChannelID(ChannelID) {
 		var selectIndex=-1;
 		for(var i=0;i<ChannelArray.length;i++){
