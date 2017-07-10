@@ -442,21 +442,13 @@
 			{
 				NewChannel.conversion.offset=Number($("#Channeloffset").val());
 			}
-            var selectIndex=-1;
             for(var i=0;i<ChannelArray.length;i++){
-			    if(ChannelArray[i].channelId==NewChannel.channelId)
+			    if(ChannelArray[i].channelId==window.EditingChannelID)
 			    {
-                    selectIndex=i;
+                    ChannelArray.splice(i,1);
                 }
             }
-            if(selectIndex>-1)
-		    {
-                ChannelArray[selectIndex]=NewChannel;
-            }
-            else
-            {
-                ChannelArray.push(NewChannel);
-            }
+            ChannelArray.push(NewChannel);
 			DrawChannelTable();
 		});
 	});
@@ -489,6 +481,7 @@
 	}
 	
     function EditChannelArrayByChannelID(ChannelID) {
+        window.EditingChannelID=ChannelID;
 		for(var i=0;i<ChannelArray.length;i++){
 			if(ChannelArray[i].channelId==ChannelID)
 			{
