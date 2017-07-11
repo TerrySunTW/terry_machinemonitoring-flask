@@ -11,7 +11,7 @@
       "equipmentId": "loader",
       "equipmentName": "屋頂(1)"
     },
-    "pollingPeriodMS": 500,
-    "requestTimeoutMS": 300
+    "pollingPeriodMS": 600,
+    "requestTimeoutMS": 600
   }
 ]
