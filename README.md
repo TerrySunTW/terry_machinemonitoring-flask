@@ -22,6 +22,9 @@ http://terryphptest.azurewebsites.net/swagger-martini.txt
 
 http://terryphptest.azurewebsites.net/swagger-qonfig.txt
 
+SWAGGER v2.1
+http://terryphptest.azurewebsites.net/config_fins_templates.txt
+
 
 
 
