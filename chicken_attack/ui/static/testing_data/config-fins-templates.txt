@@ -4,9 +4,20 @@
     "commands": [
       {
         "command": "read-word",
-        "memoryArea": "D",
-        "address": 0,
-        "quantity": 2
+        "wordAddress": {
+          "memoryArea": "D",
+          "address": 0,
+          "quantity": 2
+        }
+      },
+      {
+        "command": "read-bit",
+        "bitAddress": {
+          "memoryArea": "W",
+          "address": 0,
+          "bit": 4,
+          "quantity": 1
+        }
       }
     ],
     "channels": [
@@ -14,9 +25,11 @@
         "channelId": "temp_C",
         "channelName": "溫度",
         "raw": {
-          "memoryArea": "D",
-          "address": 0,
-          "quantity": 1
+          "wordAddress": {
+            "memoryArea": "D",
+            "address": 0,
+            "quantity": 1
+          }
         },
         "conversion": {
           "asType": "uint16",
@@ -27,13 +40,30 @@
         "channelId": "humidity_Percent",
         "channelName": "濕度",
         "raw": {
-          "memoryArea": "D",
-          "address": 1,
-          "quantity": 1
+          "wordAddress": {
+            "memoryArea": "D",
+            "address": 1,
+            "quantity": 1
+          }
         },
         "conversion": {
           "asType": "uint16",
           "multiplier": 0.025
+        }
+      },
+      {
+        "channelId": "alarm_temperature",
+        "channelName": "溫度告警",
+        "raw": {
+          "bitAddress": {
+            "memoryArea": "W",
+            "address": 0,
+            "bit": 4,
+            "quantity": 1
+          }
+        },
+        "conversion": {
+          "asType": "uint16"
         }
       }
     ]
