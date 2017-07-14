@@ -13,10 +13,7 @@
                     <table id="myTable" class="tablesorter-blue">
                         <thead>
                             <tr>
-                                <th>Command</th>
-                                <th>MemoryArea</th>
-                                <th>address</th>
-                                <th>quantity</th>
+                                <th>Command Settings</th>
                                 <th>刪除</th>
                             </tr>
                         </thead>
@@ -60,6 +57,15 @@
 										<ul class="dropdown-menu" style="width:100px;text-align:center;" role="menu">
 											<li>
 												<a name="CommandMemoryAreaOption" href="javascript:void(0)">D</a>
+                                            </li>
+                                            <li>
+												<a name="CommandMemoryAreaOption" href="javascript:void(0)">DR</a>
+                                            </li>
+                                            <li>
+												<a name="CommandMemoryAreaOption" href="javascript:void(0)">W</a>
+                                            </li>
+                                            <li>
+												<a name="CommandMemoryAreaOption" href="javascript:void(0)">WR</a>
 											</li>
 										</ul>
 									</div>
@@ -72,8 +78,34 @@
                                     <span>quantity:</span>
                                     <input id="Commandquantity" class="numbersOnly" type="text1" class="form-control" placeholder="" value="1">
                                 </td>
-                                <td id="AddCommand" colspan="2" rowspan="2"><a href="#Signup" role="button" data-toggle="modal" class="btn btn-danger2">新增Command</a></td>
+                                
                             </tr>
+                            <tr>
+                                <td width="22%" scope="row">
+									<div class="btn-group margain-left1">
+										<button id="FinsAddressType" type="button" class="btn btn-primary" style="width:200px;" data-toggle="dropdown">FinsBitAddress</button>
+										<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+											<span class="caret"></span>
+										</button>
+										<span class="dropdown-arrow"></span>
+										<ul class="dropdown-menu" style="width:200px;text-align:center;" role="menu">
+											<li>
+												<a name="FinsAddressOption" href="javascript:void(0)">FinsBitAddress</a>
+											</li>
+											<li>
+												<a name="FinsAddressOption" href="javascript:void(0)">FinsWordAddress</a>
+											</li>
+										</ul>
+									</div>
+                                </td>
+                                <td width="17%" scope="row">
+                                    <div id="FinsBitDiv">
+                                        <span>bit:</span>
+                                        <input id="FinsBit" class="numbersOnly" type="text1" class="form-control" placeholder="" value="0">
+                                    </div>
+                                </td>
+                                <td style="text-align: right" id="AddCommand" colspan="2" rowspan="2"><a href="#Signup" role="button" data-toggle="modal" class="btn btn-danger2">新增Command</a></td>
+                            </td>
                         </tbody>
                     </table>
                          <table class="table table-bordered">
@@ -83,8 +115,6 @@
                   </table>
               </div>
             </div>
-			
-			
 			<hr>
 			<!--Channel-->
              <div style="text-align:right">
@@ -270,7 +300,6 @@
 		$("a[name='CommandMemoryAreaOption']").bind('click', function (event) {
 			$("#CommandMemoryArea").html(this.innerText);
 		});
-		//======
 		$("a[name='byteOrderOption']").bind('click', function (event) {
 			$("#byteOrder").html(this.innerText);
 		});
@@ -280,6 +309,18 @@
 		$("a[name='ChannelMemoryAreaOption']").bind('click', function (event) {
 			$("#ChannelMemoryArea").html(this.innerText);
 		});
+        $("a[name='FinsAddressOption']").bind('click', function (event) {
+			$("#FinsAddressType").html(this.innerText);
+            if(this.innerText=="FinsBitAddress")
+            {
+                $("#FinsBitDiv").show();
+            }
+            else
+            {
+                $("#FinsBitDiv").hide();
+            }
+		});
+        
 		$('#ChannelEditDiv').on('hidden', function () {
             $('#ChannelEditDiv').css('z-index', -150);
         })
@@ -318,13 +359,35 @@
             ShowChannelEditDiv();
 		});
 		$("#AddCommand").click(function(){
-			var NewCommand=
-			{
-				"command": $("#Command")[0].innerText,
-				"memoryArea": $("#CommandMemoryArea")[0].innerText,
-				"address": parseInt($("#Commandaddress").val()),
-				"quantity": parseInt($("#Commandquantity").val())
-			};
+            var NewCommand;
+            if($("#FinsAddressType").html()=="FinsWordAddress")
+            {
+                NewCommand=
+                {
+                    "command": $("#Command")[0].innerText,
+                    "wordAddress":{
+                        "memoryArea": $("#CommandMemoryArea")[0].innerText,
+                        "address": parseInt($("#Commandaddress").val()),
+                        "quantity": parseInt($("#Commandquantity").val())
+                    }
+                    
+                };
+            }
+            else
+            {
+                NewCommand=
+                {
+                    "command": $("#Command")[0].innerText,
+                    "bitAddress":{
+                        "memoryArea": $("#CommandMemoryArea")[0].innerText,
+                        "address": parseInt($("#Commandaddress").val()),
+                        "bit":parseInt($("#FinsBit").val()),
+                        "quantity": parseInt($("#Commandquantity").val())
+                    }
+                    
+                };
+            }
+			
 			CommandArray.push(NewCommand);
 			DrawCommandTable();
 		});
@@ -451,11 +514,11 @@
 	function DrawCommandTable() {
 		var TbodyHtml="";
 		for(var i=0;i<CommandArray.length;i++){
+            var Setting=JSON.stringify(CommandArray[i], null, '\t');
 			TbodyHtml+="<tr>"+
-				"<td>"+CommandArray[i].command+"</td>"+
-				"<td>"+CommandArray[i].memoryArea+"</td>"+
-				"<td>"+CommandArray[i].address+"</td>"+
-				"<td>"+CommandArray[i].quantity+"</td>"+
+				"<td>"+
+                "<pre style='overflow-x: auto; height: 100px;'>"+Setting+"</pre>"+
+                "</td>"+
 				"<td><a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveCommandArrayByAddress('"+CommandArray[i].address+"')\">刪除</a></td>"+
 			"</tr>";
 		}
