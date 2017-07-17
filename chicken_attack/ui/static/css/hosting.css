@@ -931,3 +931,13 @@ input[type="checkbox"] {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
+.graybody{
+    background: gray;
+}
+
+.floatDiv{
+    float:left;
+    height: 40px;
+    padding-right: 15px;
+}

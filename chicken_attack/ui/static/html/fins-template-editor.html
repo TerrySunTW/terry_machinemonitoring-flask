@@ -83,25 +83,25 @@
                             <tr>
                                 <td width="22%" scope="row">
 									<div class="btn-group margain-left1">
-										<button id="FinsAddressType" type="button" class="btn btn-primary" style="width:200px;" data-toggle="dropdown">FinsBitAddress</button>
+										<button id="FinsCommandAddressType" type="button" class="btn btn-primary" style="width:200px;" data-toggle="dropdown">FinsBitAddress</button>
 										<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 											<span class="caret"></span>
 										</button>
 										<span class="dropdown-arrow"></span>
 										<ul class="dropdown-menu" style="width:200px;text-align:center;" role="menu">
 											<li>
-												<a name="FinsAddressOption" href="javascript:void(0)">FinsBitAddress</a>
+												<a name="FinsCommandAddressOption" href="javascript:void(0)">FinsBitAddress</a>
 											</li>
 											<li>
-												<a name="FinsAddressOption" href="javascript:void(0)">FinsWordAddress</a>
+												<a name="FinsCommandAddressOption" href="javascript:void(0)">FinsWordAddress</a>
 											</li>
 										</ul>
 									</div>
                                 </td>
                                 <td width="17%" scope="row">
-                                    <div id="FinsBitDiv">
+                                    <div id="FinsCommandBitDiv">
                                         <span>bit:</span>
-                                        <input id="FinsBit" class="numbersOnly" type="text1" class="form-control" placeholder="" value="0">
+                                        <input id="FinsCommandBit" class="numbersOnly" type="text1" class="form-control" placeholder="" value="0">
                                     </div>
                                 </td>
                                 <td style="text-align: right" id="AddCommand" colspan="2" rowspan="2"><a href="#Signup" role="button" data-toggle="modal" class="btn btn-danger2">新增Command</a></td>
@@ -138,7 +138,7 @@
                 </div>
             </div>
             <!--Channel-->
-            <div class="modal fade" id="ChannelEditDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-left: -150px;z-index:-150;">
+            <div class="modal fade" id="ChannelEditDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index:-150;">
                 <div class="vertical-alignment-helper">
                     <div class="modal-dialog vertical-align-center">
                         <div class="modal-content">
@@ -149,19 +149,16 @@
                                 <h4 class="modal-title" id="myModalLabel">Channel Editor</h4>
 
                             </div>
-                            <div class="modal-body">
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <td width="22%" scope="row">
-                                    <span>ChannelId:</span>
-                                    <input id="ChannelId" type="text1" class="form-control" placeholder="">
-                                </td>
-                                 <td width="22%" scope="row">
-                                    <span>Name:</span>
-                                    <input id="ChannelName" type="text1" class="form-control" placeholder="">
-                                </td>
-                                <td width="17%" scope="row">
+                            <div class="modal-body graybody" style="min-height: 150px;overflow-y: initial;">
+                                <div class="floatDiv">
+                                                <span>ChannelId:</span>
+                                                <input id="ChannelId" type="text1" class="form-control" placeholder="">
+                                </div>
+                                <div class="floatDiv">
+                                                <span>Name:</span>
+                                                <input id="ChannelName" type="text1" class="form-control" placeholder="">
+                                </div>
+                                <div class="floatDiv">
                                     <span>memoryArea:</span>
                                     <div class="btn-group margain-left1">
                                         <button id="ChannelMemoryArea" type="button" class="btn btn-primary" style="width:100px;" data-toggle="dropdown">
@@ -174,23 +171,24 @@
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
                                                 <a name="ChannelMemoryAreaOption" href="javascript:void(0)">D</a>
+                                                <a name="ChannelMemoryAreaOption" href="javascript:void(0)">DM</a>
+                                                <a name="ChannelMemoryAreaOption" href="javascript:void(0)">W</a>
+                                                <a name="ChannelMemoryAreaOption" href="javascript:void(0)">WR</a>
                                             </li>
                                         </ul>
                                     </div>
-                                </td>
-                                <td width="22%" scope="row">
+                    </div>
+                    <div class="floatDiv">
                                     <span>address:</span>
                                     <input id="Channeladdress" class="numbersOnly" type="text1" class="form-control" placeholder="" value="0">
-                                </td>
-                                <td width="22%" scope="row">
+                    </div>
+                    <div class="floatDiv">
                                     <span>quantity:</span>
                                     <input id="Channelquantity" class="numbersOnly" type="text1" class="form-control" placeholder="" value="1">
-                                </td>
+                    </div>
                                 
                              
-                            </tr>
-                            <tr>
-                                <td width="22%" scope="row">
+                    <div class="floatDiv">
                                     <span>byteOrder:</span>
                                     <div class="btn-group margain-left1">
                                         <button id="byteOrder" type="button" class="btn btn-primary" style="width:100px;" data-toggle="dropdown">&nbsp;</button>
@@ -213,16 +211,16 @@
                                             </li>
                                         </ul>
                                     </div>
-                                </td>
-                                <td width="22%" scope="row">
+                    </div>
+                    <div class="floatDiv">
                                     <span>andMask(1,2,3):</span>
                                     <input id="andMask" type="text1" class="form-control" placeholder="" value="">
-                                </td>
-                                  <td width="22%" scope="row">
+                    </div>
+                    <div class="floatDiv">
                                     <span>orMask(1,2,3):</span>
                                     <input id="orMask" type="text1" class="form-control" placeholder="" value="">
-                                </td>
-                                <td width="17%" scope="row">
+                    </div>
+                    <div class="floatDiv">
                                     <span>asType:</span>
                                     <div class="btn-group margain-left1">
                                         <button id="asType" type="button" class="btn btn-primary" style="width:100px;" data-toggle="dropdown">
@@ -259,24 +257,42 @@
                                             </li>
                                         </ul>
                                     </div>
-                                </td>
-                                <td width="22%" scope="row">
+                    </div>
+                    <div class="floatDiv">
                                     <span>multiplier:</span>
                                     <input id="multiplier" type="text1" class="form-control" placeholder="" value="">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td  colspan="5">
+                    </div>
+                    <div class="floatDiv">
                                     <span>offset:</span>
                                     <input id="Channeloffset" type="text1" class="form-control" placeholder="" value="">    
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    </div>
+                    <div class="floatDiv">
+                                    <div class="btn-group margain-left1">
+                                        <button id="FinsChannelAddressType" type="button" class="btn btn-primary" style="width:200px;" data-toggle="dropdown">FinsBitAddress</button>
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                        </button>
+                                        <span class="dropdown-arrow"></span>
+                                        <ul class="dropdown-menu" style="width:200px;text-align:center;" role="menu">
+                                            <li>
+                                                <a name="FinsChannelAddressOption" href="javascript:void(0)">FinsBitAddress</a>
+                                            </li>
+                                            <li>
+                                                <a name="FinsChannelAddressOption" href="javascript:void(0)">FinsWordAddress</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                    </div>
+                    <div class="floatDiv">
+                                    <div id="FinsChannelBitDiv">
+                                        <span>bit:</span>
+                                        <input id="FinsChannelBit" class="numbersOnly" type="text1" class="form-control" placeholder="" value="0">
+                                    </div>
+                    </div>
               </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button id="AddChannel" type="button" class="btn btn-primary" data-dismiss="modal">Add/Update Channel</button>
+                                <button id="CloseChannel" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button id="AddChannel" type="button" class="btn btn-primary">Add/Update Channel</button>
                             </div>
                         </div>
                     </div>
@@ -309,18 +325,30 @@
 		$("a[name='ChannelMemoryAreaOption']").bind('click', function (event) {
 			$("#ChannelMemoryArea").html(this.innerText);
 		});
-        $("a[name='FinsAddressOption']").bind('click', function (event) {
-			$("#FinsAddressType").html(this.innerText);
+        $("a[name='FinsCommandAddressOption']").bind('click', function (event) {
+			$("#FinsCommandAddressType").html(this.innerText);
             if(this.innerText=="FinsBitAddress")
             {
-                $("#FinsBitDiv").show();
+                $("#FinsCommandBitDiv").show();
             }
             else
             {
-                $("#FinsBitDiv").hide();
+                $("#FinsCommandBitDiv").hide();
             }
 		});
         
+        $("a[name='FinsChannelAddressOption']").bind('click', function (event) {
+			$("#FinsChannelAddressType").html(this.innerText);
+            if(this.innerText=="FinsBitAddress")
+            {
+                $("#FinsChannelBitDiv").show();
+            }
+            else
+            {
+                $("#FinsChannelBitDiv").hide();
+            }
+		});
+
 		$('#ChannelEditDiv').on('hidden', function () {
             $('#ChannelEditDiv').css('z-index', -150);
         })
@@ -360,7 +388,7 @@
 		});
 		$("#AddCommand").click(function(){
             var NewCommand;
-            if($("#FinsAddressType").html()=="FinsWordAddress")
+            if($("#FinsCommandAddressType").html()=="FinsWordAddress")
             {
                 NewCommand=
                 {
@@ -381,7 +409,7 @@
                     "bitAddress":{
                         "memoryArea": $("#CommandMemoryArea")[0].innerText,
                         "address": parseInt($("#Commandaddress").val()),
-                        "bit":parseInt($("#FinsBit").val()),
+                        "bit":parseInt($("#FinsCommandBit").val()),
                         "quantity": parseInt($("#Commandquantity").val())
                     }
                     
@@ -396,21 +424,47 @@
 			{
 				alert(IDCheckMessage);
                 return;
-			}
-			var NewChannel=
-			{
-			  "channelId": $("#ChannelId").val(),
-              "channelName": $("#ChannelName").val(),
-			  "raw": {
-				"memoryArea": $("#ChannelMemoryArea")[0].innerText,
-				"address": Number($("#Channeladdress").val()),
-				"quantity": Number($("#Channelquantity").val())
-			  },
-			  "conversion": {
-                
-				"asType": $("#asType")[0].innerText,
-			  }
-			};
+            }
+            var NewChannel;
+            if($("#FinsChannelAddressType").html()=="FinsBitAddress")
+            {
+                NewChannel=
+                            {
+                            "channelId": $("#ChannelId").val(),
+                            "channelName": $("#ChannelName").val(),
+                            "raw": {
+                                "bitAddress":{
+                                    "memoryArea": $("#ChannelMemoryArea")[0].innerText,
+                                    "address": Number($("#Channeladdress").val()),
+                                    "bit": Number($("#FinsChannelBit").val()),
+                                    "quantity": Number($("#Channelquantity").val())
+                                }
+                            },
+                            "conversion": {
+                                
+                                "asType": $("#asType")[0].innerText,
+                                }
+                            };
+            }
+            else
+            {
+                 NewChannel=
+                            {
+                            "channelId": $("#ChannelId").val(),
+                            "channelName": $("#ChannelName").val(),
+                            "raw": {
+                                "wordAddress":{
+                                    "memoryArea": $("#ChannelMemoryArea")[0].innerText,
+                                    "address": Number($("#Channeladdress").val()),
+                                    "quantity": Number($("#Channelquantity").val())
+                                }
+                            },
+                            "conversion": {
+                                "asType": $("#asType")[0].innerText,
+                                }
+                            };
+            }
+			
             if($("#byteOrder")[0].innerText.trim().length>0)
             {
                 NewChannel.conversion.byteOrder=$("#byteOrder")[0].innerText;
@@ -444,7 +498,8 @@
                 }
             }
             ChannelArray.push(NewChannel);
-			DrawChannelTable();
+            $("#CloseChannel").click();
+            DrawChannelTable();
 		});
 	});
 	function GetPageDataObj() {
