@@ -47,6 +47,7 @@
 		window.SelectedChannelID='';
 		window.PageReady=false;
         window.AvaliableDeviceIDs=[];
+        window.WaittingHttpThread=[];
         window.myObject = {
             started: new signals.Signal()
         };
@@ -376,15 +377,23 @@
                 window.Devices.forEach(function (item) {
                     if(window.AvaliableDeviceIDs.indexOf(item.deviceId)>-1)
                     {
-
-                        axios.get(martiniApiDeviceChannelsLastestDataURL.replace('{deviceId}',item.deviceId)+'?'+d.getTime(),{params: {deviceId: item.deviceId,pageSize:1000}})
-                        .then(function (response) {
-                                window.DevicesChannelsLatestdata[response.config.params.deviceId]=response.data;
-                                ReactDOM.render(
-                                <DevicesAP Devices={window.Devices} DevicesChannelsLatestdata={window.DevicesChannelsLatestdata} />,
-                                document.getElementById('DevicesDiv')
-                        );
-                        });	
+                        if(window.WaittingHttpThread.indexOf(item.deviceId)<0)
+                        {
+                            window.WaittingHttpThread.push(item.deviceId);
+                            axios.get(martiniApiDeviceChannelsLastestDataURL.replace('{deviceId}',item.deviceId)+'?'+d.getTime(),{params: {deviceId: item.deviceId,pageSize:1000}})
+                            .then(function (response) {
+                                    window.DevicesChannelsLatestdata[response.config.params.deviceId]=response.data;
+                                    //remove waitting item
+                                    var index = window.WaittingHttpThread.indexOf(response.config.params.deviceId);
+                                    if (index > -1) {
+                                        window.WaittingHttpThread.splice(index, 1);
+                                    }
+                                    ReactDOM.render(
+                                        <DevicesAP Devices={window.Devices} DevicesChannelsLatestdata={window.DevicesChannelsLatestdata} />,
+                                        document.getElementById('DevicesDiv')
+                                    );
+                            });	
+                        }
                     }
                 });
 			}
