@@ -286,7 +286,9 @@
                 {
                     DeviceName=this.props.devicedata.metadata.name;
                 }
-                if(window.AvaliableDeviceIDs.indexOf(this.props.devicedata.deviceId)<0)
+                if(window.AvaliableDeviceIDs.indexOf(this.props.devicedata.deviceId)<0 ||
+                    !this.props.ChannelsLatestdata
+                )
                 {
                     return (null);
                 }
