@@ -25,6 +25,7 @@
 		constructor(props) {
 			super(props);
 			this.state = {
+				IsLoading:false,
 				SelectedDeviceID:'',
 				SelectedChannelID:'',
 				CompareType:'<',
@@ -55,7 +56,6 @@
 			.then(function (response) {
 					that.setState({ Devices:response.data });
 					for (var i = 0; i < response.data.length; i++) { 
-						
 						axios.get(martiniApiDeviceChannelsURL.replace('{deviceId}',response.data[i].deviceId),
 						{params: {deviceId: response.data[i].deviceId,pageSize:1000}})
 						.then(function (response){
@@ -66,9 +66,9 @@
 			});
 		}
 		render() {
+			
 			return (
 <div className="product_text1 span4">
-
 	<ConditionSection CompareType={this.state.CompareType} CompareValue={this.state.CompareValue} SelectCompareType={this.SelectCompareType.bind(this)} OnCompareValueChanged={this.OnCompareValueChanged.bind(this)}/>
 	<SelectDeviceSection Devices={this.state.Devices} selectedDevice={this.state.SelectedDeviceID} SelectEquipment={this.SelectEquipment.bind(this)} />
 	<SelectChannelSection DeviceChannel={this.state.DeviceChannel} SelectedChannelID={this.state.SelectedChannelID} selectedDevice={this.state.SelectedDeviceID} SelectChannel={this.SelectChannel.bind(this)} />
@@ -208,6 +208,7 @@
 			constructor(props) {
 				super(props);
 				this.state = {
+					IsLoading:false,
 					jsondata: []
 				};
 			}
@@ -234,11 +235,13 @@
 				var self = this;
 				if(SelectedChannelID.length>0)
 				{
+					self.setState({ IsLoading:true });
 					var URL=martiniApiDeviceChannelDataURL
 					.replace('{deviceId}',SelectedDevice)
 					.replace('{channelId}',SelectedChannelID);
 					axios.get(URL,{params: {pageSize:1000}})
 					.then(function (response) {
+						self.setState({ IsLoading:false });
 						self.setState({ jsondata:response.data });
 					});
 				}
@@ -249,6 +252,24 @@
 			}
             render() {
 			console.log('HistoryDataSection.render');
+				let Content = null;
+				if(this.state.IsLoading)
+				{
+					Content = <tr><td colSpan="2"><div className="loader"></div></td></tr>;
+				}
+				else
+				{
+					Content = this.state.jsondata.map((dataitem,idx) => (
+							<HistoryDataRow 
+								key={idx} 
+								time={dataitem.at} 
+								data={dataitem.value} 
+								CompareType={this.props.CompareType} 
+								CompareValue={this.props.CompareValue}
+							/>
+							));
+				}
+
                 return (
 <div className="height2" >
 	<table id="myTable" className="tablesorter-blue">
@@ -259,16 +280,7 @@
 			</tr>
 		</thead>
 		<tbody>
-		
-		{this.state.jsondata.map((dataitem,idx) => (
-				<HistoryDataRow 
-					key={idx} 
-					time={dataitem.at} 
-					data={dataitem.value} 
-					CompareType={this.props.CompareType} 
-					CompareValue={this.props.CompareValue}
-				/>
-				))}
+			{Content}
 		</tbody>
 	</table>
 </div>
