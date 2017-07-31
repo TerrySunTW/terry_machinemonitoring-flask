@@ -348,14 +348,21 @@
         }
         class DevicesAP extends React.Component {
             render() {
+                let Content = null;
+				if(window.AvaliableDeviceIDs.length<3)
+				{
+					Content = <NewDeviceView key="NewMachineView" />;
+				}
+				else
+				{
+					Content = this.props.Devices.map((dataitem,idx) => (
+                            <SingleDevice key={idx} reactkey={idx} devicedata={dataitem} ChannelsLatestdata={this.props.DevicesChannelsLatestdata[dataitem.deviceId]} />
+                        ));
+                }
+                        
                 return (
                     <div>
-                        {this.props.Devices.map((dataitem,idx) => (
-                            <SingleDevice key={idx} reactkey={idx} devicedata={dataitem} ChannelsLatestdata={this.props.DevicesChannelsLatestdata[dataitem.deviceId]} />
-                        ))}
-                        {window.AvaliableDeviceIDs.length<3&&
-                            <NewDeviceView key="NewMachineView" />
-                        }
+                        {Content}
                     </div>
                 );
             }
@@ -401,13 +408,19 @@
 			}
         }
         function GetDetailViewData() {
-            if(window.SelectedDeviceID!='' && window.SelectedChannelID !='')
+            var DetailViewFlag='DetailViewData';
+            if(window.SelectedDeviceID!='' && window.SelectedChannelID !='' &&
+                window.WaittingHttpThread.indexOf(DetailViewFlag)<0)
             {
-                //console.log('GetDetailViewData()');
+                window.WaittingHttpThread.push(DetailViewFlag);
                 //update chart
                 var d = new Date();
                 axios.get(martiniApiDeviceChannelDataURL.replace('{deviceId}',window.SelectedDeviceID).replace('{channelId}',window.SelectedChannelID)+'?pageSize='+martiniPagingSize+'&'+d.getTime())
                 .then(function (response) {
+                    var index = window.WaittingHttpThread.indexOf(DetailViewFlag);
+                    if (index > -1) {
+                        window.WaittingHttpThread.splice(index, 1);
+                    }
                     if(response.data[0].value.num!=undefined)
                     {
                         var num = new Number(response.data[0].value.num);
