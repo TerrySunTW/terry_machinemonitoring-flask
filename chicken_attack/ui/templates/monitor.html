@@ -348,17 +348,13 @@
         }
         class DevicesAP extends React.Component {
             render() {
-                let Content = null;
-				if(window.AvaliableDeviceIDs.length<3)
-				{
-					Content = <NewDeviceView key="NewMachineView" />;
-				}
-				else
-				{
-					Content = this.props.Devices.map((dataitem,idx) => (
+                let Content = this.props.Devices.map((dataitem,idx) => (
                             <SingleDevice key={idx} reactkey={idx} devicedata={dataitem} ChannelsLatestdata={this.props.DevicesChannelsLatestdata[dataitem.deviceId]} />
                         ));
-                }
+				if(window.AvaliableDeviceIDs.length<3)
+				{
+					Content += <NewDeviceView key="NewMachineView" />;
+				}
                         
                 return (
                     <div>
