@@ -21,6 +21,8 @@ var EquipmentConfiguration = ApiDataSoureceUrl + "/config/{protocoltype}/equipme
 var EquipmentTemplateList = ApiDataSoureceUrl + "/config/{protocoltype}/templates";
 var EquipmentTemplate = ApiDataSoureceUrl + "/config/{protocoltype}/templates/{templateId}";
 
+var DownloadTemplateExcel = ApiDataSoureceUrl + "/config/{protocoltype}/templates/{templateId}/xlsx";
+
 //chart setting 
 var ChartLength=30;
 
@@ -38,7 +40,9 @@ if(Debug)
 
 	EquipmentConfiguration = ApiDataSoureceUrl + "/static/testing_data/config-{protocoltype}-equipments.txt";
 	EquipmentTemplateList = ApiDataSoureceUrl + "/static/testing_data/config-{protocoltype}-templates.txt";
-	EquipmentTemplate = ApiDataSoureceUrl + "/static/testing_data/config-{protocoltype}-templates-{templateId}.txt";
+	EquipmentTemplate = ApiDataSoureceUrl + "/static/testing_data/config-{protocoltype}-templates-{teplateId}.txt";
+
+	DownloadTemplateExcel = ApiDataSoureceUrl + "/static/testing_data/templates_xlsx.xlsx";
 	
 }
 
