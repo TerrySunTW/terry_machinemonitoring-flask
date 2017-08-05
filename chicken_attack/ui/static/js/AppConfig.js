@@ -39,6 +39,8 @@ if(Debug)
 	EquipmentConfiguration = ApiDataSoureceUrl + "/static/testing_data/config-{protocoltype}-equipments.txt";
 	EquipmentTemplateList = ApiDataSoureceUrl + "/static/testing_data/config-{protocoltype}-templates.txt";
 	EquipmentTemplate = ApiDataSoureceUrl + "/static/testing_data/config-{protocoltype}-templates-{templateId}.txt";
+
+	DownloadTemplateExcel = ApiDataSoureceUrl + "/static/testing_data/templates_xlsx.xlsx";
 	
 }
 

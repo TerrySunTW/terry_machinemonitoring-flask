@@ -63,7 +63,7 @@
 
 <script>
 	$(function() {
-		$($("#NavigationBar li")[2]).addClass("active");
+		$($("#NavigationBar li")[3]).addClass("active");
 	});
 </script>
 <script src="/static/js/dropzone.js"></script>
@@ -197,7 +197,9 @@
 				
 								<td className="table-function-td">
 								<a href={"/edittemplate/"+dataitem.templateId+"/"+dataitem.ProtocolType} role="button" className="btn btn-inverse">修改</a>&nbsp;
-								<a onClick={() => self.deleteTemplate(dataitem.templateId,dataitem.ProtocolType)}  href="" role="button" className="btn btn-inverse">刪除</a></td>
+								<a onClick={() => self.deleteTemplate(dataitem.templateId,dataitem.ProtocolType)}  href="" role="button" className="btn btn-inverse">刪除</a>&nbsp;
+								<a href={DownloadTemplateExcel.replace('{protocoltype}',dataitem.ProtocolType).replace('{templateId}',dataitem.templateId)} role="button" className="btn btn-inverse">下載Excel</a>
+								</td>
 							</tr>
 						  );
 						})}
