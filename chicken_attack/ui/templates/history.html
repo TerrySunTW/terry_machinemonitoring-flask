@@ -222,7 +222,6 @@
 				
 			}
 			shouldComponentUpdate(nextProps, nextState) {
-				console.log('HistoryDataSection shouldComponentUpdate');
 				return true;
 			}
 			componentWillUpdate(nextProps, nextState) {
@@ -241,8 +240,11 @@
 					.replace('{channelId}',SelectedChannelID);
 					axios.get(URL,{params: {pageSize:1000}})
 					.then(function (response) {
-						self.setState({ IsLoading:false });
-						self.setState({ jsondata:response.data });
+						self.setState({ 
+							IsLoading:false,
+							jsondata:response.data 
+						});
+						console.log('response.data='+response.data );
 					});
 				}
 				else
@@ -251,7 +253,6 @@
 				}
 			}
             render() {
-			console.log('HistoryDataSection.render');
 				let Content = null;
 				if(this.state.IsLoading)
 				{
