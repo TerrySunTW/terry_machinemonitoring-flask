@@ -20,7 +20,7 @@ var ProtocolTypeArray = ["fins", "melsec", "modbus"];
 var EquipmentConfiguration = ApiDataSoureceUrl + "/config/{protocoltype}/equipments";
 var EquipmentTemplateList = ApiDataSoureceUrl + "/config/{protocoltype}/templates";
 var EquipmentTemplate = ApiDataSoureceUrl + "/config/{protocoltype}/templates/{templateId}";
-
+var ConfigTemplatesXlsx =ApiDataSoureceUrl + "/config/templates/xlsx";
 //chart setting 
 var ChartLength=30;
 
