@@ -21,6 +21,8 @@ var EquipmentConfiguration = ApiDataSoureceUrl + "/config/{protocoltype}/equipme
 var EquipmentTemplateList = ApiDataSoureceUrl + "/config/{protocoltype}/templates";
 var EquipmentTemplate = ApiDataSoureceUrl + "/config/{protocoltype}/templates/{templateId}";
 var ConfigTemplatesXlsx =ApiDataSoureceUrl + "/config/templates/xlsx";
+var DownloadTemplateExcel = ApiDataSoureceUrl + "/static/testing_data/templates_xlsx.xlsx";
+
 //chart setting 
 var ChartLength=30;
 
