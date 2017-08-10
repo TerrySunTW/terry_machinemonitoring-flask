@@ -520,10 +520,22 @@
 	function RemoveCommandArrayByAddress(Address) {
 		var selectIndex=-1;
 		for(var i=0;i<CommandArray.length;i++){
-			if(CommandArray[i].address==Address)
-			{
-				selectIndex=i;
-			}
+            if(CommandArray[i].wordAddress)
+            {
+                var IdentifyString=CommandArray[i].command+'wordAddress'+CommandArray[i].wordAddress.memoryArea+CommandArray[i].wordAddress.address+CommandArray[i].wordAddress.quantity;
+                if(IdentifyString==Address)
+                {
+                    selectIndex=i;
+                }
+            }
+            else
+            {
+                var IdentifyString=CommandArray[i].command+'bitAddress'+CommandArray[i].bitAddress.memoryArea+CommandArray[i].bitAddress.address+CommandArray[i].bitAddress.quantity;
+                if(IdentifyString==Address)
+                {
+                    selectIndex=i;
+                }
+            }
 		}
 		if(selectIndex>-1)
 		{
@@ -594,6 +606,7 @@
             
             if(CommandArray[i].wordAddress)
             {
+                var IdentifyString=CommandArray[i].command+'wordAddress'+CommandArray[i].wordAddress.memoryArea+CommandArray[i].wordAddress.address+CommandArray[i].wordAddress.quantity;
                 TbodyHtml+="<tr>"+
                     "<td>"+CommandArray[i].command+"</td>"+
                     "<td>wordAddress</td>"+
@@ -601,11 +614,12 @@
 				    "<td>"+CommandArray[i].wordAddress.address+"</td>"+
                     "<td>"+CommandArray[i].wordAddress.quantity+"</td>"+
                     "<td>&nbsp;</td>"+
-				    "<td><a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveCommandArrayByAddress('"+CommandArray[i].address+"')\">刪除</a></td>"+
+				    "<td><a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveCommandArrayByAddress('"+IdentifyString+"')\">刪除</a></td>"+
                 "</tr>";
             }
             else
             {
+                var IdentifyString=CommandArray[i].command+'bitAddress'+CommandArray[i].bitAddress.memoryArea+CommandArray[i].bitAddress.address+CommandArray[i].bitAddress.quantity;
                 TbodyHtml+="<tr>"+
                     "<td>"+CommandArray[i].command+"</td>"+
                     "<td>bitAddress</td>"+
@@ -613,7 +627,7 @@
 				    "<td>"+CommandArray[i].bitAddress.address+"</td>"+
                     "<td>"+CommandArray[i].bitAddress.quantity+"</td>"+
                     "<td>"+CommandArray[i].bitAddress.bit+"</td>"+
-				    "<td><a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveCommandArrayByAddress('"+CommandArray[i].address+"')\">刪除</a></td>"+
+				    "<td><a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveCommandArrayByAddress('"+IdentifyString+"')\">刪除</a></td>"+
                 "</tr>";
             }
 		}
