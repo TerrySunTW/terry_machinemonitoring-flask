@@ -1,1 +1,2 @@
+powershell -Command "(gc C:\Python\flaskweb\machinemonitoring-flask\chicken_attack\ui\static\js\AppConfig.js) -replace 'var Debug=true;', 'var Debug=false;' | Out-File C:\Python\flaskweb\machinemonitoring-flask\chicken_attack\ui\static\js\AppConfig.js"
 setup.py sdist
