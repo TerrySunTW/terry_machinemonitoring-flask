@@ -1,6 +1,7 @@
 ﻿var Debug=false;
 var ApiDataSoureceUrl = "/api/v1";
 var IDCheckMessage="ID需長度大於3並以英文字母開頭!!";
+var IDCheckMessage2="ID需長度大於2並以英文字母開頭!!";
 
 if(Debug)
 {

@@ -301,9 +301,9 @@
 			DrawCommandTable();
 		});
 		$("#AddChannel").click(function(){
-            if(!CheckIDPattern($("#ChannelId").val()))
+            if(!CheckChannelIDPattern($("#ChannelId").val()))
 			{
-				alert(IDCheckMessage);
+				alert(IDCheckMessage2);
                 return;
 			}
 			var NewChannel=
