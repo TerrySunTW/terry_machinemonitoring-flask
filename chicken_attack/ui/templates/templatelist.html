@@ -2,14 +2,19 @@
 
 
 {% block contain %}
-
+			<form style="display: none" id="dropzone" action="" class="dropzone"></form>
             <div class="row height1">
                 <div class="product_text">
                     <div class="span4">
                     </div>
                     <div class="span4">
                     </div>
-                    <div class="span4 text-right" style="padding-top:10px;"><a href="/edittemplate" role="button" class="btn btn-danger">新增Template</a>
+                    <div class="span12 text-right" style="padding-top:10px;">
+						<a style="display:none" id="reloadbutton" href="javascript:void(0);" role="button" class="btn btn-danger">重新整理</a>
+						&nbsp;
+						<a id="toggleUpload" href="javascript:void(0);" role="button" class="btn btn-danger">開啟上傳Excel模式</a>
+						&nbsp;
+						<a href="/edittemplate" role="button" class="btn btn-danger">新增Template</a>
                     </div>
                 </div>
             </div>
@@ -27,8 +32,26 @@
 {% block JavaScript %}
 
 <script>
+	Dropzone.options.dropzone = {
+		dictDefaultMessage:"請點擊或拖曳上傳檔案，上傳完畢請重新整理頁面",
+		acceptedFiles:".xlsx",
+		url:"/api/v1/config/templates/xlsx"
+	};
 	$(function() {
 		$($("#NavigationBar li")[3]).addClass("active");
+		$("#toggleUpload").click(function(){
+			$("#reloadbutton").toggle();
+			if($('#dropzone').css('display') == 'none'){ 
+				$("#toggleUpload").text("關閉上傳Excel模式");
+				$('#dropzone').show(); 
+			} else { 
+				$("#toggleUpload").text("開啟上傳Excel模式");
+				$('#dropzone').hide(); 
+			}
+		});
+		$("#reloadbutton").click(function(){
+			location.reload();
+		});
 	});
 </script>
 {% endblock JavaScript %}
