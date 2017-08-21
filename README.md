@@ -28,6 +28,9 @@ SWAGGER v2.1
 
 http://terryphptest.azurewebsites.net/config_fins_templates.txt
 
+SWAGGER V2.1+event
+
+http://terryphptest.azurewebsites.net/swagger2-event.txt
 
 
 
