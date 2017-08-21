@@ -111,7 +111,7 @@
 				var TemplateSelectionHTML='';
 				for(var i=0;i<TemplateList.length;i++)
 				{
-					TemplateSelectionHTML+="<li><a ProtocolType='"+TemplateList[i].ProtocolType+"' name='TemplateIDOption' href='#'>"+TemplateList[i].templateId+"</a></li>";
+					TemplateSelectionHTML+="<li><a ProtocolType='"+TemplateList[i].ProtocolType+"' name='TemplateIDOption' href='javascript:void(0)'>"+TemplateList[i].templateId+"</a></li>";
 				}
 				$("#TemplateIDWapper").html(TemplateSelectionHTML);
 				$("a[name='TemplateIDOption']").bind('click', function (event) {

@@ -126,7 +126,14 @@
 <div class="row height3">
     <div class="product_text">
         <div class="span8">
-            <a id="AddSubMachine" href="javascript:void(0)" role="button" class="btn btn-danger">Add/Update Equipment</a>
+            <input type="hidden" id="EditEquipmentId" value="">
+            <div id="DivCreateButton">
+                <a id="AddSubMachine" href="javascript:void(0)" role="button" class="btn btn-danger">Add New Equipment</a>&nbsp;
+            </div>
+            <div id="DivUpdateButton" style="display:none">
+                <a id="UpdateSubMachine" href="javascript:void(0)" role="button" class="btn btn-danger">Update Equipment</a>&nbsp;
+                <a id="ResetForm" href="javascript:void(0)" role="button" class="btn btn-danger">Reset</a>
+            </div>
         </div>
     </div>
 </div>
@@ -170,24 +177,31 @@
                 return;
             }
             var NewMachineObj=GetPageDataObj();
+            ServerMachineObj.push(NewMachineObj);
+            ResetEditForm();
+			DrawMachineTable();
+        });
+        $("#UpdateSubMachine").click(function(){
+            if(!CheckIDPattern($("#EquipmentId").val()))
+			{
+                alert(IDCheckMessage);
+                return;
+            }
+            var NewMachineObj=GetPageDataObj();
             var selectIndex=-1;
             for(var i=0;i<ServerMachineObj.length;i++){
-                if(ServerMachineObj[i].equipment.equipmentId==NewMachineObj.equipment.equipmentId)
+                if(ServerMachineObj[i].equipment.equipmentId==$("#EditEquipmentId").val())
                 {
-                    selectIndex=i;
+                    ServerMachineObj.splice(i,1);
                     break;
                 }
             }
-            if(selectIndex>-1)
-            {
-                ServerMachineObj[selectIndex]=NewMachineObj;
-            }
-            else
-            {
-                ServerMachineObj.push(NewMachineObj);
-            }
-			$("#editinfo").hide();
+            ServerMachineObj.push(NewMachineObj);
+            ResetEditForm();
 			DrawMachineTable();
+        });
+        $("#ResetForm").click(function(){
+            ResetEditForm();
         });
     });
     function ResetEditForm(){
@@ -196,8 +210,14 @@
         $("#TCPPort").val('');
         $("#EquipmentId").val('');
         $("#EquipmentName").val('');
+        $("#EditEquipmentId").val('');
+        $("#DivUpdateButton").hide();
+        $("#DivCreateButton").show();
+        $("#editinfo").hide();
     }
     function UpdateEditObj(){
+        $("#DivUpdateButton").show();
+        $("#DivCreateButton").hide();
         if(EditMachineObj.connection.tcp)
         {
             $("#tcpdiv").show();
@@ -292,6 +312,7 @@
 		$("#MachineTbody").html(TbodyHtml);
 	}
     function EditSubMachineArrayByID(equipmentId) {
+        $("#EditEquipmentId").val(equipmentId);
         for(var i=0;i<ServerMachineObj.length;i++){
 			if(ServerMachineObj[i].equipment.equipmentId==equipmentId)
 			{

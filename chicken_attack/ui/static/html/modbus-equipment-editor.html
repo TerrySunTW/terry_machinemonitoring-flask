@@ -52,7 +52,14 @@
 <div class="row height3">
     <div class="product_text">
         <div class="span8">
-            <a id="AddSubMachine" href="javascript:void(0)" role="button" class="btn btn-danger">Add/Update Equipment</a>
+            <input type="hidden" id="EditEquipmentId" value="">
+            <div id="DivCreateButton">
+                <a id="AddSubMachine" href="javascript:void(0)" role="button" class="btn btn-danger">Add New Equipment</a>&nbsp;
+            </div>
+            <div id="DivUpdateButton" style="display:none">
+                <a id="UpdateSubMachine" href="javascript:void(0)" role="button" class="btn btn-danger">Update Equipment</a>&nbsp;
+                <a id="ResetForm" href="javascript:void(0)" role="button" class="btn btn-danger">Reset</a>
+            </div>
         </div>
     </div>
 </div>
@@ -123,14 +130,6 @@
                 alert(IDCheckMessage);
                 return;
             }
-            var SubMachineID=$("#EID").val();
-            var selectIndex=-1;
-            for(var i=0;i<MachineArray.length;i++){
-                if(MachineArray[i].id==SubMachineID)
-                {
-                    selectIndex=i;
-                }
-            }
             var NewMachine=
 			{
 				"id": parseInt($("#EID").val()),
@@ -138,23 +137,55 @@
 				"equipmentId": $("#EquipmentId").val(),
 				"equipmentName": $("#EquipmentName").val()
 			};
-            if(selectIndex>-1)
-            {
-                MachineArray[selectIndex]=NewMachine;
-            }
-            else
-            {
-                MachineArray.push(NewMachine);
-            }
+
+            MachineArray.push(NewMachine);
+            ResetEditForm();
 			DrawMachineTable();
-            $("#editinfo").hide();
+        });
+        $("#UpdateSubMachine").click(function(){
+            if(!CheckIDPattern($("#EquipmentId").val()))
+			{
+                alert(IDCheckMessage);
+                return;
+            }
+            for(var i=0;i<MachineArray.length;i++){
+                if(MachineArray[i].id==$("#EditEquipmentId").val())
+                {
+                    MachineArray.splice(i,1);
+                    break;
+                }
+            }
+
+            var NewMachine=
+			{
+				"id": parseInt($("#EID").val()),
+				"templateId": $("#TemplateID")[0].innerText,
+				"equipmentId": $("#EquipmentId").val(),
+				"equipmentName": $("#EquipmentName").val()
+			};
+
+            MachineArray.push(NewMachine);
+
+            ResetEditForm();
+			DrawMachineTable();
+        });
+        $("#ResetForm").click(function(){
+            ResetEditForm();
         });
     });
     function ResetEditForm(){
         $("#Host").val('');
         $("#Port").val('');
+        $("#EID").val('');
+        $("#EquipmentId").val('');
+        $("#EquipmentName").val('');
+        $("#DivUpdateButton").hide();
+        $("#DivCreateButton").show();
+        $("#editinfo").hide();
     }
     function UpdateEditObj(){
+        $("#DivUpdateButton").show();
+        $("#DivCreateButton").hide();
         $("#TemplateID").html(EditMachineObj.equipments[0].templateId);
         $("#Host").val(EditMachineObj.endPoint.host);
         $("#Port").val(EditMachineObj.endPoint.port);
@@ -205,6 +236,7 @@
         return SubmitData;
     }
     function EditSubMachineArrayByID(Id) {
+        $("#EditEquipmentId").val(Id);
         for(var i=0;i<MachineArray.length;i++){
 			if(MachineArray[i].id==Id)
 			{
@@ -212,7 +244,9 @@
 				$("#EquipmentId").val(MachineArray[i].equipmentId);
 				$("#EquipmentName").val(MachineArray[i].equipmentName);
 			}
-		}
+        }
+        $("#DivUpdateButton").show();
+        $("#DivCreateButton").hide();
         $("#editinfo").show();
         $('html, body').animate({ scrollTop: $('#editinfo').offset().top }, 'slow');
 	}
