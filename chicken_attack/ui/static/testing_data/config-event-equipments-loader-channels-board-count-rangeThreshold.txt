@@ -1,0 +1,16 @@
+{
+  "window": {
+    "depth": 5
+  },
+  "initialState": "set",
+  "upper": {
+    "aggregationMethod": "highest",
+    "upperThreshold": 70.5,
+    "lowerThreshold": 69.5
+  },
+  "lower": {
+    "aggregationMethod": "lowest",
+    "upperThreshold": 65.5,
+    "lowerThreshold": 64.5
+  }
+}
