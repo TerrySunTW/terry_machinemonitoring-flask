@@ -28,9 +28,9 @@
                            
                             <tr>
 
-                                <td class="DetailView-td-style2 name2" style="padding-top:5px;text-align:right">Depth:</td>
+                                <td class="DetailView-td-style2 name2" style="padding-top:5px;text-align:right">Depth:&nbsp;</td>
                                 <td id="" style="padding-top:5px;">
-                                   <input class="form-control input2" placeholder="" style="vertical-align: bottom;">
+                                   <input class="form-control input2" placeholder="1~60" style="vertical-align: bottom;" value="">
                                     <div class="btn-group margain-left1" style="padding-left: 38px;">
                                         <button id="ThresholdValue" type="button" class="margin-bottom0 btn btn-primary" style="width:100px;" data-toggle="dropdown">set</button>
                                         <button type="button" class="margin-bottom0 btn btn-primary dropdown-toggle" style="width:30px;" data-toggle="dropdown">
@@ -39,27 +39,27 @@
                                         <span class="dropdown-arrow"></span>
                                         <ul class="dropdown-menu" role="menu">
                                             <li>
-                                                <a href="javascript:void(0)" name="ThresholdOption">InitialState:set</a>
+                                                <a href="javascript:void(0)" name="ThresholdOption">InitialState:&nbsp;set</a>
                                             </li>
                                             <li>
-                                                <a href="javascript:void(0)" name="ThresholdOption">InitialState:clear</a>
+                                                <a href="javascript:void(0)" name="ThresholdOption">InitialState:&nbsp;clear</a>
                                             </li>
                                         </ul>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="DetailView-td-style2 name2" style="padding-top:5px;text-align:right">UpperThreshold:</td>
+                                <td class="DetailView-td-style2 name2" style="padding-top:5px;text-align:right">UpperThreshold:&nbsp;</td>
                                 <td id="" style="padding-top:5px;">
-                                    <input class="form-control input2" placeholder="">~
-                                    <input class="form-control input2" placeholder="">
+                                    <input class="form-control input2" placeholder="UpperThreshold">~
+                                    <input class="form-control input2" placeholder="LowerThreshold">
                                 </td>
                             </tr>
                             <tr>
-                                <td class="DetailView-td-style name2" style="padding-top:5px;text-align:right">LowerThreshold:</td>
+                                <td class="DetailView-td-style name2" style="padding-top:5px;text-align:right">LowerThreshold:&nbsp;</td>
                                 <td id="DetailViewRange" style="padding-top:5px;">
-                                    <input class="form-control input2" placeholder="">~
-                                    <input class="form-control input2" placeholder="">
+                                    <input class="form-control input2" placeholder="UpperThreshold">~
+                                    <input class="form-control input2" placeholder="LowerThreshold">
                                 </td>
                             </tr>
                             <tr>
@@ -67,7 +67,8 @@
                                 &nbsp;      
                                 </td>
                                 <td style="padding-top:5px; text-align:right;">
-                                    <a id="SubmitLightCondition" href="" role="button" data-toggle="modal" class="btn btn-danger2 margin-bottom0">套用Event</a>
+                                    <a id="RemoveEvent" href="" role="button" data-toggle="modal" class="btn btn-danger2 margin-bottom0 width40">刪除Event</a>&nbsp;
+                                    <a id="SubmitEvent" href="" role="button" data-toggle="modal" class="btn btn-danger2 margin-bottom0 width40">套用Event</a>
                                 </td>
                             </tr>
                         </table>
@@ -118,12 +119,12 @@
         }
         myObject.started.add(onStarted);  
         var DetailViewChartData = {
-            labels: ["111", "222"],
+            labels: ["0"],
             datasets: [{
                 type: 'line',
                 borderColor: 'rgb(54, 162, 235)',
                 fill: false,
-                data: [111, 222]
+                data: [0]
             }]
         };
         function GetPotocolEquipmentArray(){
@@ -230,7 +231,7 @@
                     $("#OrderNumber").html(this.innerText);
                 });
 				$("a[name='ThresholdOption']").bind('click', function (event) {
-                    $("#ThresholdValue").html(this.innerText.replace("InitialState:",""));
+                    $("#ThresholdValue").html(this.innerText.replace("InitialState: ",""));
                 });
             });
 </script>
