@@ -687,6 +687,10 @@ input[type="checkbox"] {
     box-sizing: border-box;
     margin-bottom: 10px;
 }
+.margin-bottom0 {
+    margin-bottom: 0px !important;
+}
+
 
 
 /*==========12. Product Detail ==============*/

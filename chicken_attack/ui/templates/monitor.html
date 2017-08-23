@@ -18,11 +18,60 @@
             </div>
             <div class="modalproduct_bg">
                 <div class="modalproduct_part1">
-                    <div class="text-center modalproduct_title">目前燈號</div>
+                    <div class="text-center modalproduct_title">目前資料</div>
                     <div id="DetailViewLight"></div>
                 </div>
                 <div class="modalproduct_part2">
                     <div id="DetailViewTitle2" class="modalproduct_title1">DetailViewTitle2</div>
+                    <div style="background-color: #48586B;padding: 10px;margin-top: 05px;">
+                        <table border="0" cellspacing="0" cellpadding="0">
+                           
+                            <tr>
+
+                                <td class="DetailView-td-style2 name2" style="padding-top:5px;text-align:right">Depth:</td>
+                                <td id="" style="padding-top:5px;">
+                                   <input class="form-control input2" placeholder="" style="vertical-align: bottom;">
+                                    <div class="btn-group margain-left1" style="padding-left: 38px;">
+                                        <button id="ThresholdValue" type="button" class="margin-bottom0 btn btn-primary" style="width:100px;" data-toggle="dropdown">set</button>
+                                        <button type="button" class="margin-bottom0 btn btn-primary dropdown-toggle" style="width:30px;" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                        </button>
+                                        <span class="dropdown-arrow"></span>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <a href="javascript:void(0)" name="ThresholdOption">InitialState:set</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" name="ThresholdOption">InitialState:clear</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="DetailView-td-style2 name2" style="padding-top:5px;text-align:right">UpperThreshold:</td>
+                                <td id="" style="padding-top:5px;">
+                                    <input class="form-control input2" placeholder="">~
+                                    <input class="form-control input2" placeholder="">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="DetailView-td-style name2" style="padding-top:5px;text-align:right">LowerThreshold:</td>
+                                <td id="DetailViewRange" style="padding-top:5px;">
+                                    <input class="form-control input2" placeholder="">~
+                                    <input class="form-control input2" placeholder="">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                &nbsp;      
+                                </td>
+                                <td style="padding-top:5px; text-align:right;">
+                                    <a id="SubmitLightCondition" href="" role="button" data-toggle="modal" class="btn btn-danger2 margin-bottom0">套用Event</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
 
             </div>
@@ -181,7 +230,7 @@
                     $("#OrderNumber").html(this.innerText);
                 });
 				$("a[name='ThresholdOption']").bind('click', function (event) {
-                    $("#ThresholdValue").html(this.innerText);
+                    $("#ThresholdValue").html(this.innerText.replace("InitialState:",""));
                 });
             });
 </script>
@@ -352,7 +401,15 @@
 				if(window.AvaliableDeviceIDs.length<3)
 				{
 					AddContent = <NewDeviceView key="NewMachineView" />;
-				}
+                }
+                if(this.props.Devices.length==0&&window.AvaliableDeviceIDs.length>=3)
+                {
+                    return (
+                        <div style="font-size: 30px;">
+                            伺服器未正確回傳資料，請確認機台是否正常連線，或聯絡管理員處理。
+                        </div>
+                    )
+                }
                         
                 return (
                     <div>
@@ -427,7 +484,7 @@
                     {
                         $(".light_detail_title").html(response.data[0].value.str);
                     }
-                    $("#detailtime").html(window.FixLightValue(response.data[0].at));
+                    $("#detailtime").html(window.FixLightValue(response.data[0].at.replace("+00:00",".00")));
                    
                     UpdateDetailViewChartData(response.data);
                 });
@@ -459,6 +516,7 @@
                 ChannelName='('+Channeldata.metadata.name+')';
             }
 
+            
 			//title
             ReactDOM.render(
                 <span>{DeviceName}</span>,
@@ -496,6 +554,7 @@
                 ,
                 document.getElementById('DetailViewLight')
             );
+            
 
         };
 </script>
