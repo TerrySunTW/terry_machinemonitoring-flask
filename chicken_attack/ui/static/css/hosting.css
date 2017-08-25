@@ -692,7 +692,7 @@ input[type="checkbox"] {
     margin-bottom: 0px !important;
 }
 .width40{
-    width: 40% !important;
+    width: 48% !important;
 }
 
 
@@ -717,7 +717,7 @@ input[type="checkbox"] {
 }
 
 .modalproduct_part2 {
-    width: 500px;
+    width: 540px;
     float: left;
     font-size: 18px;
 }
@@ -755,6 +755,13 @@ input[type="checkbox"] {
     text-align: center;
 }
 
+.input3 {
+    width: 70px;
+    height: 20px;
+    margin-bottom: 0px;
+    text-align: center;
+    vertical-align: bottom;
+}
 
 /*==========13. CUSTOM MEDIA QUERIES==============*/
 

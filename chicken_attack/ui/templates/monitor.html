@@ -23,15 +23,15 @@
                 </div>
                 <div class="modalproduct_part2">
                     <div id="DetailViewTitle2" class="modalproduct_title1">DetailViewTitle2</div>
-                    <div style="background-color: #48586B;padding: 10px;margin-top: 05px;">
+                    <div style="background-color: #48586B;padding: 0px 5px 5px 5px; margin-top:5px">
                         <table border="0" cellspacing="0" cellpadding="0">
                            
                             <tr>
 
                                 <td class="DetailView-td-style2 name2" style="padding-top:5px;text-align:right">Depth:&nbsp;</td>
-                                <td id="" style="padding-top:5px;">
-                                   <input class="form-control input2" placeholder="1~60" style="vertical-align: bottom;" value="">
-                                    <div class="btn-group margain-left1" style="padding-left: 38px;">
+                                <td style="padding-top:5px;">
+                                   <input id="ThresholdDepth" class="form-control input3" placeholder="1~60" value="" style="margin-right: 92px;">
+                                    <div class="btn-group margain-left1 dropup">
                                         <button id="ThresholdValue" type="button" class="margin-bottom0 btn btn-primary" style="width:100px;" data-toggle="dropdown">set</button>
                                         <button type="button" class="margin-bottom0 btn btn-primary dropdown-toggle" style="width:30px;" data-toggle="dropdown">
                                             <span class="caret"></span>
@@ -50,16 +50,52 @@
                             </tr>
                             <tr>
                                 <td class="DetailView-td-style2 name2" style="padding-top:5px;text-align:right">UpperThreshold:&nbsp;</td>
-                                <td id="" style="padding-top:5px;">
-                                    <input class="form-control input2" placeholder="UpperThreshold">~
-                                    <input class="form-control input2" placeholder="LowerThreshold">
+                                <td style="padding-top:5px;">
+                                    <input id="UpperThreshold-Upper" class="form-control input3" placeholder="Upper">~
+                                    <input id="UpperThreshold-Lower" class="form-control input3" placeholder="Lower">
+                                    <div class="btn-group margain-left1 dropup">
+                                        <button id="UpperThresholdOptionValue" type="button" class="margin-bottom0 btn btn-primary" style="width:100px;" data-toggle="dropdown">average</button>
+                                        <button type="button" class="margin-bottom0 btn btn-primary dropdown-toggle" style="width:30px;" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                        </button>
+                                        <span class="dropdown-arrow"></span>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <a href="javascript:void(0)" name="UpperThresholdOption">average</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" name="UpperThresholdOption">highest</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" name="UpperThresholdOption">lowest</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="DetailView-td-style name2" style="padding-top:5px;text-align:right">LowerThreshold:&nbsp;</td>
-                                <td id="DetailViewRange" style="padding-top:5px;">
-                                    <input class="form-control input2" placeholder="UpperThreshold">~
-                                    <input class="form-control input2" placeholder="LowerThreshold">
+                                <td style="padding-top:5px;">
+                                    <input id="LowerThreshold-Upper" class="form-control input3" placeholder="Upper">~
+                                    <input id="LowerThreshold-Lower" class="form-control input3" placeholder="Lower">
+                                    <div class="btn-group margain-left1 dropup">
+                                        <button id="LowerThresholdOptionValue" type="button" class="margin-bottom0 btn btn-primary" style="width:100px;" data-toggle="dropdown">average</button>
+                                        <button type="button" class="margin-bottom0 btn btn-primary dropdown-toggle" style="width:30px;" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                        </button>
+                                        <span class="dropdown-arrow"></span>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <a href="javascript:void(0)" name="LowerThresholdOption">average</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" name="LowerThresholdOption">highest</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void(0)" name="LowerThresholdOption">lowest</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
@@ -232,6 +268,60 @@
                 });
 				$("a[name='ThresholdOption']").bind('click', function (event) {
                     $("#ThresholdValue").html(this.innerText.replace("InitialState: ",""));
+                });
+                $("a[name='UpperThresholdOption']").bind('click', function (event) {
+                    $("#UpperThresholdOptionValue").html(this.innerText);
+                });
+                $("a[name='LowerThresholdOption']").bind('click', function (event) {
+                    $("#LowerThresholdOptionValue").html(this.innerText);
+                });
+                $("#RemoveEvent").click(function(){
+                    axios.delete(ConfigEvent.replace('{equipmentId}',window.SelectedDeviceID).replace('{channelId}',window.SelectedChannelID));
+                });
+                $("#SubmitEvent").click(function(){
+                    var SubmitData={
+                            "window": {
+                                "depth": parseInt($("#ThresholdDepth").val())
+                            },
+                            "initialState":$("#ThresholdValue").html(),
+                            "upper": {
+                                "aggregationMethod": $("#UpperThresholdOptionValue").html(),
+                                "upperThreshold": parseInt($("#UpperThreshold-Upper").val()),
+                                "lowerThreshold":parseInt($("#UpperThreshold-Lower").val())
+                            },
+                            "lower": {
+                                "aggregationMethod": $("#LowerThresholdOptionValue").html(),
+                                "upperThreshold": parseInt($("#LowerThreshold-Upper").val()),
+                                "lowerThreshold":parseInt($("#LowerThreshold-Lower").val())
+                            }
+                        };
+                    var SubmitJsonStringData=JSON.stringify(SubmitData);
+                    $.ajax({
+                    type: "PUT",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: SubmitJsonStringData,
+                    url: ConfigEvent.replace('{equipmentId}',window.SelectedDeviceID).replace('{channelId}',window.SelectedChannelID),
+                    statusCode : {
+                            200: function (data, textStatus, jqxhr) {
+                                    alert( "更新完成!!");
+                                    window.location.href = "/monitor";
+                                    return;
+                                },
+                            204: function (data, textStatus, jqxhr) {
+                                    alert( "更新完成!!");
+                                    window.location.href = "/monitor";
+                                    return;
+                                },
+                            400: function (data, textStatus, jqxhr) {
+                                    alert(JSON.parse(data.responseText).message);
+                                },
+                            500: function (data, textStatus, jqxhr) {
+                                    alert(data.responseText);
+                                }
+
+                        }
+                    });
                 });
             });
 </script>
@@ -501,10 +591,29 @@
        
 
 //Detail View setting============================
-            window.DetailViewRender = function(Devicedata, Channeldata){
-			//console.log('DetailViewRender');
+        window.DetailViewRender = function(Devicedata, Channeldata){
 			window.SelectedDeviceID=Devicedata.deviceId;
-			window.SelectedChannelID=Channeldata.channelId;
+            window.SelectedChannelID=Channeldata.channelId;
+            window.CleanDetailViewSetting();
+            var d = new Date();
+            axios.get(ConfigEvent.replace('{equipmentId}',window.SelectedDeviceID).replace('{channelId}',window.SelectedChannelID)+'?'+d.getTime())
+                .then(function (response) {
+                    var EventObj=response.data;
+                    if(EventObj.initialState)
+                    {
+                        $("#RemoveEvent").show();
+                        $("#ThresholdValue").html(EventObj.initialState);
+                        $("#ThresholdDepth").val(EventObj.window.depth);
+                        $("#UpperThresholdOptionValue").html(EventObj.upper.aggregationMethod);
+                        $("#UpperThreshold-Upper").val(EventObj.upper.upperThreshold);
+                        $("#UpperThreshold-Lower").val(EventObj.upper.lowerThreshold);
+                        $("#LowerThresholdOptionValue").html(EventObj.lower.aggregationMethod);
+                        $("#LowerThreshold-Upper").val(EventObj.lower.upperThreshold);
+                        $("#LowerThreshold-Lower").val(EventObj.lower.lowerThreshold);
+                    }
+            });
+
+
 			var FixLigthValue=window.FixLightValue(Channeldata.latestValue.at.toString());
             var DeviceName=Devicedata.deviceId;
             if(Devicedata.metadata&&Devicedata.metadata.name)
@@ -557,6 +666,17 @@
             );
             
 
+        };
+        window.CleanDetailViewSetting = function(){
+            $("#ThresholdValue").html('set');
+            $("#ThresholdDepth").val('');
+            $("#UpperThresholdOptionValue").html('average');
+            $("#UpperThreshold-Upper").val('');
+            $("#UpperThreshold-Lower").val('');
+            $("#LowerThresholdOptionValue").html('average');
+            $("#LowerThreshold-Upper").val('');
+            $("#LowerThreshold-Lower").val('');
+            $("#RemoveEvent").hide();
         };
 </script>
 {% endblock BabelScript %}
