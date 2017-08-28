@@ -276,7 +276,11 @@
                     $("#LowerThresholdOptionValue").html(this.innerText);
                 });
                 $("#RemoveEvent").click(function(){
-                    axios.delete(ConfigEvent.replace('{equipmentId}',window.SelectedDeviceID).replace('{channelId}',window.SelectedChannelID));
+                    axios.delete(ConfigEvent.replace('{equipmentId}',window.SelectedDeviceID).replace('{channelId}',window.SelectedChannelID))
+                    .then(function (response) {
+                        window.CleanDetailViewSetting();
+                        alert( "更新完成!!");
+				    });
                 });
                 $("#SubmitEvent").click(function(){
                     var SubmitData={
@@ -286,13 +290,13 @@
                             "initialState":$("#ThresholdValue").html(),
                             "upper": {
                                 "aggregationMethod": $("#UpperThresholdOptionValue").html(),
-                                "upperThreshold": parseInt($("#UpperThreshold-Upper").val()),
-                                "lowerThreshold":parseInt($("#UpperThreshold-Lower").val())
+                                "upperThreshold": parseFloat($("#UpperThreshold-Upper").val()),
+                                "lowerThreshold":parseFloat($("#UpperThreshold-Lower").val())
                             },
                             "lower": {
                                 "aggregationMethod": $("#LowerThresholdOptionValue").html(),
-                                "upperThreshold": parseInt($("#LowerThreshold-Upper").val()),
-                                "lowerThreshold":parseInt($("#LowerThreshold-Lower").val())
+                                "upperThreshold": parseFloat($("#LowerThreshold-Upper").val()),
+                                "lowerThreshold":parseFloat($("#LowerThreshold-Lower").val())
                             }
                         };
                     var SubmitJsonStringData=JSON.stringify(SubmitData);
@@ -305,12 +309,10 @@
                     statusCode : {
                             200: function (data, textStatus, jqxhr) {
                                     alert( "更新完成!!");
-                                    window.location.href = "/monitor";
                                     return;
                                 },
                             204: function (data, textStatus, jqxhr) {
                                     alert( "更新完成!!");
-                                    window.location.href = "/monitor";
                                     return;
                                 },
                             400: function (data, textStatus, jqxhr) {
