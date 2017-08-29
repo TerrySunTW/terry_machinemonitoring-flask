@@ -103,8 +103,8 @@
                                 &nbsp;      
                                 </td>
                                 <td style="padding-top:5px; text-align:right;">
-                                    <a id="RemoveEvent" href="" role="button" data-toggle="modal" class="btn btn-danger2 margin-bottom0 width40">刪除Event</a>&nbsp;
-                                    <a id="SubmitEvent" href="" role="button" data-toggle="modal" class="btn btn-danger2 margin-bottom0 width40">套用Event</a>
+                                    <a id="RemoveEvent" href="" role="button" data-toggle="modal" class="btn btn-danger2 margin-bottom0 width40" data-loading-text="<i class='fa fa-refresh fa-spin'></i> 刪除中">刪除Event</a>&nbsp;
+                                    <a id="SubmitEvent" href="" role="button" data-toggle="modal" class="btn btn-danger2 margin-bottom0 width40" data-loading-text="<i class='fa fa-refresh fa-spin'></i> 送出資料中">套用Event</a>
                                 </td>
                             </tr>
                         </table>
@@ -225,6 +225,11 @@
             DetailViewChartData.datasets[0].data = DataValueArray;
             window.myMixedChart.update();
         }
+        function ResetButtonLoading()
+        {
+            $('.btn').button('reset');
+            $('.btn').disable(false);
+        }
         var ctx = document.getElementById("DetailViewCanvas").getContext("2d");
             window.myMixedChart = new Chart(ctx, {
                 type: 'bar',
@@ -275,10 +280,16 @@
                 $("a[name='LowerThresholdOption']").bind('click', function (event) {
                     $("#LowerThresholdOptionValue").html(this.innerText);
                 });
+                $('.btn').on('click', function() {
+                    var $this = $(this);
+                    $this.button('loading');
+                });
+
                 $("#RemoveEvent").click(function(){
                     axios.delete(ConfigEvent.replace('{equipmentId}',window.SelectedDeviceID).replace('{channelId}',window.SelectedChannelID))
                     .then(function (response) {
                         window.CleanDetailViewSetting();
+                        ResetButtonLoading();
                         alert( "更新完成!!");
 				    });
                 });
@@ -323,7 +334,7 @@
                                 }
 
                         }
-                    });
+                    }).done(function(){ ResetButtonLoading();});
                 });
             });
 </script>
