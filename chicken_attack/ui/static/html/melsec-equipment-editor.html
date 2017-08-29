@@ -138,7 +138,7 @@
     </div>
 </div>
 <script>
-    var ConnectionType="TCP";
+
     var d = new Date();
     $(function() {
         $('.numbersOnly').keyup(function () { 
@@ -146,7 +146,6 @@
 		});
 		$("a[name='ConnectionTypeOption']").bind('click', function (event) {
 			$("#ConnectionType").html(this.innerText);
-            ConnectionType=this.innerText;
             if(this.innerText=="TCP")
             {
                 $("#tcpdiv").show();
@@ -214,6 +213,8 @@
         $("#DivUpdateButton").hide();
         $("#DivCreateButton").show();
         $("#editinfo").hide();
+        $("#tcpdiv").show();
+        $("#udpdiv").hide();
     }
     function UpdateEditObj(){
         $("#DivUpdateButton").show();
@@ -249,7 +250,7 @@
     }
     function GetPageDataObj(){
         var SubmitData;
-        if(ConnectionType=="TCP")
+        if($("#ConnectionType").html()=="TCP")
         {
             SubmitData={
                             "connection": {
