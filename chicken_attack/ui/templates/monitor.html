@@ -228,7 +228,7 @@
         function ResetButtonLoading()
         {
             $('.btn').button('reset');
-            $('.btn').disable(false);
+            $('.btn:disabled').prop("disabled", false);
         }
         var ctx = document.getElementById("DetailViewCanvas").getContext("2d");
             window.myMixedChart = new Chart(ctx, {
@@ -334,7 +334,7 @@
                                 }
 
                         }
-                    }).done(function(){ ResetButtonLoading();});
+                    }).complete(function(){ ResetButtonLoading();});
                 });
             });
 </script>
