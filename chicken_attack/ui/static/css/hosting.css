@@ -43,6 +43,7 @@ a:focus {
 }
 
 .content_height {
+    padding-bottom: 50px;
     min-height: 620px;
     padding-top: 40px;
 }
@@ -617,6 +618,7 @@ input[type="checkbox"] {
 /*==========10. FOOTER ==============*/
 
 .footer {
+    position: fixed;
     color: #ffffff;
     background: #232a31;
     width: 100%;
