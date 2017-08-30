@@ -595,7 +595,7 @@
                     {
                         $(".light_detail_title").html(response.data[0].value.str);
                     }
-                    $("#detailtime").html(window.FixLightValue(response.data[0].at.replace("+00:00",".00")));
+                    $("#detailtime").html(window.FixLightValue(response.data[0].at.replace("+00:00",".000").replace("000.00","")));
                    
                     UpdateDetailViewChartData(response.data);
                 });
