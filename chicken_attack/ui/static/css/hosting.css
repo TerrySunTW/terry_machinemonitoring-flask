@@ -43,7 +43,7 @@ a:focus {
 }
 
 .content_height {
-    min-height: 768px;
+    min-height: 620px;
     padding-top: 40px;
 }
 .content_height1 {
@@ -617,15 +617,15 @@ input[type="checkbox"] {
 /*==========10. FOOTER ==============*/
 
 .footer {
-    position: relative;
     color: #ffffff;
     background: #232a31;
+    width: 100%;
+    bottom: 0;
     /*
 	background:url(../images/header-bg.jpg) no-repeat #232a31;
 	background-size:cover;
 	overflow:hidden;
 */
-    margin-top: 20px;
 }
 
 .footer h1,
@@ -979,4 +979,8 @@ input[type="checkbox"] {
 
 .dropzone.dz-clickable * {
     FONT-SIZE: 30px;
+}
+
+.SubmitMachineButton {
+    margin-bottom: 15px;
 }
