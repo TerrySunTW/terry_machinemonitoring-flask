@@ -207,6 +207,8 @@
         $("#DivUpdateButton").hide();
         $("#DivCreateButton").show();
         $("#editinfo").hide();
+        $("#tcpdiv").show();
+        $("#udpdiv").hide();
     }
     function UpdateEditObj(){
         $("#DivUpdateButton").show();
@@ -281,6 +283,13 @@
     }
     function DrawMachineTable() {
 		var TbodyHtml="";
+        ServerMachineObj=ServerMachineObj.sort(function(a, b) {
+            if (a.equipment.equipmentId < b.equipment.equipmentId)
+                return -1
+            if ( a.equipment.equipmentId > b.equipment.equipmentId)
+                return 1
+            return 0
+        });
 		for(var i=0;i<ServerMachineObj.length;i++){
             var Setting=JSON.stringify(ServerMachineObj[i], null, '\t');
 			TbodyHtml+="<tr>"+
