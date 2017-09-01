@@ -623,7 +623,6 @@
             });
 
 
-			var FixLigthValue=window.FixLightValue(Channeldata.latestValue.at.toString());
             var DeviceName=Devicedata.deviceId;
             if(Devicedata.metadata&&Devicedata.metadata.name)
             {
@@ -646,28 +645,17 @@
                 document.getElementById('DetailViewTitle2')
             );
 
-            var LightFirstValue;
-            if(Channeldata.latestValue.value.num!=undefined)
-            {
-                LightFirstValue = new Number(Channeldata.latestValue.value.num);
-                LightFirstValue = LightFirstValue.toFixed(3);
-            }
-            else
-            {
-                LightFirstValue = Channeldata.latestValue.value.str;
-            }
-
             //light
             ReactDOM.render(
         <table width="100%" border="0" cellspacing="0" cellpadding="0" className="height2">
             <tr>
-                <td><div className="light_detail_title">{Channeldata.latestValue.value.num}</div></td>
+                <td><div className="light_detail_title">-</div></td>
             </tr>
             <tr>
                 <td className="text-center"><LightView Devicedata={Devicedata} Channeldata={Channeldata}/></td>
             </tr>
             <tr>
-                <td id="detailtime" className="number">{FixLigthValue}</td>
+                <td id="detailtime" className="number">-</td>
             </tr>
         </table>
                 ,
