@@ -8,7 +8,7 @@
 {% endblock contain %}
 
 {% block NextContainer %}
-<div id="DetailView" class="modal hide fade LoginSignup" style="left:20%;top:1%;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+<div id="DetailView" class="modal hide fade LoginSignup" style="left:20%;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h3 id="DetailViewTitle" class="text-center">DetailViewTitle</h3>
@@ -121,7 +121,21 @@
 {% block JavaScript %}
 <script>
 	$(function() {
-		$($("#NavigationBar li")[0]).addClass("active");
+        $($("#NavigationBar li")[0]).addClass("active");
+        $('#DetailView').on('shown', function() {
+            if(document.getElementsByClassName('modal-backdrop fade in')[0])
+            {
+                if(document.getElementsByClassName('modal-backdrop fade in')[0].offsetHeight<640)
+                {
+                    $('#DetailView').css('top','0');
+                }
+                else
+                {
+                    $('#DetailView').css('top', '');
+                }
+            }
+            
+        })
 	});
 </script>
 <script>
