@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='chicken-attack',
-    version='0.6.6',
+    version='0.6.8',
     description='For terry test front end',
     author='WeiHao Huang',
     author_email='neilhuang@iii.org.tw',
