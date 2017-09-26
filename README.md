@@ -32,6 +32,10 @@ SWAGGER V2.1+event
 
 http://terryphptest.azurewebsites.net/swagger2-event.txt
 
+SWAGGER Safebox
+
+http://terryphptest.azurewebsites.net/safebox.txt
+
 
 
 test equipment data
