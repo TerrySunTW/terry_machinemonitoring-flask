@@ -35,6 +35,7 @@
 	var EditMachinePotocolType='';
 	var EditMachineObj;
 	var ServerMachineObj;
+	var SetupAllTemplateSelectionReturnCounter=0;
 	$(function() {
 		$($("#NavigationBar li")[2]).addClass("active");
 		if(EditMachineID=='')
@@ -92,6 +93,7 @@
 		}
 	}
 	function SetupAllTemplateSelection(){
+		HoldOn.open({theme: "sk-circle"});
 		for(var ProtocolTypeArrayIndex in ProtocolTypeArray){
 			var URL=EquipmentTemplateList.replace('{protocoltype}',ProtocolTypeArray[ProtocolTypeArrayIndex])+'?'+d.getTime();
 			axios.get(URL,{params: {protocoltype: ProtocolTypeArray[ProtocolTypeArrayIndex]}})
@@ -121,6 +123,11 @@
 					EditMachineObj=null;
 					LoadEquipmentEditor();
 				});
+				SetupAllTemplateSelectionReturnCounter++;
+				if(ProtocolTypeArray.length==SetupAllTemplateSelectionReturnCounter)
+				{
+					HoldOn.close();
+				}
 			}); 
         }
 	}
