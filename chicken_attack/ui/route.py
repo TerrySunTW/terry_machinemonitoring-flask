@@ -24,6 +24,10 @@ def history_html():
 def templatelist_html():
     return render_template('templatelist.html',WebInfo=WebInfo)
 
+@UI_ROUTE.route('/machinelist')
+def machinelist_html():
+    return render_template('machinelist.html',WebInfo=WebInfo)
+
 @UI_ROUTE.route('/edittemplate')
 @UI_ROUTE.route('/edittemplate/<templateID>/<protocoltype>')
 def edittemplate_html(templateID='',protocoltype=''):

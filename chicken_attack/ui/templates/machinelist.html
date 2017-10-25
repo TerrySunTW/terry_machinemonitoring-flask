@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+
+
+{% block contain %}
+			<form style="display: none" id="dropzone" action="" class="dropzone"></form>
+            <div class="row-fluid height1">
+                <div id="DataSection" class="span12">
+                    
+                </div>
+			</div>
+			
+
+
+{% endblock contain %}
+
+{% block BabelScript %}
+<script type="text/babel">
+	class DataView extends React.Component {
+		constructor(props) {
+			super(props);
+			this.state = {
+				jsondata: []
+			};
+		}
+		componentDidMount() {
+			this.GetData();
+		}
+		deleteMachine(MachineID){
+			var self = this;
+			if(confirm('Delete the item?'+TemplateID))
+			{
+				var URL=QonfigConfigTemplatesURL.replace('{ProtocolType}',ProtocolType).replace('{templateId}',TemplateID);
+				axios.delete(URL)
+				.then(function (response) {
+					if(response.data=="")
+					{
+						self.GetData();
+					}
+					else
+					{
+						alert(JSON.stringify(response));
+					}
+				});
+			}
+			
+		}
+		GetData(){
+			var self = this;
+			var d = new Date();
+            axios.get(martiniApiDevicesURL+'?'+d.getTime())
+            .then(function (response) {
+                self.setState({ jsondata:response.data });
+			});
+		}
+		render() {
+			var self = this;
+			return (
+				<table id="myTable" className="tablesorter-blue">
+					<thead>
+						<tr>
+							<th>MachineID</th>
+							<th>功能</th>
+						</tr>
+					</thead>
+					<tbody>
+						{this.state.jsondata.map(function(dataitem, i) {
+						  return (
+							<tr key={i}>
+								<td><a href={"/editmachine/"+dataitem.deviceId}>
+									{dataitem.deviceId}
+									</a>
+								</td>			
+								<td className="table-function-td">
+								<a href={"/editmachine/"+dataitem.deviceId} role="button" className="btn btn-inverse">修改</a>&nbsp;
+								</td>
+							</tr>
+						  );
+						})}
+					</tbody>
+				</table>
+			)
+		}
+	}
+		
+
+	  ReactDOM.render(
+		<DataView />,
+		document.getElementById('DataSection')
+	  );
+        
+</script>
+{% endblock BabelScript %}
