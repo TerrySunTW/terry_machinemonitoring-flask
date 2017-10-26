@@ -32,12 +32,14 @@
 {% block JavaScript %}
 
 <script>
+	window.DataCount=0;
 	Dropzone.options.dropzone = {
 		dictDefaultMessage:"請點擊或拖曳上傳檔案，上傳完畢請重新整理頁面",
 		acceptedFiles:".xlsx",
 		url:"/api/v1/config/templates/xlsx"
 	};
 	$(function() {
+		
 		$($("#NavigationBar li")[3]).addClass("active");
 		$("#toggleUpload").click(function(){
 			$("#reloadbutton").toggle();
@@ -65,8 +67,14 @@
 				jsondata: []
 			};
 		}
-		componentDidMount() {
+		componentWillMount() {
 			this.GetData();
+		}
+		componentDidUpdate(){
+			if(ProtocolTypeArray.length==window.DataCount)
+			{
+				HoldOn.close();
+			}
 		}
 		deleteTemplate(TemplateID,ProtocolType){
 			var self = this;
@@ -88,13 +96,15 @@
 			
 		}
 		GetData(){
+			HoldOn.open({theme: "sk-circle"});
 			var self = this;
 			var d = new Date();
-			
+			window.DataCount=0;
 			for(var ProtocolTypeArrayIndex in ProtocolTypeArray){
 				  var URL=EquipmentTemplateList.replace('{protocoltype}',ProtocolTypeArray[ProtocolTypeArrayIndex])+'?'+d.getTime();
 					axios.get(URL,{params: {protocoltype: ProtocolTypeArray[ProtocolTypeArrayIndex]}})
 					.then(function (response) {
+						window.DataCount++;
 						var DataResult=response.data;
 						for(var DataResultIndex in DataResult){	
 							DataResult[DataResultIndex]["ProtocolType"]=response.config.params.protocoltype;
@@ -110,7 +120,6 @@
 						
 					}); 
 			}
-			
 			
 		}
 		render() {
