@@ -81,7 +81,11 @@
 			if(confirm('Delete the item?'+TemplateID))
 			{
 				var URL=QonfigConfigTemplatesURL.replace('{ProtocolType}',ProtocolType).replace('{templateId}',TemplateID);
-				axios.delete(URL)
+				axios.delete(URL,
+				{headers: {
+					"Authorization" : "JWT " + Cookies.get('access_token')
+				}
+				})
 				.then(function (response) {
 					if(response.data=="")
 					{
@@ -102,7 +106,10 @@
 			window.DataCount=0;
 			for(var ProtocolTypeArrayIndex in ProtocolTypeArray){
 				  var URL=EquipmentTemplateList.replace('{protocoltype}',ProtocolTypeArray[ProtocolTypeArrayIndex])+'?'+d.getTime();
-					axios.get(URL,{params: {protocoltype: ProtocolTypeArray[ProtocolTypeArrayIndex]}})
+					axios.get(URL,{params: {protocoltype: ProtocolTypeArray[ProtocolTypeArrayIndex]},
+					headers: {
+					"Authorization" : "JWT " + Cookies.get('access_token')
+					}})
 					.then(function (response) {
 						window.DataCount++;
 						var DataResult=response.data;

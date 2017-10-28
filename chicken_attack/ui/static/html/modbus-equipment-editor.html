@@ -194,7 +194,9 @@
     }
     function SetupEditTemplateSelection(){
             var URL=EquipmentTemplateList.replace('{protocoltype}',EditMachinePotocolType)+'?'+d.getTime();
-            axios.get(URL,{params: {protocoltype: EditMachinePotocolType}})
+            axios.get(URL,{params: {protocoltype: EditMachinePotocolType},headers: {
+					"Authorization" : "JWT " + Cookies.get('access_token')
+				}})
             .then(function (response) {
                 var DataResult=response.data;
 

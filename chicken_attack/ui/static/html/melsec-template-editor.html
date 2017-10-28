@@ -356,7 +356,10 @@
 			$("#AddTemplate").html("更新Template");
 			$.ajax({
 			  type: "GET",
-			  dataType: "json",
+              dataType: "json",
+              beforeSend: function (xhr) {
+                    xhr.setRequestHeader ("Authorization", "JWT " + Cookies.get('access_token');
+                },
 			  url: QonfigConfigTemplatesURL.replace('{ProtocolType}',EditTemplateProtocoltype).replace('{templateId}',EditTemplateID)
 			}).done(function( Data ) {
 				CommandArray=Data.commands;
