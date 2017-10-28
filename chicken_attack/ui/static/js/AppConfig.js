@@ -8,7 +8,7 @@ if(Debug)
 	ApiDataSoureceUrl = "http://localhost:5000";
 }
 var martiniPagingSize = 20;
-var authURL=ApiDataSoureceUrl + "/api/v1/auth";
+var authURL=ApiDataSoureceUrl + "/auth";
 var martiniApiDevicesURL = ApiDataSoureceUrl + "/devices";
 var martiniApiDeviceChannelsURL = ApiDataSoureceUrl + "/devices/{deviceId}/channels";
 var martiniApiDeviceChannelDataURL = ApiDataSoureceUrl + "/devices/{deviceId}/channels/{channelId}/data";
