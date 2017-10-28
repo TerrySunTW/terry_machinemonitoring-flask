@@ -37,3 +37,7 @@ def edittemplate_html(templateID='',protocoltype=''):
 @UI_ROUTE.route('/editmachine/<machineID>')
 def editmachine_html(machineID=''):
     return render_template('editmachine.html',WebInfo=WebInfo,machineID=machineID)
+
+@UI_ROUTE.route('/login')
+def login_html():
+    return render_template('login.html',WebInfo=WebInfo)

@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+
+{% block contain %}
+         <div id="Login" class="modal height0 LoginSignup" style="width:460px;left:35%" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <h3 id="myModalLabel">Login</h3>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input id="username" type="text" placeholder="Account">
+                    <input id="password" type="password" placeholder="Password">
+                    <button id="LoginButton" type="button" class="btn btn-success btn-large">Login to my Account</button>
+                </form>
+            </div>
+        </div>
+
+
+{% endblock contain %}
+{% block JavaScript %}
+<script>
+	$(function() {
+        $('#LoginButton').click(function(){
+            $.ajax({
+			  type: "POST",
+              dataType: "json",
+              data: { username: $("#username").val(), password: $("#password").val() },
+			  url: authURL
+			}).done(function( Data ) {
+                if(Data.access_token)
+                {
+                    Cookies.set('access_token', Data.access_token);
+                    window.location.replace("/machinelist");
+                }
+                else
+                {
+                    alert("Login failed!!");
+                }
+			});
+        });
+	});
+</script>
+{% endblock JavaScript %}

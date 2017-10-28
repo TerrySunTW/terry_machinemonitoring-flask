@@ -28,7 +28,8 @@
     <script src="/static/js/Signal.js"></script>
     <script src="/static/js/SignalBinding.js"></script>
     <script src="/static/js/Chart.bundle.min.js"></script>
-	<script src="/static/js/HoldOn.min.js"></script>
+    <script src="/static/js/HoldOn.min.js"></script>
+    <script src="/static/js/js.cookie.js"></script>
 	<link rel="stylesheet" href="/static/css/HoldOn.min.css">
 	<link rel="stylesheet" href="/static/css/theme.blue.css">
 </head>
@@ -53,8 +54,10 @@
                     <ul id="NavigationBar" class="nav pull-right">
                         <li><a href="/monitor">生產監控</a></li>
                         <li><a href="/history">生產查詢</a></li>
-                        <li><a href="/machinelist">機台管理</a></li>
-						<li><a href="/templatelist">樣版管理</a></li>
+                        <li class="admin"><a href="/machinelist">機台管理</a></li>
+                        <li class="admin"><a href="/templatelist">樣版管理</a></li>
+                        <li id="login"><a href="/login">Login</a></li>
+                        <li id="logout" class="admin"><a href="#">Logout</a></li>
                         <li>
                             <div> 
                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -97,7 +100,20 @@
     <script src="/static/js/bootstrap.js"></script>
 	<script>
 		$().ready(function(){
-			setInterval(ShowTime, 500);
+            setInterval(ShowTime, 500);
+            if(Cookies.get('access_token'))
+            {
+                $("#login").hide();
+                $( "li.admin" ).show();
+            }
+            else
+            {
+                $( "li.admin" ).hide();
+            }
+            $("#logout").click(function(){
+                Cookies.remove('access_token');
+                window.location.replace("/monitor");
+            });
 		});
 		function ShowTime(){
 			var currentdate = new Date(); 
