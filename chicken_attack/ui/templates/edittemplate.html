@@ -101,7 +101,7 @@
 			contentType: "application/json",
 			dataType:'json',
 			beforeSend: function (xhr) {
-				xhr.setRequestHeader ("Authorization", "JWT " + Cookies.get('access_token');
+				xhr.setRequestHeader ("Authorization", "JWT " + Cookies.get('access_token'));
 			},
 			url: QonfigConfigTemplatesURL.replace('{ProtocolType}',EditTemplateProtocoltype).replace('{templateId}',EditTemplateID),
 			data: SubmitJsonStringData,
@@ -140,7 +140,7 @@
 			contentType: "application/json",
 			dataType:'json',
 			beforeSend: function (xhr) {
-				xhr.setRequestHeader ("Authorization", "JWT " + Cookies.get('access_token');
+				xhr.setRequestHeader ("Authorization", "JWT " + Cookies.get('access_token'));
 			},
 			url: QonfigConfigCreateTemplatesURL.replace('{ProtocolType}',EditTemplateProtocoltype),
 			data: SubmitJsonStringData,

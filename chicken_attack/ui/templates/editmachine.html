@@ -156,7 +156,7 @@
 			dataType: "json",
 			data: SubmitJsonStringData,
 			beforeSend: function (xhr) {
-				xhr.setRequestHeader ("Authorization", "JWT " + Cookies.get('access_token');
+				xhr.setRequestHeader ("Authorization", "JWT " + Cookies.get('access_token'));
 			},
 			url: QonfigConfigEquipmentsURL.replace('{ProtocolType}',CurrentProtocolType),
 			statusCode : {

@@ -367,7 +367,7 @@
 			  type: "GET",
               dataType: "json",
               beforeSend: function (xhr) {
-                    xhr.setRequestHeader ("Authorization", "JWT " + Cookies.get('access_token');
+                    xhr.setRequestHeader ("Authorization", "JWT " + Cookies.get('access_token'));
                 },
 			  url: QonfigConfigTemplatesURL.replace('{ProtocolType}',EditTemplateProtocoltype).replace('{templateId}',EditTemplateID)
 			}).done(function( Data ) {
