@@ -36,6 +36,14 @@ SWAGGER Safebox
 
 http://terryphptest.azurewebsites.net/safebox.txt
 
+new API SWAGGER doc
+
+http://terryphptest.azurewebsites.net/swagger-safeboxv2.2.txt
+
+http://terryphptest.azurewebsites.net/swagger-qonfigv2.2.txt
+
+http://terryphptest.azurewebsites.net/swagger-martiniv2.2.txt
+
 
 
 test equipment data
