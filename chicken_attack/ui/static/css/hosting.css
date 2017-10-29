@@ -986,3 +986,22 @@ input[type="checkbox"] {
 .SubmitMachineButton {
     margin-bottom: 15px;
 }
+
+.jsontable {
+    width:100%;
+    border: 1px;
+}
+
+.jsontable table{
+    width:100%;
+    border: 1px;
+}
+
+.jsontable td{
+    border-width:1px 1px 1px 0 !important;
+}
+
+.jsontabletitle{
+    background-color:#A9BCCC !important;
+    width:35%;
+}

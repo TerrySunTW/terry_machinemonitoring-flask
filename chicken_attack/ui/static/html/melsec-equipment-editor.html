@@ -305,11 +305,10 @@
         });
 		var TbodyHtml="";
 		for(var i=0;i<ServerMachineObj.length;i++){
-            var Setting=JSON.stringify(ServerMachineObj[i], null, '\t');
 			TbodyHtml+="<tr>"+
 				"<td>"+ServerMachineObj[i].equipment.equipmentId+"</td>"+
 				"<td>"+ServerMachineObj[i].equipment.equipmentName+"</td>"+
-                "<td><pre style='overflow-x: auto; height: 100px;'>"+Setting+"</pre></td>"+
+                "<td>"+JsonToTableRunner(ServerMachineObj[i])+"</td>"+
 				"<td>"+
                 "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"EditSubMachineArrayByID('"+ServerMachineObj[i].equipment.equipmentId+"')\">編輯</a>"+
                 "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveSubMachineArrayByID('"+ServerMachineObj[i].equipment.equipmentId+"')\">刪除</a>"+
