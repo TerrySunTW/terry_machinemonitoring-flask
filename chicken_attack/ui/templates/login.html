@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+﻿{% extends "layout.html" %}
 
 
 {% block contain %}
@@ -24,20 +24,24 @@
             $.ajax({
 			  type: "POST",
               dataType: "json",
-              data: { username: $("#username").val(), password: $("#password").val() },
-			  url: authURL
-			}).done(function( Data ) {
-                if(Data.access_token)
-                {
-                    Cookies.set('access_token', Data.access_token);
+              contentType: "application/json",
+              data: JSON.stringify({ username: $("#username").val(), password: $("#password").val() }),
+              url: authURL,
+              statusCode : {
+					401: function (data, textStatus, jqxhr) {
+                            alert("Login failed!!");
+						},
+					500: function (data, textStatus, jqxhr) {
+                            alert("System Error!!");
+						}
+
+                },
+                success: function (response) {
+                    Cookies.set('access_token', response.access_token);
                     window.location.replace("/machinelist");
                 }
-                else
-                {
-                    alert("Login failed!!");
-                }
-			});
+            });
         });
-	});
+    });
 </script>
 {% endblock JavaScript %}
