@@ -1006,7 +1006,12 @@ input[type="checkbox"] {
     width:35%;
 }
 
+
 #MachineTab a{
     padding-left: 50px !important;
     padding-right: 50px !important;
+}
+
+.admin{
+    display: none;
 }
