@@ -36,7 +36,10 @@
 	Dropzone.options.dropzone = {
 		dictDefaultMessage:"請點擊或拖曳上傳檔案，上傳完畢請重新整理頁面",
 		acceptedFiles:".xlsx",
-		url:"/api/v1/config/templates/xlsx"
+		url:"/api/v1/config/templates/xlsx",
+		headers: {
+			'Authorization': "JWT " + Cookies.get('access_token')
+		}
 	};
 	$(function() {
 		
