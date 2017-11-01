@@ -1005,3 +1005,7 @@ input[type="checkbox"] {
     background-color:#A9BCCC !important;
     width:35%;
 }
+
+.admin{
+    display: none;
+}
