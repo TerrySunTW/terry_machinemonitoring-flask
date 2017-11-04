@@ -39,7 +39,13 @@
 		url:"/api/v1/config/templates/xlsx",
 		headers: {
 			'Authorization': "JWT " + Cookies.get('access_token')
-		}
+		},
+		init: function() {
+            this.on("error", function(file, response) {
+                $(file.previewElement).find('.dz-error-message').text(response.message);
+            });
+
+        }
 	};
 	$(function() {
 		
