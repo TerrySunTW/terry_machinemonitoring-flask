@@ -1005,7 +1005,10 @@ input[type="checkbox"] {
     background-color:#A9BCCC !important;
     width:35%;
 }
-
+.jsontabletitle2{
+    background-color:#A9BCCC !important;
+    width:15%;
+}
 
 #MachineTab a{
     padding-left: 50px !important;

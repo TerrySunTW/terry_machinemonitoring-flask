@@ -13,7 +13,7 @@
 					</div>
 				</div>
 			</div>
-            <div class="row-fluid height1">
+            <div class="row-fluid">
                 <div id="DataSection" class="span12">
                     <table id="myTable" class="tablesorter-blue">
 						<thead>
@@ -68,8 +68,16 @@
 	function AppendNewTab(TabName,SelectdeviceIds){
 		if(TabName=='')
 		{
-			NewTabStart++;
-			TabName='NewTab'+NewTabStart;
+			while(true)
+			{
+				NewTabStart++;
+				TabName='NewTab'+NewTabStart;
+				if($('#'+TabName).length==0)
+				{
+					break;
+				}
+			}
+			
 		}
 		
 		var TableBody='';
@@ -87,8 +95,10 @@
 		SelectionItems+='</select>';
 		TableBody+=
 		'<tr id="tr_'+TabName+'"><td>'+
-		'<input id="tabname_'+TabName+'" class="tabname" type="text1" value="'+TabName+'">'+
-		SelectionItems+
+		'<table class="jsontable"><tbody>'+
+'<tr><td class="jsontabletitle2">Tab Name:</td><td><input id="tabname_'+TabName+'" class="tabname" type="text1" value="'+TabName+'">'+'</td></tr>'+
+'<tr><td class="jsontabletitle2">Devies: </td><td>'+SelectionItems+'</td></tr>'+
+'</table>'+
 		'</td><td class="table-function-td">'+
 			'<a href="javascript:void(0)" role="button" class="btn btn-inverse" onclick="RemoveTab(\''+TabName+'\')">刪除</a>&nbsp;'+
 		'</td></tr>';
