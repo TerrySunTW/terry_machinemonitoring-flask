@@ -117,7 +117,6 @@
 	}
 	function SaveToServer()
 	{
-		
 		var tabdata=[];
 		for (var index = 0; index < $("select.tabitem").length; index++) {
 			var tabitem={
@@ -129,7 +128,6 @@
 				tabdata.push(tabitem);	
 			}
 		}
-		
 		var webconfig={
 			"webname": Cookies.get('webname'),
 			"tabdata": tabdata
