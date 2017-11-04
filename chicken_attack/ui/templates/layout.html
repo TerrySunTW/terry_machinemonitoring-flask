@@ -15,8 +15,8 @@
 
     <link href="/static/css/hosting.css" rel="stylesheet" media="all">
     <link href="/static/css/dropzone.min.css" rel="stylesheet" media="all">
+    <link href="/static/css/selectize.bootstrap2.css" rel="stylesheet" media="all">
     <script src="/static/js/dropzone.min.js"></script>
-
     <script src="/static/js/es6-promise.auto.min.js"></script>
     <script src="/static/js/modernizr.js"></script>
     <script src="/static/js/AppConfig.js"></script>
@@ -31,6 +31,7 @@
     <script src="/static/js/HoldOn.min.js"></script>
     <script src="/static/js/js.cookie.js"></script>
     <script src="/static/js/lib.js"></script>
+    <script src="/static/js/selectize.min.js"></script>
 	<link rel="stylesheet" href="/static/css/HoldOn.min.css">
 	<link rel="stylesheet" href="/static/css/theme.blue.css">
 </head>
@@ -46,7 +47,7 @@
                 <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
 
                 <!-- Be sure to leave the brand out there if you want it shown -->
-                <a class="brand" href="/monitor">{{WebInfo.Title}}</a>
+                <a id="WebTitle" class="brand" href="/monitor">{{WebInfo.Title}}</a>
 
                 <!-- Everything you want hidden at 940px or less, place within here -->
                 <div class="nav-collapse collapse">
@@ -55,6 +56,7 @@
                     <ul id="NavigationBar" class="nav pull-right">
                         <li><a href="/monitor">生產監控</a></li>
                         <li><a href="/history">生產查詢</a></li>
+                        <li class="admin"><a href="/tablist">TAB管理</a></li>
                         <li class="admin"><a href="/machinelist">機台管理</a></li>
                         <li class="admin"><a href="/templatelist">樣版管理</a></li>
                         <li id="login"><a href="/login">Login</a></li>
@@ -100,7 +102,24 @@
 
     <script src="/static/js/bootstrap.js"></script>
 	<script>
+        var d = new Date();
 		$().ready(function(){
+            if(Cookies.get('webname'))
+            {
+                SetupTitle(Cookies.get('webname'));
+            }
+            else
+            {
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: webconfigURL+'?'+d.getTime()
+                }).done(function( Data ) {
+                    SetupTitle(Data.webname);
+                    Cookies.set('webname', Data.webname);
+                    Cookies.set('tabdata', JSON.stringify(Data.tabdata));
+                });
+            }
             setInterval(ShowTime, 500);
             if(Cookies.get('access_token'))
             {
@@ -115,7 +134,14 @@
                 Cookies.remove('access_token');
                 window.location.replace("/monitor");
             });
-		});
+        });
+        function SetupTitle(title){
+            if(title && title !='undefined')
+            {
+                document.title=title;
+                $("#WebTitle").html(title);
+            }
+        }
 		function ShowTime(){
 			var currentdate = new Date(); 
 			var dateString = currentdate.getFullYear() +"/" +padLeft((currentdate.getMonth()+1),2)

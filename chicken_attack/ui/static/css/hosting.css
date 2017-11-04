@@ -1015,3 +1015,7 @@ input[type="checkbox"] {
 .admin{
     display: none;
 }
+
+.device-tabs{
+    font-size: 26px;
+}

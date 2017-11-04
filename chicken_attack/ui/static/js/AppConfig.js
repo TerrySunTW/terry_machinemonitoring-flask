@@ -8,6 +8,7 @@ if(Debug)
 	ApiDataSoureceUrl = "http://localhost:5000";
 }
 var martiniPagingSize = 20;
+var webconfigURL=ApiDataSoureceUrl + "/safeboxes/webconfig";
 var authURL=ApiDataSoureceUrl + "/auth";
 var martiniApiDevicesURL = ApiDataSoureceUrl + "/devices";
 var martiniApiDeviceChannelsURL = ApiDataSoureceUrl + "/devices/{deviceId}/channels";
@@ -35,6 +36,7 @@ var ChartLength=30;
 //only for testing
 if(Debug)
 {
+	webconfigURL = ApiDataSoureceUrl + "/static/testing_data/web-config.txt"; 
 	authURL = ApiDataSoureceUrl + "/static/testing_data/auth.txt";
 	martiniApiDevicesURL = ApiDataSoureceUrl + "/static/testing_data/martini-devices.txt";
 	martiniApiDeviceChannelsURL = ApiDataSoureceUrl + "/static/testing_data/martini-device-{deviceId}-channels.txt";

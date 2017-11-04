@@ -41,3 +41,7 @@ def editmachine_html(machineID=''):
 @UI_ROUTE.route('/login')
 def login_html():
     return render_template('login.html',WebInfo=WebInfo)
+
+@UI_ROUTE.route('/tablist')
+def tablist_html():
+    return render_template('tablist.html',WebInfo=WebInfo)

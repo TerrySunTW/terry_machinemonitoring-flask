@@ -1,0 +1,143 @@
+{% extends "layout.html" %}
+
+
+{% block contain %}
+			<div class="row height1">
+				<div class="product_text">
+					<div class="span4">
+					</div>
+					<div class="span4">
+					</div>
+					<div class="span12 text-right" style="padding-top:10px;">
+						<a href="javascript:void(0)" role="button" class="btn btn-danger" onclick="AppendNewTab('',[])">新增TAB</a>
+					</div>
+				</div>
+			</div>
+            <div class="row-fluid height1">
+                <div id="DataSection" class="span12">
+                    <table id="myTable" class="tablesorter-blue">
+						<thead>
+							<tr>
+								<th>Tabs</th>
+								<th>功能</th>
+							</tr>
+						</thead>
+						<tbody id="tablebody">
+							
+						</tbody>
+					</table>
+                </div>
+			</div>
+			
+
+
+{% endblock contain %}
+{% block JavaScript %}
+<script>
+	var NewTabStart=0;
+	var Devices=[];
+	var d = new Date();
+	$(function() {
+		$($("#NavigationBar li")[2]).addClass("active");
+		
+		$.ajax({
+			  type: "GET",
+              dataType: "json",
+			  url: martiniApiDevicesURL+'?'+d.getTime()
+			})
+			.done(function(Data) {
+				Devices=Data;
+				SetupTabs();
+			});
+		
+			
+	});
+	function SetupTabs()
+	{
+		$.ajax({
+			type: "GET",
+			dataType: "json",
+			url: webconfigURL+'?'+d.getTime()
+		}).done(function( Data ) {
+			Cookies.set('tabdata', JSON.stringify(Data.tabdata));
+			Data.tabdata.forEach(function(Item) {
+				AppendNewTab(Item.name,Item.tabitems);
+			});
+		});
+	}
+	function AppendNewTab(TabName,SelectdeviceIds){
+		if(TabName=='')
+		{
+			NewTabStart++;
+			TabName='NewTab'+NewTabStart;
+		}
+		
+		var TableBody='';
+		var SelectionItems='<select id="tab_'+TabName+'" multiple class="tabitem" style="width:40%" placeholder="Select a device...">';
+		Devices.forEach(function(Device) {
+			if(SelectdeviceIds.indexOf(Device.deviceId)>-1)
+			{
+				SelectionItems+='<option value="'+Device.deviceId+'" selected>'+Device.deviceId+'</option>';
+			}
+			else
+			{
+				SelectionItems+='<option value="'+Device.deviceId+'">'+Device.deviceId+'</option>';
+			}
+		})
+		SelectionItems+='</select>';
+		TableBody+=
+		'<tr id="tr_'+TabName+'"><td>'+
+		'<input id="tabname_'+TabName+'" class="tabname" type="text1" value="'+TabName+'">'+
+		SelectionItems+
+		'</td><td class="table-function-td">'+
+			'<a href="javascript:void(0)" role="button" class="btn btn-inverse" onclick="RemoveTab(\''+TabName+'\')">刪除</a>&nbsp;'+
+		'</td></tr>';
+		$("#tablebody").append(TableBody);
+		$("#tab_"+TabName).selectize({
+				maxItems: 3
+		});
+		$("#tab_"+TabName).change(function(){
+			SaveToServer();
+		});
+	}
+	function RemoveTab(deviceID)
+	{
+		$('#tr_'+deviceID).remove();
+		SaveToServer();
+	}
+	function SaveToServer()
+	{
+		
+		var tabdata=[];
+		for (var index = 0; index < $("select.tabitem").length; index++) {
+			var tabitem={
+				"name":$("input.tabname").eq(index).val().replace(" ", ""),
+				"tabitems":$("select.tabitem").eq(index).val()
+			};
+			if(tabitem.tabitems!=null)
+			{
+				tabdata.push(tabitem);	
+			}
+		}
+		
+		var webconfig={
+			"webname": Cookies.get('webname'),
+			"tabdata": tabdata
+		};
+		Cookies.set('tabdata', JSON.stringify(tabdata));
+		//save webconfig to server
+		$.ajax({
+			type: "PUT",
+			dataType: "json",
+			contentType: "application/json",
+			data: JSON.stringify(webconfig),
+			url: webconfigURL,
+			statusCode : {
+				400: function (data, textStatus, jqxhr) {
+						alert("failed!!(400)");
+					}
+			}
+		});
+	}
+</script>
+{% endblock JavaScript %}

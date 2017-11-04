@@ -449,6 +449,11 @@
                 super(props);
             }
             render() {
+                //tab device checking
+                var tabdevices=Cookies.getJSON('tabdata')[this.props.SelectedTabIndex];
+                if(tabdevices.tabitems.indexOf(this.props.devicedata.deviceId)<0){
+                    return (null);
+                }
                 //IF doesn't exist , don't display
 				var TypeNumber=Number(this.props.reactkey);
                 var Wapper1Class="span4 height3";
@@ -521,6 +526,27 @@
             }
         }
         class DevicesAP extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {
+                    SelectedTabIndex: 0
+                };
+                this.changeTab = this.changeTab.bind(this);
+            }
+            changeTab(e) {
+                this.setState({
+                    SelectedTabIndex:e.target.getAttribute('data-i')
+                });
+            }
+            renderLi(idx,dataitemname) {
+                var activestr="";
+                if(idx==this.state.SelectedTabIndex)
+                {
+                    activestr="active";
+                }
+                return <li className={activestr}><a href="javascript:void(0)" data-i={idx} onClick={this.changeTab}>{dataitemname}</a>
+                                </li>
+            }
             render() {
                 let AddContent=null;
 				if(window.AvaliableDeviceIDs.length<3)
@@ -535,11 +561,22 @@
                         </div>
                     )
                 }
-                        
+                
                 return (
                     <div>
+                        <ul id="MachineTab" className="nav nav-tabs device-tabs">
+                            {Cookies.getJSON('tabdata').map((dataitem,idx) => (
+                                this.renderLi(idx,dataitem.name)
+                            ))}
+                            
+                        </ul>
                         {this.props.Devices.map((dataitem,idx) => (
-                            <SingleDevice key={idx} reactkey={idx} devicedata={dataitem} ChannelsLatestdata={this.props.DevicesChannelsLatestdata[dataitem.deviceId]} />
+                            <SingleDevice 
+                            key={idx} 
+                            reactkey={idx} 
+                            devicedata={dataitem} 
+                            SelectedTabIndex={this.state.SelectedTabIndex} 
+                            ChannelsLatestdata={this.props.DevicesChannelsLatestdata[dataitem.deviceId]} />
                         ))}
                         {AddContent}
                     </div>
