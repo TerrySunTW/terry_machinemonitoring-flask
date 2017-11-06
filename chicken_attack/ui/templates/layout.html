@@ -151,7 +151,10 @@
             }
             else
             {
-                //$( "li.admin" ).hide();
+                if((window.location.href.indexOf("history")==-1&&window.location.href.indexOf("monitor")==-1))
+                {
+                    window.location.replace("/monitor");
+                }
             }
             $("#logout").click(function(){
                 Cookies.remove('access_token');
