@@ -151,7 +151,9 @@
             }
             else
             {
-                if((window.location.href.indexOf("history")==-1&&window.location.href.indexOf("monitor")==-1))
+                if(window.location.href.indexOf("history")==-1&&
+                window.location.href.indexOf("monitor")==-1&&
+                window.location.href.indexOf("login")==-1)
                 {
                     window.location.replace("/monitor");
                 }
