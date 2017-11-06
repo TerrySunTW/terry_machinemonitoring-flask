@@ -33,10 +33,30 @@
 		GetData(){
 			var self = this;
 			var d = new Date();
-            axios.get(martiniApiDevicesURL+'?'+d.getTime())
-            .then(function (response) {
-                self.setState({ jsondata:response.data });
-			});
+			for(var ProtocolTypeArrayIndex in ProtocolTypeArray){
+                    var ProtocolType=ProtocolTypeArray[ProtocolTypeArrayIndex];
+                    var URL=QonfigConfigEquipmentsURL.replace('{ProtocolType}',ProtocolType);
+                    axios.get(URL,{params: {protocoltype:ProtocolType }})
+                    .then(function (response) {
+                        var DataResult=response.data;
+                        for(var DataResultIndex in DataResult){	
+                            if(DataResult[DataResultIndex].equipment)
+                            {
+								var jsondata = self.state.jsondata.slice()
+								jsondata.push(DataResult[DataResultIndex].equipment.equipmentId)
+								self.setState({ jsondata: jsondata })
+                            }
+                            else if(DataResult[DataResultIndex].equipments)
+                            {
+								var jsondata = self.state.jsondata.slice()
+                                DataResult[DataResultIndex].equipments.forEach(function (item) {
+									jsondata.push(item.equipmentId);
+								});
+								self.setState({ jsondata: jsondata })
+                            }
+                        }
+                    });
+            }
 		}
 		render() {
 			var self = this;
@@ -52,12 +72,12 @@
 						{this.state.jsondata.map(function(dataitem, i) {
 						  return (
 							<tr key={i}>
-								<td><a href={"/editmachine/"+dataitem.deviceId}>
-									{dataitem.deviceId}
+								<td><a href={"/editmachine/"+dataitem}>
+									{dataitem}
 									</a>
 								</td>			
 								<td className="table-function-td">
-								<a href={"/editmachine/"+dataitem.deviceId} role="button" className="btn btn-inverse">修改</a>&nbsp;
+								<a href={"/editmachine/"+dataitem} role="button" className="btn btn-inverse">修改</a>&nbsp;
 								</td>
 							</tr>
 						  );
