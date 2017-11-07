@@ -38,7 +38,7 @@
 	var Devices=[];
 	var d = new Date();
 	$(function() {
-		$($("#NavigationBar li")[2]).addClass("active");
+		$('a[href$="/tablist"]').parent().addClass("active");
 		
 		$.ajax({
 			  type: "GET",

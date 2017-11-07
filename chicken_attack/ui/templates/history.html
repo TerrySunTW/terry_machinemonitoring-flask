@@ -14,7 +14,7 @@
 {% block JavaScript %}
 <script>
 	$(function() {
-		$($("#NavigationBar li")[1]).addClass("active");
+		$('a[href$="/history"]').parent().addClass("active");
 	});
 </script>
 {% endblock JavaScript %}

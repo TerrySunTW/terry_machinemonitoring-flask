@@ -20,6 +20,7 @@
 {% block JavaScript %}
 <script>
 	$(function() {
+        $('a[href$="/login"]').parent().addClass("active");
         $('#LoginButton').click(function(){
             $.ajax({
 			  type: "POST",

@@ -258,7 +258,7 @@
 		$('#ChannelEditDiv').on('hidden', function () {
             $('#ChannelEditDiv').css('z-index', -150);
         })
-		$($("#NavigationBar li")[4]).addClass("active");
+		$('a[href$="/templatelist"]').parent().addClass("active");
 		if(EditTemplateID!='')
 		{
             $("#templateID").prop('disabled', true);

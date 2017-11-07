@@ -37,7 +37,7 @@
 	var ServerMachineObj;
 	var SetupAllTemplateSelectionReturnCounter=0;
 	$(function() {
-		$($("#NavigationBar li")[2]).addClass("active");
+		$('a[href$="/machinelist"]').parent().addClass("active");
 		if(EditMachineID=='')
 		{
 			SetupAllTemplateSelection();

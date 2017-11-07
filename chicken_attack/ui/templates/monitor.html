@@ -121,7 +121,7 @@
 {% block JavaScript %}
 <script>
 	$(function() {
-        $($("#NavigationBar li")[0]).addClass("active");
+        $('a[href$="/monitor"]').parent().addClass("active");
         $('#DetailView').on('shown', function() {
             if(document.getElementsByClassName('modal-backdrop fade in')[0])
             {
