@@ -46,20 +46,6 @@ http://terryphptest.azurewebsites.net/swagger-martiniv2.2.txt
 
 
 
-test equipment data
-{
-	"connection": {
-		"tcp": {
-			"host": "192.168.20.61",
-			"port": 9600
-		}
-	},
-	"equipment": {
-		"equipmentId": "roof-01",
-		"templateId": "fx3u-ht"
-	},
-	"pollingPeriodMS": 500,
-	"requestTimeoutMS": 500
-}
+{"username": "admin", "password": "p@55w0rd"}
 
 cNzVoz3v0tm8ukpkK2n0
