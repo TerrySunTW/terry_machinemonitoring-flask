@@ -125,7 +125,7 @@
 	<script>
         var d = new Date();
 		$().ready(function(){
-            if(Cookies.get('webname'))
+            if(Cookies.get('webname')&&Cookies.get('webname')!='undefined')
             {
                 SetupTitle(Cookies.get('webname'));
             }
