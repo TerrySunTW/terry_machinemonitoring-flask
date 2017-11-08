@@ -139,6 +139,7 @@
                     SetupTitle(Data.webname);
                     Cookies.set('webname', Data.webname);
                     Cookies.set('tabdata', JSON.stringify(Data.tabdata));
+                    location.reload();
                 });
             }
             setInterval(ShowTime, 500);
