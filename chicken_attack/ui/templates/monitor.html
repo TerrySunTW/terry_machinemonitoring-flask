@@ -448,6 +448,16 @@
             constructor(props) {
                 super(props);
             }
+            EditIcon(){
+                if(Cookies.get('access_token'))
+                {
+                    return <a href={"/editmachine/"+this.props.devicedata.deviceId}><img src="static/images/editing_icon.png" alt=""/></a>
+                }
+                else
+                {
+                    return null;
+                }
+            }
             render() {
                 //tab device checking
                 var tabdevices=Cookies.getJSON('tabdata')[this.props.SelectedTabIndex];
@@ -480,7 +490,9 @@
 							<table width="100%" border="0" cellspacing="0" cellpadding="0">
 										<tbody><tr>
 											<td>
-												<div className="icon_space"><a href={"/editmachine/"+this.props.devicedata.deviceId}><img src="static/images/editing_icon.png" alt=""/></a></div>
+                                                <div className="icon_space">
+                                                    {this.EditIcon()}  
+                                                </div>
 											</td>
 											 <td>
 												<div className="edit">{DeviceName}</div>
@@ -510,7 +522,9 @@
                 return false;
             }
             render() {
-                return (
+                if(Cookies.get('access_token'))
+                {
+                    return (
                     <div className="span4 height3">
                          <a href="/editmachine">
                         <div className="product_type0">
@@ -522,7 +536,13 @@
                         </div>
                         </a>
                     </div>
-                )
+                    )
+                }
+                else
+                {
+                    return null;
+                }
+                
             }
         }
         class DevicesAP extends React.Component {
@@ -549,7 +569,7 @@
             }
             render() {
                 let AddContent=null;
-				if(window.AvaliableDeviceIDs.length<3)
+				if(window.AvaliableDeviceIDs.length<5)
 				{
 					AddContent = <NewDeviceView key="NewMachineView" />;
                 }
