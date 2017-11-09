@@ -139,7 +139,23 @@
                     SetupTitle(Data.webname);
                     Cookies.set('webname', Data.webname);
                     Cookies.set('tabdata', JSON.stringify(Data.tabdata));
-                    location.reload();
+                    if(Cookies.get('GetWebConfigRetrytime')!='undefined')
+                    {
+                        Cookies.set('GetWebConfigRetrytime', Cookies.get('GetWebConfigRetrytime')+1);    
+                    }
+                    else
+                    {
+                        Cookies.set('GetWebConfigRetrytime', 1); 
+                    }
+                    
+                    if(Cookies.get('GetWebConfigRetrytime')==1)
+                    {
+                        location.reload();
+                    }
+                    else
+                    {
+                        alert("Config file loading fail!! Please config TAB setting first!!")
+                    }
                 });
             }
             setInterval(ShowTime, 500);
@@ -147,7 +163,7 @@
             {
                 $("#login").hide();
                 $( "li.admin" ).show();
-                $( "button.admin" ).show();
+                $( "a.admin" ).show();
                 
             }
             else
