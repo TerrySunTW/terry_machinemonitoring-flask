@@ -192,6 +192,9 @@
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(webconfig),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader ("Authorization", "JWT " + Cookies.get('access_token'));
+                    },
                     url: webconfigURL,
                     statusCode : {
                         400: function (data, textStatus, jqxhr) {
