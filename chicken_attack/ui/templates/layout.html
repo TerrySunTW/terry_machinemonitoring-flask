@@ -154,9 +154,12 @@
                     }
                     else
                     {
-                        alert("Config file loading fail!! Please config TAB setting first!!")
+                        alert("Config file loading fail!! Please config TAB setting first!!");
                     }
-                });
+                }).fail(function( jqXHR, textStatus, errorThrown ) {
+                    alert("Config file loading fail!! Please config TAB setting first!!");
+                })
+                ;
             }
             setInterval(ShowTime, 500);
             if(Cookies.get('access_token'))
