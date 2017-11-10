@@ -141,7 +141,7 @@
                     Cookies.set('tabdata', JSON.stringify(Data.tabdata));
                     if(Cookies.get('GetWebConfigRetrytime')!='undefined')
                     {
-                        Cookies.set('GetWebConfigRetrytime', Cookies.get('GetWebConfigRetrytime')+1);    
+                        Cookies.set('GetWebConfigRetrytime', parseInt(Cookies.get('GetWebConfigRetrytime'))+1);    
                     }
                     else
                     {
