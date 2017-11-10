@@ -124,43 +124,39 @@
     <script src="/static/js/bootstrap.js"></script>
 	<script>
         var d = new Date();
+        window.tabdata=[];
 		$().ready(function(){
-            if(Cookies.get('webname')&&Cookies.get('webname')!='undefined')
-            {
-                SetupTitle(Cookies.get('webname'));
-            }
-            else
-            {
-                $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    url: webconfigURL+'?'+d.getTime()
-                }).done(function( Data ) {
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: webconfigURL+'?'+d.getTime()
+            }).done(function( Data ) {
+                if(Data.tabdata)
+                {
                     SetupTitle(Data.webname);
-                    Cookies.set('webname', Data.webname);
-                    Cookies.set('tabdata', JSON.stringify(Data.tabdata));
-                    if(Cookies.get('GetWebConfigRetrytime')!='undefined')
+                    window.tabdata=Data.tabdata;
+                }
+                else
+                {
+                    if(!isNaN(Cookies.get('GetWebConfigRetrytime')))
                     {
                         Cookies.set('GetWebConfigRetrytime', parseInt(Cookies.get('GetWebConfigRetrytime'))+1);    
                     }
                     else
                     {
-                        Cookies.set('GetWebConfigRetrytime', 1); 
-                    }
-                    
-                    if(Cookies.get('GetWebConfigRetrytime')==1)
-                    {
+                        Cookies.set('GetWebConfigRetrytime', "1"); 
                         location.reload();
                     }
-                    else
-                    {
-                        alert("Config file loading fail!! Please config TAB setting first!!");
-                    }
-                }).fail(function( jqXHR, textStatus, errorThrown ) {
+                }
+            }).fail(function( jqXHR, textStatus, errorThrown ) {
+                if(window.location.href.substring(window.location.href.lastIndexOf('/')+1)=="monitor")
+                {
+                    Logout();
                     alert("Config file loading fail!! Please config TAB setting first!!");
-                })
-                ;
-            }
+                    window.location.replace("/login");
+                }
+            });
+            
             setInterval(ShowTime, 500);
             if(Cookies.get('access_token'))
             {
@@ -179,16 +175,16 @@
                 }
             }
             $("#logout").click(function(){
-                Cookies.remove('access_token');
+                Logout();
                 window.location.replace("/monitor");
             });
+            
 
             $("#SubmitChangeTitle").click(function(){
                 var webconfig={
                     "webname": $("#inputNewTitle").val(),
-                    "tabdata": JSON.stringify(Cookies.getJSON('tabdata'))
+                    "tabdata": window.tabdata
                 };
-                Cookies.set('webname',$("#inputNewTitle").val())
                 SetupTitle($("#inputNewTitle").val());
                 $.ajax({
                     type: "PUT",
@@ -207,6 +203,11 @@
                 });
             });
         });
+        function Logout(){
+            Cookies.remove('access_token');
+            Cookies.remove('tabdata');
+            Cookies.remove('webname');
+        }
         function SetupTitle(title){
             if(title && title !='undefined')
             {
@@ -230,7 +231,7 @@
 			return str;
 			else
 			return padLeft("0" +str,lenght);
-		}
+        }
 	</script>
     {% block JavaScript %}{% endblock JavaScript %}
     

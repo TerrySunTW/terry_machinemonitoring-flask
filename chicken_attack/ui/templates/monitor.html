@@ -460,7 +460,7 @@
             }
             render() {
                 //tab device checking
-                var tabdevices=Cookies.getJSON('tabdata')[this.props.SelectedTabIndex];
+                var tabdevices=window.tabdata[this.props.SelectedTabIndex];
                 if(tabdevices.tabitems.indexOf(this.props.devicedata.deviceId)<0){
                     return (null);
                 }
@@ -585,7 +585,7 @@
                 return (
                     <div>
                         <ul id="MachineTab" className="nav nav-tabs device-tabs">
-                            {Cookies.getJSON('tabdata').map((dataitem,idx) => (
+                            {window.tabdata.map((dataitem,idx) => (
                                 this.renderLi(idx,dataitem.name)
                             ))}
                             
