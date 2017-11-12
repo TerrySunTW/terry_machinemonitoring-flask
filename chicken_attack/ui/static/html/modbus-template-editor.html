@@ -6,7 +6,9 @@
                     </div>
                 </div>
             </div>
-
+            <div style="text-align:right">
+                <a id="AddNewCommand" href="javascript:void(0)" role="button" data-toggle="modal" class="btn btn-danger2">新增Command</a>
+            </div>
 			<!--Command-->
 			<div class="row-fluid height3">
                 <div class="span12s">
@@ -25,54 +27,69 @@
                     </table>
                 </div>
             </div>
-            <div class="row ">
-                <div class="span12">
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <td width="22%" scope="row">
-                                    <span>Command:</span>
-									<div class="btn-group margain-left1">
-										<button id="Command" type="button" class="btn btn-primary" style="width:200px;" data-toggle="dropdown">read-coils</button>
-										<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-											<span class="caret"></span>
-										</button>
-										<span class="dropdown-arrow"></span>
-										<ul class="dropdown-menu" style="width:200px;text-align:center;" role="menu">
-											<li>
-												<a name="CommandOption" href="javascript:void(0)">read-coils</a>
-											</li>
-											<li>
-												<a name="CommandOption" href="javascript:void(0)">read-discrete-inputs</a>
-											</li>
-                                            <li>
-												<a name="CommandOption" href="javascript:void(0)">read-input-registers</a>
-											</li>
-                                            <li>
-												<a name="CommandOption" href="javascript:void(0)">read-holding-registers</a>
-											</li>
-										</ul>
-									</div>
-                                </td>
-                                <td width="17%" scope="row">
-                                    <span>address:</span>
-                                    <input id="Commandaddress" class="numbersOnly" type="text1" class="form-control" placeholder="" value="0">
-                                </td>
-                                <td width="17%" scope="row">
-                                    <span>quantity:</span>
-                                    <input id="Commandquantity" class="numbersOnly" type="text1" class="form-control" placeholder="" value="1">
-                                </td>
-                                <td id="AddCommand" colspan="2" rowspan="2"><a href="#Signup" role="button" data-toggle="modal" class="btn btn-danger2">新增Command</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                         <table class="table table-bordered">
-                        <tbody>
-                
-                        </tbody>
-                  </table>
-              </div>
+            
+            <!--Command-->
+            
+            <div class="modal fade" id="CommandEditDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-left: -150px;z-index:0;">
+                <div class="vertical-alignment-helper">
+                    <div class="modal-dialog vertical-align-center">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">Command Editor</h4>
+
+                            </div>
+                            <div class="modal-body">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td scope="row">
+                                                <span>Command:</span>
+                                                <div class="btn-group margain-left1">
+                                                    <button id="Command" type="button" class="btn btn-primary" style="width:200px;" data-toggle="dropdown">read-coils</button>
+                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <span class="dropdown-arrow"></span>
+                                                    <ul class="dropdown-menu" style="width:200px;text-align:center;" role="menu">
+                                                        <li>
+                                                            <a name="CommandOption" href="javascript:void(0)">read-coils</a>
+                                                        </li>
+                                                        <li>
+                                                            <a name="CommandOption" href="javascript:void(0)">read-discrete-inputs</a>
+                                                        </li>
+                                                        <li>
+                                                            <a name="CommandOption" href="javascript:void(0)">read-input-registers</a>
+                                                        </li>
+                                                        <li>
+                                                            <a name="CommandOption" href="javascript:void(0)">read-holding-registers</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            <td scope="row">
+                                                <span>address:</span>
+                                                <input id="Commandaddress" class="numbersOnly" type="text1" class="form-control" placeholder="" value="0">
+                                            </td>
+                                            <td scope="row">
+                                                <span>quantity:</span>
+                                                <input id="Commandquantity" class="numbersOnly" type="text1" class="form-control" placeholder="" value="1">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button id="AddCommand" type="button" class="btn btn-primary" data-dismiss="modal">Add/Update Command</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            
 			
 			<hr>
 			<!--Channel-->
@@ -87,7 +104,7 @@
                                 <th>ChannelId</th>
                                 <th>Name</th>
                                 <th>Settings</th>
-                                <th>刪除</th>
+                                <th>功能</th>
                             </tr>
                         </thead>
                         <tbody id="ChannelTbody">
@@ -96,6 +113,7 @@
                     </table>
                 </div>
             </div>
+            
             <!--Channel-->
             <div class="modal fade" id="ChannelEditDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-left: -150px;z-index:0;">
                 <div class="vertical-alignment-helper">
@@ -296,14 +314,28 @@
             $("#Channeloffset").val('');
             ShowChannelEditDiv();
 		});
+        $("#AddNewCommand").click(function(){
+            window.EditingCommandIndex=-1;
+            $("#asType").html('&nbsp;');
+			$("#Commandaddress").val('');
+            $("#Commandquantity").val('');
+            ShowCommandEditDiv();
+		});
 		$("#AddCommand").click(function(){
-			var NewCommand=
-			{
-				"command": $("#Command")[0].innerText,
-				"address": parseInt($("#Commandaddress").val()),
-				"quantity": parseInt($("#Commandquantity").val())
-			};
-			CommandArray.push(NewCommand);
+            var NewCommand=
+            {
+                "command": $("#Command")[0].innerText,
+                "address": parseInt($("#Commandaddress").val()),
+                "quantity": parseInt($("#Commandquantity").val())
+            };
+            if(window.EditingCommandIndex==-1)
+            {
+                CommandArray.push(NewCommand);
+            }
+            else
+            {
+                CommandArray[window.EditingCommandIndex]=NewCommand;
+            }
 			DrawCommandTable();
 		});
 		$("#AddChannel").click(function(){
@@ -365,6 +397,11 @@
         myModal.css('z-index', 2000);
         myModal.modal({ show: true });
     }
+    function ShowCommandEditDiv(){
+        var myModal = $('#CommandEditDiv');
+        myModal.css('z-index', 2000);
+        myModal.modal({ show: true });
+    }
 	function GetPageDataObj() {
 		var SubmitData=
 			{
@@ -387,6 +424,16 @@
 			CommandArray.splice(selectIndex,1);
 			DrawCommandTable();
 		}
+	}
+    function EditCommandArrayByIndex(Index) {
+        if(CommandArray[Index])
+        {
+            window.EditingCommandIndex=Index;
+            $("#Commandaddress").val(CommandArray[Index].address);
+            $("#Commandquantity").val(CommandArray[Index].quantity);
+            $("#Command").html(CommandArray[Index].command);
+        }
+	    ShowCommandEditDiv();
 	}
 	function EditChannelArrayByChannelID(ChannelID) {
 		window.EditingChannelID=ChannelID;
@@ -435,7 +482,10 @@
 				"<td>"+CommandArray[i].command+"</td>"+
 				"<td>"+CommandArray[i].address+"</td>"+
 				"<td>"+CommandArray[i].quantity+"</td>"+
-				"<td><a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveCommandArrayByAddress('"+CommandArray[i].address+"')\">刪除</a></td>"+
+				"<td>"+
+                "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"EditCommandArrayByIndex('"+i+"')\">編輯</a>"+
+                "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveCommandArrayByAddress('"+CommandArray[i].address+"')\">刪除</a>"+
+                "</td>"+
 			"</tr>";
 		}
 		$("#CommandTbody").html(TbodyHtml);
