@@ -6,7 +6,9 @@
                     </div>
                 </div>
             </div>
-
+            <div style="text-align:right">
+                    <a id="AddNewCommand" href="javascript:void(0)" role="button" data-toggle="modal" class="btn btn-danger2">新增Command</a>
+             </div>
 			<!--Command-->
 			<div class="row-fluid height3">
                 <div class="span12s">
@@ -19,7 +21,7 @@
                                 <th>address</th>
                                 <th>quantity</th>
                                 <th>bit</th>
-                                <th>刪除</th>
+                                <th>功能</th>
                             </tr>
                         </thead>
                         <tbody id="CommandTbody">
@@ -28,97 +30,113 @@
                     </table>
                 </div>
             </div>
-            <div class="row ">
-                <div class="span12">
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <td width="22%" scope="row">
-                                    <span>Command:</span>
-									<div class="btn-group margain-left1">
-										<button id="Command" type="button" class="btn btn-primary" style="width:200px;" data-toggle="dropdown">read-bit</button>
-										<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-											<span class="caret"></span>
-										</button>
-										<span class="dropdown-arrow"></span>
-										<ul class="dropdown-menu" style="width:200px;text-align:center;" role="menu">
-											<li>
-												<a name="CommandOption" href="javascript:void(0)">read-bit</a>
-											</li>
-											<li>
-												<a name="CommandOption" href="javascript:void(0)">read-word</a>
-											</li>
-										</ul>
-									</div>
-                                </td>
-                                <td width="17%" scope="row">
-                                    <span>MemoryArea:</span>
-                                    <div class="btn-group margain-left1">
-										<button id="CommandMemoryArea" type="button" class="btn btn-primary" style="width:100px;" data-toggle="dropdown">D</button>
-										<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-											<span class="caret"></span>
-										</button>
-										<span class="dropdown-arrow"></span>
-										<ul class="dropdown-menu" style="width:100px;text-align:center;" role="menu">
-											<li>
-												<a name="CommandMemoryAreaOption" href="javascript:void(0)">D</a>
-                                            </li>
-                                            <li>
-												<a name="CommandMemoryAreaOption" href="javascript:void(0)">DR</a>
-                                            </li>
-                                            <li>
-												<a name="CommandMemoryAreaOption" href="javascript:void(0)">W</a>
-                                            </li>
-                                            <li>
-												<a name="CommandMemoryAreaOption" href="javascript:void(0)">WR</a>
-											</li>
-										</ul>
-									</div>
-                                </td>
-                                <td width="17%" scope="row">
-                                    <span>address:</span>
-                                    <input id="Commandaddress" class="numbersOnly" type="text1" class="form-control" placeholder="" value="0">
-                                </td>
-                                <td width="17%" scope="row">
-                                    <span>quantity:</span>
-                                    <input id="Commandquantity" class="numbersOnly" type="text1" class="form-control" placeholder="" value="1">
-                                </td>
+            <!--Command-->
+            <div class="modal fade" id="CommandEditDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index:-150;">
+                <div class="vertical-alignment-helper">
+                    <div class="modal-dialog vertical-align-center">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">Command Editor</h4>
+
+                            </div>
+                            <div class="modal-body" style="min-height: 150px;overflow-y: initial;">
+                                    <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                        <td scope="row">
+                                                                <span>Command:</span>
+                                                                <div class="btn-group margain-left1">
+                                                                    <button id="Command" type="button" class="btn btn-primary" style="width:200px;" data-toggle="dropdown">read-bit</button>
+                                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                                        <span class="caret"></span>
+                                                                    </button>
+                                                                    <span class="dropdown-arrow"></span>
+                                                                    <ul class="dropdown-menu" style="width:200px;text-align:center;" role="menu">
+                                                                        <li>
+                                                                            <a name="CommandOption" href="javascript:void(0)">read-bit</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a name="CommandOption" href="javascript:void(0)">read-word</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                            <td scope="row">
+                                                                <span>MemoryArea:</span>
+                                                                <div class="btn-group margain-left1">
+                                                                    <button id="CommandMemoryArea" type="button" class="btn btn-primary" style="width:100px;" data-toggle="dropdown">D</button>
+                                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                                        <span class="caret"></span>
+                                                                    </button>
+                                                                    <span class="dropdown-arrow"></span>
+                                                                    <ul class="dropdown-menu" style="width:100px;text-align:center;" role="menu">
+                                                                        <li>
+                                                                            <a name="CommandMemoryAreaOption" href="javascript:void(0)">D</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a name="CommandMemoryAreaOption" href="javascript:void(0)">DR</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a name="CommandMemoryAreaOption" href="javascript:void(0)">W</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a name="CommandMemoryAreaOption" href="javascript:void(0)">WR</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                            <td scope="row">
+                                                                <span>address:</span>
+                                                                <input id="Commandaddress" class="numbersOnly" type="text1" class="form-control" placeholder="" value="0">
+                                                            </td>
+                                                            <td scope="row">
+                                                                <span>quantity:</span>
+                                                                <input id="Commandquantity" class="numbersOnly" type="text1" class="form-control" placeholder="" value="1">
+                                                            </td>
+                                                            
+                                                        </tr>
+                                                        <tr>
+                                                            <td scope="row">
+                                                                <div class="btn-group margain-left1">
+                                                                    <button id="FinsCommandAddressType" type="button" class="btn btn-primary" style="width:200px;" data-toggle="dropdown">FinsBitAddress</button>
+                                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                                        <span class="caret"></span>
+                                                                    </button>
+                                                                    <span class="dropdown-arrow"></span>
+                                                                    <ul class="dropdown-menu" style="width:200px;text-align:center;" role="menu">
+                                                                        <li>
+                                                                            <a name="FinsCommandAddressOption" href="javascript:void(0)">FinsBitAddress</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a name="FinsCommandAddressOption" href="javascript:void(0)">FinsWordAddress</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                            <td scope="row">
+                                                                <div id="FinsCommandBitDiv">
+                                                                    <span>bit:</span>
+                                                                    <input id="FinsCommandBit" class="numbersOnly" type="text1" class="form-control" placeholder="" value="0">
+                                                                </div>
+                                                            </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                            </div>
                                 
-                            </tr>
-                            <tr>
-                                <td width="22%" scope="row">
-									<div class="btn-group margain-left1">
-										<button id="FinsCommandAddressType" type="button" class="btn btn-primary" style="width:200px;" data-toggle="dropdown">FinsBitAddress</button>
-										<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-											<span class="caret"></span>
-										</button>
-										<span class="dropdown-arrow"></span>
-										<ul class="dropdown-menu" style="width:200px;text-align:center;" role="menu">
-											<li>
-												<a name="FinsCommandAddressOption" href="javascript:void(0)">FinsBitAddress</a>
-											</li>
-											<li>
-												<a name="FinsCommandAddressOption" href="javascript:void(0)">FinsWordAddress</a>
-											</li>
-										</ul>
-									</div>
-                                </td>
-                                <td width="17%" scope="row">
-                                    <div id="FinsCommandBitDiv">
-                                        <span>bit:</span>
-                                        <input id="FinsCommandBit" class="numbersOnly" type="text1" class="form-control" placeholder="" value="0">
-                                    </div>
-                                </td>
-                                <td style="text-align: right" id="AddCommand" colspan="2" rowspan="2"><a href="#Signup" role="button" data-toggle="modal" class="btn btn-danger2">新增Command</a></td>
-                            </td>
-                        </tbody>
-                    </table>
-                         <table class="table table-bordered">
-                        <tbody>
-                
-                        </tbody>
-                  </table>
-              </div>
+                     
+                    
+
+                            <div class="modal-footer">
+                                <button id="CloseCommand" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button id="AddCommand" type="button" class="btn btn-primary">Add/Update Command</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 			<hr>
 			<!--Channel-->
@@ -133,7 +151,7 @@
                                 <th>ChannelId</th>
                                 <th>Name</th>
                                 <th>Settings</th>
-                                <th>刪除</th>
+                                <th>功能</th>
                             </tr>
                         </thead>
                         <tbody id="ChannelTbody">
@@ -357,7 +375,9 @@
                 $("#FinsChannelBitDiv").hide();
             }
 		});
-
+        $('#CommandEditDiv').on('hidden', function () {
+            $('#CommandEditDiv').css('z-index', -150);
+        })
 		$('#ChannelEditDiv').on('hidden', function () {
             $('#ChannelEditDiv').css('z-index', -150);
         })
@@ -382,7 +402,15 @@
 			});
 			
 		}
-		
+		$("#AddNewCommand").click(function(){
+            window.EditingCommandIndex=-1;
+			$("#Commandaddress").val('');
+            $("#Commandquantity").val('');
+            $("#Command").html('read-bit');
+            $("#FinsCommandAddressType").html('FinsBitAddress');
+            $("#FinsCommandBitDiv").show();
+            ShowCommandEditDiv();
+		});
 		
 		$("#AddNewChannel").click(function(){
 			$("#ChannelId").val('');
@@ -427,8 +455,15 @@
                     
                 };
             }
-			
-			CommandArray.push(NewCommand);
+            if(window.EditingCommandIndex==-1)
+            {
+                CommandArray.push(NewCommand);
+            }
+            else
+            {
+                CommandArray[window.EditingCommandIndex]=NewCommand;
+            }
+            $("#CloseCommand").click();
 			DrawCommandTable();
 		});
 		$("#AddChannel").click(function(){
@@ -549,6 +584,32 @@
 			DrawCommandTable();
 		}
 	}
+    function EditCommandArrayByIndex(Index) {
+        var item=CommandArray[Index];
+        if(item)
+        {
+            window.EditingCommandIndex=Index;
+            if(item.bitAddress)
+            {
+                $("#FinsCommandBitDiv").show();
+                $("#FinsCommandBit").val(item.bitAddress.bit);
+                $("#Commandaddress").val(item.bitAddress.address);
+                $("#Commandquantity").val(item.bitAddress.quantity);
+                $("#CommandMemoryArea").html(item.bitAddress.memoryArea);
+                $("#FinsCommandAddressType").html('FinsBitAddress');
+            }
+            else
+            {
+                $("#FinsCommandBitDiv").hide();
+                $("#Commandaddress").val(item.wordAddress.address);
+                $("#Commandquantity").val(item.wordAddress.quantity);
+                $("#CommandMemoryArea").html(item.wordAddress.memoryArea);
+                $("#FinsCommandAddressType").html('FinsWordAddress');
+            }
+            $("#Command").html(CommandArray[Index].command);
+        }
+        ShowCommandEditDiv();
+	}
 	function EditChannelArrayByChannelID(ChannelID) {
         window.EditingChannelID=ChannelID;
 		for(var i=0;i<ChannelArray.length;i++){
@@ -584,6 +645,11 @@
 		}
         ShowChannelEditDiv();
 	}
+    function ShowCommandEditDiv(){
+        var myModal = $('#CommandEditDiv');
+        myModal.css('z-index', 2000);
+        myModal.modal({ show: true });
+    }
     function ShowChannelEditDiv(){
         var myModal = $('#ChannelEditDiv');
         myModal.css('z-index', 2000);
@@ -619,7 +685,10 @@
 				    "<td>"+CommandArray[i].wordAddress.address+"</td>"+
                     "<td>"+CommandArray[i].wordAddress.quantity+"</td>"+
                     "<td>&nbsp;</td>"+
-				    "<td><a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveCommandArrayByAddress('"+IdentifyString+"')\">刪除</a></td>"+
+				    "<td>"+
+                    "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"EditCommandArrayByIndex('"+i+"')\">編輯</a>"+
+                    "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveCommandArrayByAddress('"+IdentifyString+"')\">刪除</a>"+
+                    "</td>"+
                 "</tr>";
             }
             else
@@ -632,7 +701,10 @@
 				    "<td>"+CommandArray[i].bitAddress.address+"</td>"+
                     "<td>"+CommandArray[i].bitAddress.quantity+"</td>"+
                     "<td>"+CommandArray[i].bitAddress.bit+"</td>"+
-				    "<td><a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveCommandArrayByAddress('"+IdentifyString+"')\">刪除</a></td>"+
+				    "<td>"+
+                    "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"EditCommandArrayByIndex('"+i+"')\">編輯</a>"+
+                    "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveCommandArrayByAddress('"+IdentifyString+"')\">刪除</a>"+
+                    "</td>"+
                 "</tr>";
             }
 		}
