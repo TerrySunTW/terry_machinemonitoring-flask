@@ -50,6 +50,9 @@
                     </div>
                 </div>
             </div>
+            <div style="text-align:right">
+                <a id="AddNewCommand" href="javascript:void(0)" role="button" data-toggle="modal" class="btn btn-danger2">新增Command</a>
+            </div>
 			<!--Command-->
 			<div class="row-fluid height3">
                 <div class="span12s">
@@ -60,7 +63,7 @@
                                 <th>RegisterType</th>
                                 <th>address</th>
                                 <th>quantity</th>
-                                <th>刪除</th>
+                                <th>功能</th>
                             </tr>
                         </thead>
                         <tbody id="CommandTbody">
@@ -69,72 +72,84 @@
                     </table>
                 </div>
             </div>
-            <div class="row ">
-                <div class="span12">
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <td width="22%" scope="row">
-                                    <span>Command:</span>
-									<div class="btn-group margain-left1">
-										<button id="Command" type="button" class="btn btn-primary" style="width:200px;" data-toggle="dropdown">read-bit</button>
-										<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-											<span class="caret"></span>
-										</button>
-										<span class="dropdown-arrow"></span>
-										<ul class="dropdown-menu" style="width:200px;text-align:center;" role="menu">
-											<li>
-												<a name="CommandOption" href="javascript:void(0)">read-bit</a>
-											</li>
-											<li>
-												<a name="CommandOption" href="javascript:void(0)">read-word</a>
-											</li>
-										</ul>
-									</div>
-                                </td>
-                                <td width="17%" scope="row">
-                                    <span>RegisterType:</span>
-                                    <div class="btn-group margain-left1">
-										<button id="CommandRegisterType" type="button" class="btn btn-primary" style="width:100px;" data-toggle="dropdown">D</button>
-										<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-											<span class="caret"></span>
-										</button>
-										<span class="dropdown-arrow"></span>
-										<ul class="dropdown-menu" style="width:100px;text-align:center;" role="menu">
-											<li>
-												<a name="CommandRegisterTypeOption" href="javascript:void(0)">D</a>
-											</li>
-                                            <li>
-												<a name="CommandRegisterTypeOption" href="javascript:void(0)">M</a>
-											</li>
-                                            <li>
-												<a name="CommandRegisterTypeOption" href="javascript:void(0)">X</a>
-											</li>
-                                            <li>
-												<a name="CommandRegisterTypeOption" href="javascript:void(0)">Y</a>
-											</li>
-										</ul>
-									</div>
-                                </td>
-                                <td width="17%" scope="row">
-                                    <span>address:</span>
-                                    <input id="Commandaddress" class="numbersOnly" type="text1" class="form-control" placeholder="" value="0">
-                                </td>
-                                <td width="17%" scope="row">
-                                    <span>quantity:</span>
-                                    <input id="Commandquantity" class="numbersOnly" type="text1" class="form-control" placeholder="" value="1">
-                                </td>
-                                <td id="AddCommand" colspan="2" rowspan="2"><a href="#Signup" role="button" data-toggle="modal" class="btn btn-danger2">新增Command</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                         <table class="table table-bordered">
-                        <tbody>
-                
-                        </tbody>
-                  </table>
-              </div>
+           <!--command-->
+           <div class="modal fade" id="CommandEditDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-left: -150px;z-index:-150;">
+            <div class="vertical-alignment-helper">
+                <div class="modal-dialog vertical-align-center">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Command Editor</h4>
+
+                        </div>
+                        <div class="modal-body">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td scope="row">
+                                <span>Command:</span>
+                                <div class="btn-group margain-left1">
+                                    <button id="Command" type="button" class="btn btn-primary" style="width:200px;" data-toggle="dropdown">read-bit</button>
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <span class="dropdown-arrow"></span>
+                                    <ul class="dropdown-menu" style="width:200px;text-align:center;" role="menu">
+                                        <li>
+                                            <a name="CommandOption" href="javascript:void(0)">read-bit</a>
+                                        </li>
+                                        <li>
+                                            <a name="CommandOption" href="javascript:void(0)">read-word</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td scope="row">
+                                <span>RegisterType:</span>
+                                <div class="btn-group margain-left1">
+                                    <button id="CommandRegisterType" type="button" class="btn btn-primary" style="width:100px;" data-toggle="dropdown">D</button>
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <span class="dropdown-arrow"></span>
+                                    <ul class="dropdown-menu" style="width:100px;text-align:center;" role="menu">
+                                        <li>
+                                            <a name="CommandRegisterTypeOption" href="javascript:void(0)">D</a>
+                                        </li>
+                                        <li>
+                                            <a name="CommandRegisterTypeOption" href="javascript:void(0)">M</a>
+                                        </li>
+                                        <li>
+                                            <a name="CommandRegisterTypeOption" href="javascript:void(0)">X</a>
+                                        </li>
+                                        <li>
+                                            <a name="CommandRegisterTypeOption" href="javascript:void(0)">Y</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td scope="row">
+                                <span>address:</span>
+                                <input id="Commandaddress" class="numbersOnly" type="text1" class="form-control" placeholder="" value="0">
+                            </td>
+                            <td scope="row">
+                                <span>quantity:</span>
+                                <input id="Commandquantity" class="numbersOnly" type="text1" class="form-control" placeholder="" value="1">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+               </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button id="AddCommand" type="button" class="btn btn-primary" data-dismiss="modal">Add/Update Command</button>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
 			
 			
 			<hr>
@@ -150,7 +165,7 @@
                                 <th>ChannelId</th>
                                 <th>Name</th>
                                 <th>Settings</th>
-                                <th>刪除</th>
+                                <th>功能</th>
                             </tr>
                         </thead>
                         <tbody id="ChannelTbody">
@@ -352,6 +367,9 @@
 		$('#ChannelEditDiv').on('hidden', function () {
             $('#ChannelEditDiv').css('z-index', -150);
         })
+        $('#CommandEditDiv').on('hidden', function () {
+            $('#ChannelEditDiv').css('z-index', -150);
+        })
 		$('a[href$="/templatelist"]').parent().addClass("active");
 		if(EditTemplateID!='')
 		{
@@ -376,7 +394,14 @@
 			
 		}
 		
-		
+		$("#AddNewCommand").click(function(){
+            window.EditingCommandIndex=-1;
+            $("#Command").html('read-bit');
+            $("#CommandRegisterType").html('D');
+            $("#Commandaddress").val('');
+            $("#Commandquantity").val('');
+            ShowCommandEditDiv();
+		});
 		$("#AddNewChannel").click(function(){
 			$("#ChannelId").val('');
             $("#ChannelName").val('');
@@ -399,7 +424,14 @@
 				"address": parseInt($("#Commandaddress").val()),
 				"quantity": parseInt($("#Commandquantity").val())
 			};
-			CommandArray.push(NewCommand);
+            if(window.EditingCommandIndex==-1)
+            {
+                CommandArray.push(NewCommand);
+            }
+            else
+            {
+                CommandArray[window.EditingCommandIndex]=NewCommand;
+            }
 			DrawCommandTable();
 		});
 		$("#AddChannel").click(function(){
@@ -483,7 +515,18 @@
 			DrawCommandTable();
 		}
 	}
-	
+    function EditCommandArrayByIndex(Index) {
+        if(CommandArray[Index])
+        {
+            window.EditingCommandIndex=Index;
+            $("#Commandaddress").val(CommandArray[Index].address);
+            $("#Commandquantity").val(CommandArray[Index].quantity);
+            $("#Command").html(CommandArray[Index].command);
+            $("#CommandRegisterType").html(CommandArray[Index].registerType);
+        }
+        ShowCommandEditDiv();
+    }
+
     function EditChannelArrayByChannelID(ChannelID) {
         window.EditingChannelID=ChannelID;
 		for(var i=0;i<ChannelArray.length;i++){
@@ -504,6 +547,11 @@
 		}
         ShowChannelEditDiv();
 	}
+    function ShowCommandEditDiv(){
+        var myModal = $('#CommandEditDiv');
+        myModal.css('z-index', 2000);
+        myModal.modal({ show: true });
+    }
     function ShowChannelEditDiv(){
         var myModal = $('#ChannelEditDiv');
         myModal.css('z-index', 2000);
@@ -534,6 +582,7 @@
 				"<td>"+CommandArray[i].address+"</td>"+
 				"<td>"+CommandArray[i].quantity+"</td>"+
 				"<td>"+
+                "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"EditCommandArrayByIndex('"+i+"')\">編輯</a>"+
                 "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveCommandArrayByAddress('"+CommandArray[i].address+"')\">刪除</a>"+
                 "</td>"+
 			"</tr>";
