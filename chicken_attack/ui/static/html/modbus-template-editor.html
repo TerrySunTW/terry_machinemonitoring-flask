@@ -18,7 +18,7 @@
                                 <th>Command</th>
                                 <th>address</th>
                                 <th>quantity</th>
-                                <th>刪除</th>
+                                <th>功能</th>
                             </tr>
                         </thead>
                         <tbody id="CommandTbody">
@@ -276,6 +276,9 @@
 		$("a[name='ChannelMemoryAreaOption']").bind('click', function (event) {
 			$("#ChannelMemoryArea").html(this.innerText);
 		});
+        $('#CommandEditDiv').on('hidden', function () {
+            $('#ChannelEditDiv').css('z-index', -150);
+        })
 		$('#ChannelEditDiv').on('hidden', function () {
             $('#ChannelEditDiv').css('z-index', -150);
         })
