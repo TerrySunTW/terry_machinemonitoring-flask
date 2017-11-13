@@ -465,9 +465,13 @@
                     return (null);
                 }
                 //IF doesn't exist , don't display
-				var TypeNumber=Number(this.props.reactkey);
+                var TypeNumber=Number(this.props.reactkey)%4;
+                if(TypeNumber==0)
+                {
+                    TypeNumber=1;
+                }
                 var Wapper1Class="span4 height3";
-                var Wapper2Class="product_type"+(TypeNumber+1)%4;
+                var Wapper2Class="product_type"+TypeNumber;
                 var Wapper3Class="light_area";
                 var devicedata=this.props.devicedata;
                 var DeviceName=this.props.devicedata.deviceId;
