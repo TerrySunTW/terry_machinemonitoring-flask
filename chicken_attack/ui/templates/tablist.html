@@ -40,17 +40,34 @@
 	$(function() {
 		$('a[href$="/tablist"]').parent().addClass("active");
 		
-		$.ajax({
-			  type: "GET",
-              dataType: "json",
-			  url: martiniApiDevicesURL+'?'+d.getTime()
-			})
-			.done(function(Data) {
-				Devices=Data;
-				SetupTabs();
-			});
-		
-			
+		var ProtocalCounter=0;
+		var d = new Date();
+		for(var ProtocolTypeArrayIndex in ProtocolTypeArray){
+				var ProtocolType=ProtocolTypeArray[ProtocolTypeArrayIndex];
+				var URL=QonfigConfigEquipmentsURL.replace('{ProtocolType}',ProtocolType);
+				axios.get(URL,{params: {protocoltype:ProtocolType }})
+				.then(function (response) {
+					
+					var DataResult=response.data;
+					for(var DataResultIndex in DataResult){	
+						if(DataResult[DataResultIndex].equipment)
+						{
+							Devices.push(DataResult[DataResultIndex].equipment.equipmentId)
+						}
+						else if(DataResult[DataResultIndex].equipments)
+						{
+							DataResult[DataResultIndex].equipments.forEach(function (item) {
+								Devices.push(item.equipmentId);
+							});
+						}
+					}
+					ProtocalCounter++;
+					if(ProtocalCounter==ProtocolTypeArray.length)
+					{
+						SetupTabs();
+					}
+				});
+		}
 	});
 	function SetupTabs()
 	{
@@ -82,13 +99,13 @@
 		var TableBody='';
 		var SelectionItems='<select id="tab_'+TabName+'" multiple class="tabitem" style="width:40%" placeholder="Select a device...">';
 		Devices.forEach(function(Device) {
-			if(SelectdeviceIds.indexOf(Device.deviceId)>-1)
+			if(SelectdeviceIds.indexOf(Device)>-1)
 			{
-				SelectionItems+='<option value="'+Device.deviceId+'" selected>'+Device.deviceId+'</option>';
+				SelectionItems+='<option value="'+Device+'" selected>'+Device+'</option>';
 			}
 			else
 			{
-				SelectionItems+='<option value="'+Device.deviceId+'">'+Device.deviceId+'</option>';
+				SelectionItems+='<option value="'+Device+'">'+Device+'</option>';
 			}
 		})
 		SelectionItems+='</select>';
