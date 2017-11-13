@@ -38,11 +38,13 @@ http://terryphptest.azurewebsites.net/safebox.txt
 
 new API SWAGGER doc
 
-http://terryphptest.azurewebsites.net/swagger-safeboxv2.2.txt
+http://terryphptest.azurewebsites.net/swagger-safebox1113.txt
 
-http://terryphptest.azurewebsites.net/swagger-qonfigv2.2.txt
+http://terryphptest.azurewebsites.net/swagger-qonfig1113.txt
 
-http://terryphptest.azurewebsites.net/swagger-martiniv2.2.txt
+http://terryphptest.azurewebsites.net/swagger-qold1113.txt
+
+http://terryphptest.azurewebsites.net/swagger-martini1113.txt
 
 
 
