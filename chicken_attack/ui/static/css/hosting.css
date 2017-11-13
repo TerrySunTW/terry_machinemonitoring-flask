@@ -408,6 +408,13 @@ input[type="checkbox"] {
 
 
 /*========== products-1area==============*/
+.product_type0 {
+    background: url(../images/product_type3.png) no-repeat;
+    height: 507px;
+    width: 365px;
+    position: relative;
+    clear: both;
+}
 
 .product_type1 {
     background: url(../images/product_type1.png) no-repeat;
@@ -433,7 +440,7 @@ input[type="checkbox"] {
     clear: both;
 }
 
-.product_type0 {
+.product_type_new {
     background: url(../images/product_bg01.png) no-repeat;
     height: 507px;
     width: 365px;

@@ -465,11 +465,7 @@
                     return (null);
                 }
                 //IF doesn't exist , don't display
-                var TypeNumber=Number(this.props.reactkey)%4;
-                if(TypeNumber==0)
-                {
-                    TypeNumber=1;
-                }
+                var TypeNumber=Number(this.props.reactkey+1)%4;
                 var Wapper1Class="span4 height3";
                 var Wapper2Class="product_type"+TypeNumber;
                 var Wapper3Class="light_area";
@@ -531,7 +527,7 @@
                     return (
                     <div className="span4 height3">
                          <a href="/editmachine">
-                        <div className="product_type0">
+                        <div className="product_type_new">
                             <div className="prodct_title"></div>
                             <div className="light_area4 text-center">
                                 <img src="static/images/add_icon.png" alt="logo"/>
