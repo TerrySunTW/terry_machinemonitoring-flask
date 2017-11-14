@@ -1,0 +1,16 @@
+[
+  {
+    "connection": {
+      "host": "192.168.20.88",
+      "rack": 0,
+      "slot": 2
+    },
+    "equipment": {
+      "equipmentId": "device-01",
+      "templateId": "s7-300",
+      "equipmentName": "測試設備一"
+    },
+    "pollingPeriodMS": 100,
+    "requestTimeoutMS": 100
+  }
+]

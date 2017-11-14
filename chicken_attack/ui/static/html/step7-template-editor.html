@@ -1,0 +1,500 @@
+<div class="row-fluid height1">
+                <div class="product_text">
+                    <div class="span4">
+                        <span style="padding-right:75px;">Template ID:</span>
+                        <input id="templateID" type="text" class="form-control" placeholder="">
+                    </div>
+                </div>
+            </div>
+            <div style="text-align:right">
+                    <a id="AddNewCommand" href="javascript:void(0)" role="button" data-toggle="modal" class="btn btn-danger2">新增Command</a>
+             </div>
+			<!--Command-->
+			<div class="row-fluid height3">
+                <div class="span12s">
+                    <table id="myTable" class="tablesorter-blue">
+                        <thead>
+                            <tr>
+                                <th>Command</th>
+                                <th>address</th>
+                                <th>length</th>
+                                <th>功能</th>
+                            </tr>
+                        </thead>
+                        <tbody id="CommandTbody">
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--Command-->
+            <div class="modal fade" id="CommandEditDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index:-150;">
+                <div class="vertical-alignment-helper">
+                    <div class="modal-dialog vertical-align-center">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">Command Editor</h4>
+
+                            </div>
+                            <div class="modal-body" style="min-height: 150px;overflow-y: initial;">
+                                    <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                        <td scope="row">
+                                                                <span>Command:</span>
+                                                                <div class="btn-group margain-left1">
+                                                                    <button id="Command" type="button" class="btn btn-primary" style="width:200px;" data-toggle="dropdown">read</button>
+                                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                                        <span class="caret"></span>
+                                                                    </button>
+                                                                    <span class="dropdown-arrow"></span>
+                                                                    <ul class="dropdown-menu" style="width:200px;text-align:center;" role="menu">
+                                                                        <li>
+                                                                            <a name="CommandOption" href="javascript:void(0)">read</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </td>
+                                                            
+                                                            <td scope="row">
+                                                                <span>address:</span>
+                                                                <input id="Commandaddress" class="numbersOnly" type="text1" class="form-control" placeholder="" value="0">
+                                                            </td>
+                                                            <td scope="row">
+                                                                <span>length:</span>
+                                                                <input id="Commandlength" class="numbersOnly" type="text1" class="form-control" placeholder="" value="1">
+                                                            </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                            </div>
+                                
+                     
+                    
+
+                            <div class="modal-footer">
+                                <button id="CloseCommand" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button id="AddCommand" type="button" class="btn btn-primary">Add/Update Command</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<hr>
+			<!--Channel-->
+             <div style="text-align:right">
+                   <a id="AddNewChannel" href="javascript:void(0)" role="button" data-toggle="modal" class="btn btn-danger2">新增Channel</a>
+            </div>
+            <div class="row-fluid height3">
+                <div class="span12s">
+                    <table id="myTable" class="tablesorter-blue">
+                        <thead>
+                            <tr>
+                                <th>ChannelId</th>
+                                <th>Name</th>
+                                <th>Settings</th>
+                                <th>功能</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ChannelTbody">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--Channel-->
+            <div class="modal fade" id="ChannelEditDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index:-150;">
+                <div class="vertical-alignment-helper">
+                    <div class="modal-dialog vertical-align-center">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">Channel Editor</h4>
+
+                            </div>
+                            <div class="modal-body graybody" style="min-height: 150px;overflow-y: initial;">
+                                <div class="floatDiv">
+                                                <span>ChannelId:</span>
+                                                <input id="ChannelId" type="text1" class="form-control" placeholder="">
+                                </div>
+                                <div class="floatDiv">
+                                                <span>Name:</span>
+                                                <input id="ChannelName" type="text1" class="form-control" placeholder="">
+                                </div>
+                                <div class="floatDiv">
+                                                <span>address:</span>
+                                                <input id="Channeladdress" class="numbersOnly" type="text1" class="form-control" placeholder="" value="0">
+                                </div>
+                                <div class="floatDiv">
+                                                <span>length:</span>
+                                                <input id="Channellength" class="numbersOnly" type="text1" class="form-control" placeholder="" value="1">
+                                </div>
+                                            
+                                        
+                                <div class="floatDiv">
+                                    <span>byteOrder:</span>
+                                    <div class="btn-group margain-left1">
+                                        <button id="byteOrder" type="button" class="btn btn-primary" style="width:100px;" data-toggle="dropdown">&nbsp;</button>
+                                        <button type="button" class="btn btn-primary dropdown-toggle" style="width:30px;" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                        </button>
+                                        <span class="dropdown-arrow"></span>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <a name="byteOrderOption" href="javascript:void(0)">&nbsp;</a>
+                                            </li>
+                                            <li>
+                                                <a name="byteOrderOption" href="javascript:void(0)">BA</a>
+                                            </li>
+                                            <li>
+                                                <a name="byteOrderOption" href="javascript:void(0)">DCBA</a>
+                                            </li>
+                                            <li>
+                                                <a name="byteOrderOption" href="javascript:void(0)">CDAB</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                    </div>
+                    <div class="floatDiv">
+                                    <span>andMask(1,2,3):</span>
+                                    <input id="andMask" type="text1" class="form-control" placeholder="" value="">
+                    </div>
+                    <div class="floatDiv">
+                                    <span>orMask(1,2,3):</span>
+                                    <input id="orMask" type="text1" class="form-control" placeholder="" value="">
+                    </div>
+                    <div class="floatDiv">
+                                    <span>asType:</span>
+                                    <div class="btn-group margain-left1">
+                                        <button id="asType" type="button" class="btn btn-primary" style="width:100px;" data-toggle="dropdown">
+                                            int16
+                                        </button>
+                                        <button type="button" class="btn btn-primary dropdown-toggle" style="width:30px;" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                        </button>
+                                        <span class="dropdown-arrow"></span>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <a name="asTypeOption" href="javascript:void(0)">int16</a>
+                                            </li>
+                                            <li>
+                                                <a name="asTypeOption" href="javascript:void(0)">int32</a>
+                                            </li>
+                                            <li>
+                                                <a name="asTypeOption" href="javascript:void(0)">int64</a>
+                                            </li>
+                                            <li>
+                                                <a name="asTypeOption" href="javascript:void(0)">uint16</a>
+                                            </li>
+                                            <li>
+                                                <a name="asTypeOption" href="javascript:void(0)">uint32</a>
+                                            </li>
+                                            <li>
+                                                <a name="asTypeOption" href="javascript:void(0)">uint64</a>
+                                            </li>
+                                            <li>
+                                                <a name="asTypeOption" href="javascript:void(0)">float32</a>
+                                            </li>
+                                            <li>
+                                                <a name="asTypeOption" href="javascript:void(0)">float64</a>
+                                            </li>
+                                            <li>
+                                                <a name="asTypeOption" href="javascript:void(0)">ascii</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                    </div>
+                    <div class="floatDiv">
+                                    <span>multiplier:</span>
+                                    <input id="multiplier" type="text1" class="form-control" placeholder="" value="">
+                    </div>
+                    <div class="floatDiv">
+                                    <span>offset:</span>
+                                    <input id="Channeloffset" type="text1" class="form-control" placeholder="" value="">    
+                    </div>
+              </div>
+                            <div class="modal-footer">
+                                <button id="CloseChannel" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button id="AddChannel" type="button" class="btn btn-primary">Add/Update Channel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                
+            </div>
+
+
+
+<script>
+    $(function() {
+		$('.numbersOnly').keyup(function () { 
+			this.value = this.value.replace(/[^0-9\.]/g,'');
+		});
+
+		$("a[name='CommandOption']").bind('click', function (event) {
+			$("#Command").html(this.innerText);
+		});
+		$("a[name='CommandMemoryAreaOption']").bind('click', function (event) {
+			$("#CommandMemoryArea").html(this.innerText);
+		});
+		$("a[name='byteOrderOption']").bind('click', function (event) {
+			$("#byteOrder").html(this.innerText);
+		});
+		$("a[name='asTypeOption']").bind('click', function (event) {
+			$("#asType").html(this.innerText);
+		});
+		$("a[name='ChannelMemoryAreaOption']").bind('click', function (event) {
+			$("#ChannelMemoryArea").html(this.innerText);
+		});
+        $('#CommandEditDiv').on('hidden', function () {
+            $('#CommandEditDiv').css('z-index', -150);
+        })
+		$('#ChannelEditDiv').on('hidden', function () {
+            $('#ChannelEditDiv').css('z-index', -150);
+        })
+		$('a[href$="/templatelist"]').parent().addClass("active");
+		if(EditTemplateID!='')
+		{
+            $("#templateID").prop('disabled', true);
+			$("#AddTemplate").html("更新Template");
+			$.ajax({
+			  type: "GET",
+              dataType: "json",
+              beforeSend: function (xhr) {
+                    xhr.setRequestHeader ("Authorization", "JWT " + Cookies.get('access_token'));
+                },
+			  url: QonfigConfigTemplatesURL.replace('{ProtocolType}',EditTemplateProtocoltype).replace('{templateId}',EditTemplateID)
+			}).done(function( Data ) {
+				CommandArray=Data.commands;
+				ChannelArray=Data.channels;
+				$("#templateID").val(Data.templateId);
+				DrawChannelTable();
+                DrawCommandTable()
+			});
+			
+		}
+		$("#AddNewCommand").click(function(){
+            window.EditingCommandIndex=-1;
+			$("#Commandaddress").val('');
+            $("#Commandquantity").val('');
+            $("#Command").html('read');
+            ShowCommandEditDiv();
+		});
+		
+		$("#AddNewChannel").click(function(){
+			$("#ChannelId").val('');
+            $("#ChannelName").val('');
+            $("#Channeladdress").val('');
+            $("#Channellength").val('');
+            $("#asType").html('&nbsp;');
+            $("#byteOrder").html('&nbsp;');
+            $("#andMask").val('');
+            $("#orMask").val('');
+            $("#multiplier").val('');
+            $("#Channeloffset").val('');
+            ShowChannelEditDiv();
+		});
+		$("#AddCommand").click(function(){
+            var NewCommand=
+                {
+                    "command": $("#Command")[0].innerText,
+                    "address": $("#Commandaddress").val(),
+                    "length": parseInt($("#Commandlength").val())
+                };
+           
+            if(window.EditingCommandIndex==-1)
+            {
+                CommandArray.push(NewCommand);
+            }
+            else
+            {
+                CommandArray[window.EditingCommandIndex]=NewCommand;
+            }
+            $("#CloseCommand").click();
+			DrawCommandTable();
+		});
+		$("#AddChannel").click(function(){
+            if(!CheckChannelIDPattern($("#ChannelId").val()))
+			{
+				alert(IDCheckMessage2);
+                return;
+            }
+            var NewChannel={
+                            "channelId": $("#ChannelId").val(),
+                            "channelName": $("#ChannelName").val(),
+                            "raw": {
+                                    "address": Number($("#Channeladdress").val()),
+                                    "length": Number($("#Channellength").val())
+                            },
+                            "conversion": {
+                                "asType": $("#asType")[0].innerText
+                                }
+                            };
+           
+			
+            if($("#byteOrder")[0].innerText.trim().length>0)
+            {
+                NewChannel.conversion.byteOrder=$("#byteOrder")[0].innerText;
+            }
+            
+			if($("#andMask").val().trim().length>0)
+			{
+				var andMaskArray=$("#andMask").val().split(",");
+				for(var i=0; i<andMaskArray.length; i++) { andMaskArray[i] = Number(andMaskArray[i]); } 
+				NewChannel.conversion.andMask=andMaskArray;
+			}
+			
+			if($("#orMask").val().trim().length>0)
+			{
+				var orMaskArray=$("#orMask").val().split(",");
+				for(var i=0; i<orMaskArray.length; i++) { orMaskArray[i] = Number(orMaskArray[i]); } 
+				NewChannel.conversion.orMask=orMaskArray;
+			}
+			if($("#multiplier").val().trim().length>0)
+			{
+				NewChannel.conversion.multiplier=Number($("#multiplier").val());
+			}
+			if($("#Channeloffset").val().trim().length>0)
+			{
+				NewChannel.conversion.offset=Number($("#Channeloffset").val());
+			}
+            for(var i=0;i<ChannelArray.length;i++){
+			    if(ChannelArray[i].channelId==window.EditingChannelID)
+			    {
+                    ChannelArray.splice(i,1);
+                }
+            }
+            ChannelArray.push(NewChannel);
+            $("#CloseChannel").click();
+            DrawChannelTable();
+		});
+	});
+	function GetPageDataObj() {
+		var SubmitData=
+			{
+				"templateId": $("#templateID").val(),
+				"commands": CommandArray,
+				"channels": ChannelArray
+			};
+        return SubmitData;
+	}
+	function RemoveCommandArrayByAddress(Address) {
+		var selectIndex=-1;
+		for(var i=0;i<CommandArray.length;i++){
+            var IdentifyString=CommandArray[i].command+CommandArray[i].address+CommandArray[i].length;
+            if(IdentifyString==Address)
+            {
+                selectIndex=i;
+            }
+		}
+		if(selectIndex>-1)
+		{
+			CommandArray.splice(selectIndex,1);
+			DrawCommandTable();
+		}
+	}
+    function EditCommandArrayByIndex(Index) {
+        var item=CommandArray[Index];
+        if(item)
+        {
+            window.EditingCommandIndex=Index;
+            $("#Commandaddress").val(item.address);
+            $("#Commandlength").val(item.length);
+            $("#Command").html(item.command);
+        }
+        ShowCommandEditDiv();
+	}
+	function EditChannelArrayByChannelID(ChannelID) {
+        window.EditingChannelID=ChannelID;s
+		for(var i=0;i<ChannelArray.length;i++){
+			if(ChannelArray[i].channelId==ChannelID)
+			{
+				$("#ChannelId").val(ChannelArray[i].channelId);
+                $("#ChannelName").val(ChannelArray[i].channelName);
+                
+                $("#asType").html(ChannelArray[i].conversion.asType);
+                $("#byteOrder").html(ChannelArray[i].conversion.byteOrder?ChannelArray[i].conversion.byteOrder:'&nbsp;');
+			    $("#andMask").val(ChannelArray[i].conversion.andMask?ChannelArray[i].conversion.andMask.join():'');
+                $("#orMask").val(ChannelArray[i].conversion.orMask?ChannelArray[i].conversion.orMask.join():'');
+                $("#multiplier").val(ChannelArray[i].conversion.multiplier?ChannelArray[i].conversion.multiplier:'');
+                $("#Channeloffset").val(ChannelArray[i].conversion.offset?ChannelArray[i].conversion.offset:'');
+                
+				$("#Channeladdress").val(ChannelArray[i].raw.address);
+				$("#Channellength").val(ChannelArray[i].raw.length);
+                
+			}
+		}
+        ShowChannelEditDiv();
+	}
+    function ShowCommandEditDiv(){
+        var myModal = $('#CommandEditDiv');
+        myModal.css('z-index', 2000);
+        myModal.modal({ show: true });
+    }
+    function ShowChannelEditDiv(){
+        var myModal = $('#ChannelEditDiv');
+        myModal.css('z-index', 2000);
+        myModal.modal({ show: true });
+    }
+	function RemoveChannelArrayByChannelID(ChannelID) {
+		var selectIndex=-1;
+		for(var i=0;i<ChannelArray.length;i++){
+			if(ChannelArray[i].channelId==ChannelID)
+			{
+				selectIndex=i;
+			}
+		}
+		if(selectIndex>-1)
+		{
+			ChannelArray.splice(selectIndex,1);
+			DrawChannelTable();
+		}
+	}
+	
+	
+	function DrawCommandTable() {
+		var TbodyHtml="";
+		for(var i=0;i<CommandArray.length;i++){
+            var IdentifyString=CommandArray[i].command+CommandArray[i].address+CommandArray[i].length;
+            TbodyHtml+="<tr>"+
+                "<td>"+CommandArray[i].command+"</td>"+
+                "<td>"+CommandArray[i].address+"</td>"+
+                "<td>"+CommandArray[i].length+"</td>"+
+                "<td>"+
+                "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"EditCommandArrayByIndex('"+i+"')\">編輯</a>"+
+                "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveCommandArrayByAddress('"+IdentifyString+"')\">刪除</a>"+
+                "</td>"+
+            "</tr>";
+           
+		}
+		$("#CommandTbody").html(TbodyHtml);
+	}
+	function DrawChannelTable() {
+		$("#ChannelTbody").html("Loading...");
+		var ChannelHtml="";
+		for(var i=0;i<ChannelArray.length;i++){
+            var Setting=JSON.stringify(ChannelArray[i], null, '\t');
+			ChannelHtml+="<tr>"+
+				"<td>"+ChannelArray[i].channelId+"</td>"+
+				"<td>"+ChannelArray[i].channelName+"</td>"+
+				"<td>"+
+                "<pre style='overflow-x: auto; height: 100px;'>"+Setting+"</pre>"+
+                "</td>"+
+				"<td>"+
+                "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"EditChannelArrayByChannelID('"+ChannelArray[i].channelId+"')\">編輯</a>"+
+                "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveChannelArrayByChannelID('"+ChannelArray[i].channelId+"')\">刪除</a>"+
+                "</td>"+
+			"</tr>";
+		}
+		$("#ChannelTbody").html(ChannelHtml);
+		
+		DrawCommandTable();
+	}
+</script>

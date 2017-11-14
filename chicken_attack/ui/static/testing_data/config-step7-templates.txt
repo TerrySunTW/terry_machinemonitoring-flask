@@ -1,0 +1,96 @@
+[
+  {
+    "templateId": "S7-300",
+    "commands": [
+      {
+        "command": "read",
+        "address": "DB1.DBX0.15",
+        "length": 2
+      },
+      {
+        "command": "read",
+        "address": "DB2.DBB3",
+        "length": 2
+      },
+      {
+        "command": "read",
+        "address": "DB2.DBW5",
+        "length": 1
+      },
+      {
+        "command": "read",
+        "address": "DB2.DBD65532",
+        "length": 1
+      },
+      {
+        "command": "read",
+        "address": "C3",
+        "length": 1
+      }
+    ],
+    "channels": [
+      {
+        "channelId": "templ_C",
+        "raw": {
+          "address": "DB2.DBB3",
+          "length": 2
+        },
+        "conversion": {
+          "asType": "int16",
+          "multiplier": 0.2
+        }
+      },
+      {
+        "channelId": "humidity_Percent",
+        "raw": {
+          "address": "DB2.DBW5",
+          "length": 1
+        },
+        "conversion": {
+          "asType": "int16",
+          "multiplier": 0.025
+        }
+      },
+      {
+        "channelId": "loader_abnormal",
+        "raw": {
+          "address": "DB1.DBX0.15",
+          "length": 1
+        },
+        "conversion": {
+          "asType": "uint16"
+        }
+      },
+      {
+        "channelId": "motor_overload",
+        "raw": {
+          "address": "DB1.DBX2.0",
+          "length": 1
+        },
+        "conversion": {
+          "asType": "uint16"
+        }
+      },
+      {
+        "channelId": "area",
+        "raw": {
+          "address": "DB2.DBD65532",
+          "length": 1
+        },
+        "conversion": {
+          "asType": "uint32"
+        }
+      },
+      {
+        "channelId": "count",
+        "raw": {
+          "address": "C3",
+          "length": 1
+        },
+        "conversion": {
+          "asType": "uint16"
+        }
+      }
+    ]
+  }
+]

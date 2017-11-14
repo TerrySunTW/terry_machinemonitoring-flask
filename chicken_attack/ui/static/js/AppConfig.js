@@ -19,7 +19,7 @@ var QonfigConfigCreateTemplatesURL = ApiDataSoureceUrl + "/config/{ProtocolType}
 var QonfigConfigTemplatesURL = ApiDataSoureceUrl + "/config/{ProtocolType}/templates/{templateId}";
 var QonfigConfigEquipmentsURL = ApiDataSoureceUrl + "/config/{ProtocolType}/equipments";
 
-var ProtocolTypeArray = ["fins", "melsec", "modbus"];
+var ProtocolTypeArray = ["fins", "melsec", "modbus","step7"];
 var EquipmentConfiguration = ApiDataSoureceUrl + "/config/{protocoltype}/equipments";
 var EquipmentTemplateList = ApiDataSoureceUrl + "/config/{protocoltype}/templates";
 var EquipmentTemplate = ApiDataSoureceUrl + "/config/{protocoltype}/templates/{templateId}";

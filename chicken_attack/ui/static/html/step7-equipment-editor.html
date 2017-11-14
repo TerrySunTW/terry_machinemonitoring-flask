@@ -1,0 +1,238 @@
+<!--============== Main Features ==============-->
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5"><span style="padding-right:52px;">===STEP7===</span>
+        </div>
+    </div>
+</div>
+<!--Machine-->
+<div class="row-fluid height3">
+    <div class="span12s">
+        <table id="myTable" class="tablesorter-blue">
+            <thead>
+                <tr>
+                    <th>Equipment Id</th>
+                    <th>Equipment Name</th>
+                    <th>Equipment Settings</th>
+                    <th>刪除</th>
+                </tr>
+            </thead>
+            <tbody id="MachineTbody">
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="editinfo" class="alert alert-warning" style="display:none">
+    <strong>Info!</strong> Please modify item here directly.
+</div>
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5"><span style="padding-right:52px;">EquipmentId:</span>
+            <input id="EquipmentId" type="text" class="form-control" placeholder="">
+        </div>
+        
+    </div>
+</div>
+
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5"><span style="padding-right:18px;">EquipmentName:</span>
+            <input id="EquipmentName" type="text" class="form-control" placeholder="">
+        </div>
+    </div>
+</div>
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5"><span style="padding-right:18px;">Host:</span>
+            <input id="EquipmentHost" type="text" class="form-control" placeholder="">
+        </div>
+    </div>
+</div>
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5"><span style="padding-right:18px;">Rack:</span>
+            <input id="EquipmentRack" type="text" class="form-control" placeholder="">
+        </div>
+    </div>
+</div>
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5"><span style="padding-right:18px;">Slot:</span>
+            <input id="EquipmentSlot" type="text" class="form-control" placeholder="">
+        </div>
+    </div>
+</div>
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5">
+            <span style="padding-right:25px;">PollingPeriodMS:</span>
+            <input class="numbersOnly" id="PollingPeriodMS" type="text" class="form-control" placeholder="" value="500">
+        </div>
+    </div>
+</div>
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5">
+            <span>RequestTimeoutMS:</span>
+            <input class="numbersOnly" id="RequestTimeoutMS" type="text" class="form-control" placeholder="" value="300">
+        </div>
+    </div>
+</div>
+<div class="row height3 SubmitMachineButton">
+    <div class="product_text">
+        <div class="span8">
+            <input type="hidden" id="EditEquipmentId" value="">
+            <div id="DivCreateButton">
+                <a id="AddSubMachine" href="javascript:void(0)" role="button" class="btn btn-danger">Add New Equipment</a>&nbsp;
+            </div>
+            <div id="DivUpdateButton" style="display:none">
+                <a id="UpdateSubMachine" href="javascript:void(0)" role="button" class="btn btn-danger">Update Equipment</a>&nbsp;
+                <a id="ResetForm" href="javascript:void(0)" role="button" class="btn btn-danger">Reset</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var EditMachinePotocolType='step7';
+    $(function() {
+        $('.numbersOnly').keyup(function () { 
+			this.value = this.value.replace(/[^0-9\.]/g,'');
+		});
+        if(EditMachineObj)
+        {
+            UpdateEditObj();
+        }
+        else
+        {
+            DrawMachineTable();
+        }
+        $("#AddSubMachine").click(function(){
+            if(!CheckIDPattern($("#EquipmentId").val()))
+			{
+                alert(IDCheckMessage);
+                return;
+            }
+            var NewMachineObj=GetPageDataObj();
+            ServerMachineObj.push(NewMachineObj);
+            ResetEditForm();
+			DrawMachineTable();
+        });
+        $("#UpdateSubMachine").click(function(){
+            if(!CheckIDPattern($("#EquipmentId").val()))
+			{
+                alert(IDCheckMessage);
+                return;
+            }
+            var NewMachineObj=GetPageDataObj();
+            var selectIndex=-1;
+            for(var i=0;i<ServerMachineObj.length;i++){
+                if(ServerMachineObj[i].equipment.equipmentId==$("#EditEquipmentId").val())
+                {
+                    ServerMachineObj.splice(i,1);
+                    break;
+                }
+            }
+            ServerMachineObj.push(NewMachineObj);
+            ResetEditForm();
+			DrawMachineTable();
+        });
+        $("#ResetForm").click(function(){
+            ResetEditForm();
+        });
+		
+    });
+    function ResetEditForm(){
+        $("#EquipmentId").val('');
+        $("#EquipmentName").val('');
+        $("#EditEquipmentId").val('');
+        $("#EquipmentHost").val('');
+        $("#EquipmentRack").val('');
+        $("#EquipmentSlot").val('');
+        $("#PollingPeriodMS").val('100');
+        $("#RequestTimeoutMS").val('100');
+    }
+    function UpdateEditObj(){
+        
+        $("#TemplateID").html(EditMachineObj.equipment.templateId);
+        $("#EquipmentId").val(EditMachineObj.equipment.equipmentId);
+        $("#EquipmentName").val(EditMachineObj.equipment.equipmentName);
+        $("#PollingPeriodMS").val(EditMachineObj.pollingPeriodMS);
+        $("#RequestTimeoutMS").val(EditMachineObj.requestTimeoutMS);
+        $("#EquipmentHost").val(EditMachineObj.connection.host);
+        $("#EquipmentRack").val(EditMachineObj.connection.rack);
+        $("#EquipmentSlot").val(EditMachineObj.connection.slot);
+        DrawMachineTable();
+    }
+    function GetFinalDataObj(){
+        return ServerMachineObj;
+    }
+    function GetPageDataObj(){
+        var SubmitData={
+                            "connection": {
+                                "host": $("#EquipmentHost").val(),
+                                "rack": parseInt($("#EquipmentRack").val()),
+                                "slot": parseInt($("#EquipmentSlot").val())
+                            },
+                            "equipment": {
+                            "templateId": $("#TemplateID")[0].innerText,
+                            "equipmentId": $("#EquipmentId").val(),
+                            "equipmentName":$("#EquipmentName").val()
+                            },
+                            "pollingPeriodMS": parseInt($("#PollingPeriodMS").val()),
+                            "requestTimeoutMS": parseInt($("#RequestTimeoutMS").val())
+                        };
+        
+        return SubmitData;
+    }
+    function DrawMachineTable() {
+		var TbodyHtml="";
+        ServerMachineObj=ServerMachineObj.sort(function(a, b) {
+            if (a.equipment.equipmentId < b.equipment.equipmentId)
+                return -1
+            if ( a.equipment.equipmentId > b.equipment.equipmentId)
+                return 1
+            return 0
+        });
+		for(var i=0;i<ServerMachineObj.length;i++){
+			TbodyHtml+="<tr>"+
+				"<td>"+ServerMachineObj[i].equipment.equipmentId+"</td>"+
+				"<td>"+ServerMachineObj[i].equipment.equipmentName+"</td>"+
+                "<td>"+JsonToTableRunner(ServerMachineObj[i])+"</td>"+
+				"<td>"+
+                "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"EditSubMachineArrayByID('"+ServerMachineObj[i].equipment.equipmentId+"')\">編輯</a>"+
+                "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveSubMachineArrayByID('"+ServerMachineObj[i].equipment.equipmentId+"')\">刪除</a>"+
+                "</td>"+
+			"</tr>";
+		}
+		$("#MachineTbody").html(TbodyHtml);
+	}
+    function EditSubMachineArrayByID(equipmentId) {
+        $("#EditEquipmentId").val(equipmentId);
+        for(var i=0;i<ServerMachineObj.length;i++){
+			if(ServerMachineObj[i].equipment.equipmentId==equipmentId)
+			{
+				EditMachineObj=ServerMachineObj[i];
+			}
+		}
+        $("#editinfo").show();
+        $('html, body').animate({ scrollTop: $('#editinfo').offset().top }, 'slow');
+        UpdateEditObj();
+	}
+    function RemoveSubMachineArrayByID(equipmentId) {
+		var selectIndex=-1;
+		for(var i=0;i<ServerMachineObj.length;i++){
+			if(ServerMachineObj[i].equipment.equipmentId==equipmentId)
+			{
+				selectIndex=i;
+			}
+		}
+		if(selectIndex>-1)
+		{
+			ServerMachineObj.splice(selectIndex,1);
+			DrawMachineTable();
+		}
+        ResetEditForm();
+	}
+</script>
