@@ -30,7 +30,7 @@
             
             <!--Command-->
             
-            <div class="modal fade" id="CommandEditDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-left: -150px;z-index:0;">
+            <div class="modal fade" id="CommandEditDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-left: -150px;z-index:-150;">
                 <div class="vertical-alignment-helper">
                     <div class="modal-dialog vertical-align-center">
                         <div class="modal-content">
@@ -115,7 +115,7 @@
             </div>
             
             <!--Channel-->
-            <div class="modal fade" id="ChannelEditDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-left: -150px;z-index:0;">
+            <div class="modal fade" id="ChannelEditDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-left: -150px;z-index:-150;">
                 <div class="vertical-alignment-helper">
                     <div class="modal-dialog vertical-align-center">
                         <div class="modal-content">
@@ -130,30 +130,28 @@
                                 <table class="table table-bordered">
                                     <tbody>
                                         <tr>
-                                            <td width="22%" scope="row">
+                                            <td scope="row">
                                                 <span>ChannelId:</span>
                                                 <input id="ChannelId" type="text1" class="form-control" placeholder="">
                                             </td>
-                                            <td width="22%" scope="row">
+                                            <td scope="row">
                                                 <span>Name:</span>
                                                 <input id="ChannelName" type="text1" class="form-control" placeholder="">
                                             </td>
-                                            <td width="22%" scope="row">
+                                            <td scope="row">
                                                 <span>reference:</span>
                                                 <input id="Channelreference" class="numbersOnly" type="text1" class="form-control" placeholder="" value="0">
                                             </td>
-                                            <td width="22%" scope="row">
+                                            <td scope="row">
                                                 <span>quantity:</span>
                                                 <input id="Channelquantity" class="numbersOnly" type="text1" class="form-control" placeholder="" value="1">
                                             </td>
-                                            <td width="17%" scope="row">
+                                            <td scope="row">
                                                 &nbsp;
                                             </td>
-                                            
-                                        
                                         </tr>
                                         <tr>
-                                            <td width="22%" scope="row">
+                                            <td scope="row">
                                                 <span>byteOrder:</span>
                                                 <div class="btn-group margain-left1">
                                                     <button id="byteOrder" type="button" class="btn btn-primary" style="width:100px;" data-toggle="dropdown">&nbsp;</button>
@@ -177,15 +175,15 @@
                                                     </ul>
                                                 </div>
                                             </td>
-                                            <td width="22%" scope="row">
+                                            <td scope="row">
                                                 <span>andMask(1,2,3):</span>
                                                 <input id="andMask" type="text1" class="form-control" placeholder="" value="">
                                             </td>
-                                            <td width="22%" scope="row">
+                                            <td scope="row">
                                                 <span>orMask(1,2,3):</span>
                                                 <input id="orMask" type="text1" class="form-control" placeholder="" value="">
                                             </td>
-                                            <td width="17%" scope="row">
+                                            <td scope="row">
                                                 <span>asType:</span>
                                                 <div class="btn-group margain-left1">
                                                     <button id="asType" type="button" class="btn btn-primary" style="width:100px;" data-toggle="dropdown">
@@ -226,15 +224,15 @@
                                                     </ul>
                                                 </div>
                                             </td>
-                                            <td width="22%" scope="row">
+                                            <td scope="row">
                                                 <span>multiplier:</span>
                                                 <input id="multiplier" type="text1" class="form-control" placeholder="" value="">
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td  colspan="5">
+                                            <td colspan="5" scope="row">
                                                 <span>offset:</span>
-                                                <input id="Channeloffset" type="text1" class="form-control" placeholder="" value="">    
+                                                <input id="Channeloffset" type="text1" class="form-control" placeholder="" value="">
                                             </td>
                                         </tr>
                                     </tbody>
