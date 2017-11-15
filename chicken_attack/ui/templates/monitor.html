@@ -301,7 +301,11 @@
                 });
 
                 $("#RemoveEvent").click(function(){
-                    axios.delete(ConfigEvent.replace('{equipmentId}',window.SelectedDeviceID).replace('{channelId}',window.SelectedChannelID))
+                    axios.delete(ConfigEvent.replace('{equipmentId}',window.SelectedDeviceID).replace('{channelId}',window.SelectedChannelID),
+                    {headers: {
+                        "Authorization" : "JWT " + Cookies.get('access_token')
+                    }
+                    })
                     .then(function (response) {
                         window.CleanDetailViewSetting();
                         ResetButtonLoading();
@@ -338,6 +342,9 @@
                     dataType: "json",
                     data: SubmitJsonStringData,
                     url: ConfigEvent.replace('{equipmentId}',window.SelectedDeviceID).replace('{channelId}',window.SelectedChannelID),
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader ("Authorization", "JWT " + Cookies.get('access_token'));
+                    },
                     statusCode : {
                             200: function (data, textStatus, jqxhr) {
                                     alert( "更新完成!!");
