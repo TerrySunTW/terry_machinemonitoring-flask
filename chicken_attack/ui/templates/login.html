@@ -23,7 +23,7 @@
         $('a[href$="/login"]').parent().addClass("active");
         $('#LoginButton').click(function(){
             $.ajax({
-			  type: "GET",
+			  type: "POST",
               dataType: "json",
               contentType: "application/json",
               data: JSON.stringify({ username: $("#username").val(), password: $("#password").val() }),
