@@ -23,7 +23,7 @@
         $('a[href$="/login"]').parent().addClass("active");
         $('#LoginButton').click(function(){
             $.ajax({
-			  type: "POST",
+			  type: "GET",
               dataType: "json",
               contentType: "application/json",
               data: JSON.stringify({ username: $("#username").val(), password: $("#password").val() }),
@@ -42,7 +42,16 @@
                     Cookies.set('access_token', response.access_token, {
                         expires: in1Hour
                     });
-                    window.location.replace("/monitor");
+                    if(window.tabdata&&window.tabdata.length>0)
+                    {
+                        window.location.replace("/monitor");
+                    }
+                    else
+                    {
+                        window.location.replace("/tablist");
+                    }
+
+                    
                 }
             });
         });
