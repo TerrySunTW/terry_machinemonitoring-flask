@@ -315,9 +315,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td  colspan="5">
+                                <td>
                                     <span>offset:</span>
                                     <input id="Channeloffset" type="text1" class="form-control" placeholder="" value="">    
+                                </td>
+                                <td  colspan="4">
+                                    <span>rotateLeft:</span>
+                                    <input id="ChannelrotateLeft" class="numbersOnly" type="text1" class="form-control" placeholder="" value="">    
                                 </td>
                             </tr>
                         </tbody>
@@ -414,6 +418,7 @@
             $("#orMask").val('');
             $("#multiplier").val('');
             $("#Channeloffset").val('');
+            $("#ChannelrotateLeft").val('');
             ShowChannelEditDiv();
 		});
 		$("#AddCommand").click(function(){
@@ -450,7 +455,9 @@
 				"quantity": Number($("#Channelquantity").val())
 			  },
 			  "conversion": {
-				"asType": $("#asType")[0].innerText
+                "asType": $("#asType")[0].innerText,
+                "rotateLeft": Number($("#ChannelrotateLeft").val())
+                
 			  }
 			};
             if($("#byteOrder")[0].innerText.trim().length>0)
@@ -543,6 +550,7 @@
                 $("#orMask").val(ChannelArray[i].conversion.orMask?ChannelArray[i].conversion.orMask.join():'');
                 $("#multiplier").val(ChannelArray[i].conversion.multiplier?ChannelArray[i].conversion.multiplier:'');
                 $("#Channeloffset").val(ChannelArray[i].conversion.offset?ChannelArray[i].conversion.offset:'');
+                $("#ChannelrotateLeft").val(ChannelArray[i].conversion.rotateLeft?ChannelArray[i].conversion.rotateLeft:'');
 			}
 		}
         ShowChannelEditDiv();

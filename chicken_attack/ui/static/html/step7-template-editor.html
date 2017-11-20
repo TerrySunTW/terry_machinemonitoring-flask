@@ -217,6 +217,10 @@
                                     <span>offset:</span>
                                     <input id="Channeloffset" type="text1" class="form-control" placeholder="" value="">    
                     </div>
+                    <div class="floatDiv">
+                        <span>rotateLeft:</span>
+                        <input id="ChannelrotateLeft" class="numbersOnly" type="text1" class="form-control" placeholder="" value="">    
+                    </div>
               </div>
                             <div class="modal-footer">
                                 <button id="CloseChannel" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -299,6 +303,7 @@
             $("#orMask").val('');
             $("#multiplier").val('');
             $("#Channeloffset").val('');
+            $("#ChannelrotateLeft").val('');
             ShowChannelEditDiv();
 		});
 		$("#AddCommand").click(function(){
@@ -334,7 +339,8 @@
                                     "length": Number($("#Channellength").val())
                             },
                             "conversion": {
-                                "asType": $("#asType")[0].innerText
+                                "asType": $("#asType")[0].innerText,
+                                "rotateLeft": Number($("#ChannelrotateLeft").val())
                                 }
                             };
            
@@ -425,9 +431,12 @@
                 $("#orMask").val(ChannelArray[i].conversion.orMask?ChannelArray[i].conversion.orMask.join():'');
                 $("#multiplier").val(ChannelArray[i].conversion.multiplier?ChannelArray[i].conversion.multiplier:'');
                 $("#Channeloffset").val(ChannelArray[i].conversion.offset?ChannelArray[i].conversion.offset:'');
-                
+                $("#ChannelrotateLeft").val(ChannelArray[i].conversion.rotateLeft?ChannelArray[i].conversion.rotateLeft:'');
+
 				$("#Channeladdress").val(ChannelArray[i].raw.address);
-				$("#Channellength").val(ChannelArray[i].raw.length);
+                $("#Channellength").val(ChannelArray[i].raw.length);
+                
+                
                 
 			}
 		}
