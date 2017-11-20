@@ -3,7 +3,8 @@
     "channelId": "board-count",
     "valueType": "number",
     "metadata": {
-      "name": "片數"
+      "name": "片數",
+	  "outOfRange": true
     },
     "tags": [
       "raw"

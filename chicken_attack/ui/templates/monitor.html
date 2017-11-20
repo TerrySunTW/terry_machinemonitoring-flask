@@ -375,13 +375,12 @@
             super(props);
         }
         render() {
-            //var ChannelDataStoreIndexID = this.props.machinedata.equipmentId + this.props.lightdata.channelId;
             var LightIcon="";
-            //if (LightStatus[ChannelDataStoreIndexID]) {
+            if (this.props.Channeldata.metadata.outOfRange) {
+                LightIcon ="static/images/red_light.png";
+            } else {
                 LightIcon ="static/images/green_light.png";
-            //} else {
-            //    LightIcon ="static/images/red_light.png";
-            //}
+            }
             return (
                 <img src={LightIcon} />
             )
@@ -397,7 +396,9 @@
         }
         shouldComponentUpdate(nextProps, nextState) {
             if ( nextProps.Channeldata.latestValue.value == this.props.Channeldata.latestValue.value && 
-                nextProps.Channeldata.latestValue.at == this.props.Channeldata.latestValue.at ) {
+                nextProps.Channeldata.latestValue.at == this.props.Channeldata.latestValue.at &&
+                nextProps.Channeldata.metadata.outOfRange == this.props.Channeldata.metadata.outOfRange
+             ) {
                 return false;
             }
             return true;
