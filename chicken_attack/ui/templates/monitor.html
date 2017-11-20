@@ -397,7 +397,7 @@
         shouldComponentUpdate(nextProps, nextState) {
             if ( nextProps.Channeldata.latestValue.value == this.props.Channeldata.latestValue.value && 
                 nextProps.Channeldata.latestValue.at == this.props.Channeldata.latestValue.at &&
-                nextProps.Channeldata.metadata.outOfRange == this.props.Channeldata.metadata.outOfRange
+                nextProps.Channeldata.metadata == this.props.Channeldata.metadata
              ) {
                 return false;
             }
