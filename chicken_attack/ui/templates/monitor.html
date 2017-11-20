@@ -376,7 +376,7 @@
         }
         render() {
             var LightIcon="";
-            if (this.props.Channeldata.metadata.outOfRange) {
+            if (this.props.Channeldata.metadata&&this.props.Channeldata.metadata.outOfRange) {
                 LightIcon ="static/images/red_light.png";
             } else {
                 LightIcon ="static/images/green_light.png";
