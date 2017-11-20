@@ -142,9 +142,11 @@
         //new for device 
         window.Devices = [];
         window.DevicesChannelsLatestdata = [];
-        //old need remove after checked 
+        //selectedData
 		window.SelectedDeviceID='';
-		window.SelectedChannelID='';
+        window.SelectedChannelID='';
+
+        window.LightOutOfRangeStatus=[];
 		window.PageReady=false;
         window.AvaliableDeviceIDs=[];
         window.WaittingHttpThread=[];
@@ -236,6 +238,15 @@
             });
             $(".light_detail_title").html(DataValueArray[0]);
             $("#detailtime").html(DataLabelArray[0]);
+
+            if(window.LightOutOfRangeStatus[window.SelectedDeviceID+window.SelectedChannelID])
+            {
+                $("#DetailLightTD").html('<img src="static/images/red_light.png" />');
+            }
+            else
+            {
+                $("#DetailLightTD").html('<img src="static/images/green_light.png" />');
+            }
             DetailViewChartData.labels = DataLabelArray;
             DetailViewChartData.datasets[0].data = DataValueArray;
             window.myMixedChart.update();
@@ -375,11 +386,15 @@
             super(props);
         }
         render() {
+            var MappingKey=this.props.Devicedata.deviceId
++this.props.Channeldata.channelId;
             var LightIcon="";
             if (this.props.Channeldata.metadata&&this.props.Channeldata.metadata.outOfRange) {
                 LightIcon ="static/images/red_light.png";
+                window.LightOutOfRangeStatus[MappingKey]=true;
             } else {
                 LightIcon ="static/images/green_light.png";
+                window.LightOutOfRangeStatus[MappingKey]=false;
             }
             return (
                 <img src={LightIcon} />
@@ -692,12 +707,20 @@
                         $("#RemoveEvent").show();
                         $("#ThresholdValue").html(EventObj.initialState);
                         $("#ThresholdDepth").val(EventObj.window.depth);
-                        $("#UpperThresholdOptionValue").html(EventObj.upper.aggregationMethod);
-                        $("#UpperThreshold-Upper").val(EventObj.upper.upperThreshold);
-                        $("#UpperThreshold-Lower").val(EventObj.upper.lowerThreshold);
-                        $("#LowerThresholdOptionValue").html(EventObj.lower.aggregationMethod);
-                        $("#LowerThreshold-Upper").val(EventObj.lower.upperThreshold);
-                        $("#LowerThreshold-Lower").val(EventObj.lower.lowerThreshold);
+                        if(EventObj.upper)
+                        {
+                            $("#UpperThresholdOptionValue").html(EventObj.upper.aggregationMethod);
+                            $("#UpperThreshold-Upper").val(EventObj.upper.upperThreshold);
+                            $("#UpperThreshold-Lower").val(EventObj.upper.lowerThreshold);
+                        }
+                        
+                        if(EventObj.lower)
+                        {
+                            $("#LowerThresholdOptionValue").html(EventObj.lower.aggregationMethod);
+                            $("#LowerThreshold-Upper").val(EventObj.lower.upperThreshold);
+                            $("#LowerThreshold-Lower").val(EventObj.lower.lowerThreshold);
+                        }
+                        
                     }
             });
 
@@ -731,7 +754,7 @@
                 <td><div className="light_detail_title">-</div></td>
             </tr>
             <tr>
-                <td className="text-center"><LightView Devicedata={Devicedata} Channeldata={Channeldata}/></td>
+                <td className="text-center" id="DetailLightTD"><LightView Devicedata={Devicedata} Channeldata={Channeldata}/></td>
             </tr>
             <tr>
                 <td id="detailtime" className="number">-</td>
