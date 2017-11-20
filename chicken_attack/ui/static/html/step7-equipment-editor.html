@@ -152,9 +152,12 @@
         $("#EquipmentSlot").val('');
         $("#PollingPeriodMS").val('100');
         $("#RequestTimeoutMS").val('100');
+        $("#DivUpdateButton").hide();
+        $("#DivCreateButton").show();
     }
     function UpdateEditObj(){
-        
+        $("#DivUpdateButton").show();
+        $("#DivCreateButton").hide();
         $("#TemplateID").html(EditMachineObj.equipment.templateId);
         $("#EquipmentId").val(EditMachineObj.equipment.equipmentId);
         $("#EquipmentName").val(EditMachineObj.equipment.equipmentName);
@@ -216,6 +219,8 @@
 				EditMachineObj=ServerMachineObj[i];
 			}
 		}
+        $("#DivUpdateButton").show();
+        $("#DivCreateButton").hide();
         $("#editinfo").show();
         $('html, body').animate({ scrollTop: $('#editinfo').offset().top }, 'slow');
         UpdateEditObj();
