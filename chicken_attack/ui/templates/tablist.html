@@ -116,6 +116,7 @@
 '<tr><td class="jsontabletitle2">Devies: </td><td>'+SelectionItems+'</td></tr>'+
 '</table>'+
 		'</td><td class="table-function-td">'+
+			'<a href="javascript:void(0)" role="button" class="btn btn-inverse" onclick="Update()">更新</a>&nbsp;'+
 			'<a href="javascript:void(0)" role="button" class="btn btn-inverse" onclick="RemoveTab(\''+TabName+'\')">刪除</a>&nbsp;'+
 		'</td></tr>';
 		$("#tablebody").append(TableBody);
@@ -125,6 +126,10 @@
 		$("#tab_"+TabName).change(function(){
 			SaveToServer();
 		});
+	}
+	function Update()
+	{
+		SaveToServer();
 	}
 	function RemoveTab(deviceID)
 	{
