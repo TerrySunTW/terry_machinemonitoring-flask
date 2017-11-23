@@ -22,7 +22,16 @@
 	$(function() {
         $('a[href$="/login"]').parent().addClass("active");
         $('#LoginButton').click(function(){
-            $.ajax({
+            Login();
+        });
+        $('input').on("keypress", function(e) {
+            if (e.keyCode == 13) {
+                Login();
+            }
+        });
+    });
+    function Login(){
+        $.ajax({
 			  type: "POST",
               dataType: "json",
               contentType: "application/json",
@@ -53,8 +62,7 @@
 
                     
                 }
-            });
         });
-    });
+    }
 </script>
 {% endblock JavaScript %}
