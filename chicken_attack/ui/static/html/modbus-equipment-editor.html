@@ -189,6 +189,17 @@
         $("#Port").val(EditMachineObj.endPoint.port);
         $("#PollingPeriodMS").val(EditMachineObj.pollingPeriodMS);
         $("#RequestTimeoutMS").val(EditMachineObj.requestTimeoutMS);
+        
+        for(var i=0;i<EditMachineObj.equipments.length;i++)
+        {
+            if(EditMachineObj.equipments[i].equipmentId==EditMachineID)
+            {
+                $("#EID").val(EditMachineObj.equipments[i].id);
+                $("#EquipmentId").val(EditMachineObj.equipments[i].equipmentId);
+                $("#EquipmentName").val(EditMachineObj.equipments[i].equipmentName);
+            }
+        }    
+        
         MachineArray=EditMachineObj.equipments;
         DrawMachineTable();
     }
