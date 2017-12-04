@@ -31,7 +31,7 @@ function JsonToTable(JsonData){
     if(INodeObj.length)
     {
         for (ji = 0; ji < INodeObj.length; ji++) { 
-        JsonToTable(INodeObj[ji]);
+        FinalData+=JsonToTable(INodeObj[ji]);
         FinalData+="<hr>";
         }
         FinalData+="</td>";

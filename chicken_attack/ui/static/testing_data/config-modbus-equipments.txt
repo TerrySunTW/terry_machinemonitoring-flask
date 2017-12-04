@@ -20,5 +20,27 @@
     ],
     "pollingPeriodMS": 1000,
     "requestTimeoutMS": 3000
+  },
+  {
+    "endPoint": {
+      "host": "192.168.11.111",
+      "port": 502
+    },
+    "equipments": [
+      {
+        "id": 50,
+        "templateId": "agile-metech-baw",
+        "equipmentId": "energy-meter-003",
+        "equipmentName": "電錶(3)"
+      },
+      {
+        "id": 51,
+        "templateId": "agile-metech-baw",
+        "equipmentId": "energy-meter-004",
+        "equipmentName": "電錶(4)"
+      }
+    ],
+    "pollingPeriodMS": 1111,
+    "requestTimeoutMS": 3333
   }
 ]

@@ -11,9 +11,9 @@
         <table id="myTable" class="tablesorter-blue">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>equipmentId</th>
-                    <th>equipmentName</th>
+                    <th>endPoint host</th>
+                    <th>endPoint Port</th>
+                    <th>endPoint Settings</th>
                     <th>刪除</th>
                 </tr>
             </thead>
@@ -26,6 +26,25 @@
 <div id="editinfo" class="alert alert-warning" style="display:none">
     <strong>Info!</strong> Please modify item here directly.
 </div>
+
+<div class="row-fluid height3">
+    <div class="span12s">
+        <table class="tablesorter-blue">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>equipmentId</th>
+                    <th>equipmentName</th>
+                    <th>刪除</th>
+                </tr>
+            </thead>
+            <tbody id="SubMachineTbody">
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <div class="row height3">
     <div class="product_text">
         <div class="span5"><span style="padding-right:145px;">ID:</span>
@@ -41,7 +60,6 @@
         
     </div>
 </div>
-
 <div class="row height3">
     <div class="product_text">
         <div class="span5"><span style="padding-right:18px;">EquipmentName:</span>
@@ -53,17 +71,14 @@
     <div class="product_text">
         <div class="span8">
             <input type="hidden" id="EditEquipmentId" value="">
-            <div id="DivCreateButton">
-                <a id="AddSubMachine" href="javascript:void(0)" role="button" class="btn btn-danger">Add New Equipment</a>&nbsp;
-            </div>
-            <div id="DivUpdateButton" style="display:none">
-                <a id="UpdateSubMachine" href="javascript:void(0)" role="button" class="btn btn-danger">Update Equipment</a>&nbsp;
-                <a id="ResetForm" href="javascript:void(0)" role="button" class="btn btn-danger">Reset</a>
+            <div id="DivEquipmentCreateButton">
+                <a id="UpdateEquipment" href="javascript:void(0)" role="button" class="btn btn-danger">Add/Update equipment</a>&nbsp;
             </div>
         </div>
     </div>
 </div>
 <hr>
+
 <div class="row height3">
     <div class="product_text">
         <div class="span5">
@@ -95,7 +110,20 @@
         </div>
     </div>
 </div>
-
+<div class="row height3 SubmitMachineButton">
+    <div class="product_text">
+        <div class="span8">
+            <input type="hidden" id="EditEquipmentId" value="">
+            <div id="DivCreateButton">
+                <a id="AddEndPoint" href="javascript:void(0)" role="button" class="btn btn-danger">Add New EndPoint</a>&nbsp;
+            </div>
+            <div id="DivUpdateButton" style="display:none">
+                <a id="UpdateEndPoint" href="javascript:void(0)" role="button" class="btn btn-danger">Update EndPoint</a>&nbsp;
+                <a id="ResetForm" href="javascript:void(0)" role="button" class="btn btn-danger">Reset</a>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     var MachineArray=[];
     var ConnectionType="TCP";
@@ -113,58 +141,69 @@
         {
             if(ServerMachineObj.length>0)
             {
-                MachineArray=ServerMachineObj[0].equipments;
-                if(ServerMachineObj[0].endPoint)
-                {
-                    $("#Host").val(ServerMachineObj[0].endPoint.host);
-                    $("#Port").val(ServerMachineObj[0].endPoint.port);
-                    $("#PollingPeriodMS").val(ServerMachineObj[0].pollingPeriodMS);
-                    $("#RequestTimeoutMS").val(ServerMachineObj[0].requestTimeoutMS);
-                    DrawMachineTable();    
-                }
+                DrawMachineTable();
             }
         }
-        $("#AddSubMachine").click(function(){
+        $("#UpdateEquipment").click(function(){
             if(!CheckIDPattern($("#EquipmentId").val()))
 			{
                 alert(IDCheckMessage);
                 return;
             }
-            var NewMachine=
+            var NewEquipment=
 			{
 				"id": parseInt($("#EID").val()),
 				"templateId": $("#TemplateID")[0].innerText,
 				"equipmentId": $("#EquipmentId").val(),
 				"equipmentName": $("#EquipmentName").val()
-			};
-
-            MachineArray.push(NewMachine);
-            ResetEditForm();
-			DrawMachineTable();
-        });
-        $("#UpdateSubMachine").click(function(){
-            if(!CheckIDPattern($("#EquipmentId").val()))
-			{
-                alert(IDCheckMessage);
-                return;
+            };
+            var IsNewEquipment=true;
+            if(EditMachineObj)
+            {
+                for(var i=0;i<EditMachineObj.equipments.length;i++){
+                    if(EditMachineObj.equipments[i].id==NewEquipment.id)
+                    {
+                        IsNewEquipment=false;
+                        EditMachineObj.equipments[i]=NewEquipment;
+                    }
+                }
             }
-            for(var i=0;i<MachineArray.length;i++){
-                if(MachineArray[i].id==$("#EquipmentId").val())
+            if(IsNewEquipment)
+            {
+                MachineArray.push(NewEquipment);
+            }
+            ResetEquipmentForm();
+            DrawSubMachineTable();
+        });
+        $("#AddEndPoint").click(function(){
+            var NewEndpoint={
+                    "endPoint": {
+                    "host": $("#Host").val(),
+                    "port": parseInt($("#Port").val())
+                    },
+                    "equipments": MachineArray,
+                    "pollingPeriodMS": parseInt($("#PollingPeriodMS").val()),
+                    "requestTimeoutMS": parseInt($("#RequestTimeoutMS").val())
+                };
+            ServerMachineObj.push(NewEndpoint);
+            ResetEditForm();
+            DrawMachineTable();
+        });
+        $("#UpdateEndPoint").click(function(){
+            for(var i=0;i<ServerMachineObj.length;i++){
+                if(ServerMachineObj[i].endPoint.host==EditMachineObj.endPoint.host &&
+                ServerMachineObj[i].endPoint.port==EditMachineObj.endPoint.port
+                    )
                 {
-                    MachineArray.splice(i,1);
+                    ServerMachineObj.splice(i,1);
                     break;
                 }
             }
-
-            var NewMachine=
-			{
-				"id": parseInt($("#EID").val()),
-				"templateId": $("#TemplateID")[0].innerText,
-				"equipmentId": $("#EquipmentId").val(),
-				"equipmentName": $("#EquipmentName").val()
-			};
-
-            MachineArray.push(NewMachine);
+            EditMachineObj.endPoint.host=$("#Host").val();
+            EditMachineObj.endPoint.port=parseInt($("#Port").val());
+            EditMachineObj.pollingPeriodMS=parseInt($("#PollingPeriodMS").val());
+            EditMachineObj.requestTimeoutMS =parseInt($("#RequestTimeoutMS").val());
+            ServerMachineObj.push(EditMachineObj);
 
             ResetEditForm();
 			DrawMachineTable();
@@ -173,13 +212,23 @@
             ResetEditForm();
         });
     });
-    function ResetEditForm(){
+    function ResetEquipmentForm(){
         $("#EID").val('');
         $("#EquipmentId").val('');
         $("#EquipmentName").val('');
+    }
+    function ResetEditForm(){
+        EditMachineObj=undefined;
+        MachineArray=[];
+        ResetEquipmentForm();
+        $("#Host").html('');
+        $("#Port").html('');
+        $("#PollingPeriodMS").html('500');
+        $("#RequestTimeoutMS").html('300');
         $("#DivUpdateButton").hide();
         $("#DivCreateButton").show();
         $("#editinfo").hide();
+        $("#SubMachineTbody").html('');
     }
     function UpdateEditObj(){
         $("#DivUpdateButton").show();
@@ -202,6 +251,7 @@
         
         MachineArray=EditMachineObj.equipments;
         DrawMachineTable();
+        DrawSubMachineTable();
     }
     function SetupEditTemplateSelection(){
             var URL=EquipmentTemplateList.replace('{protocoltype}',EditMachinePotocolType)+'?'+d.getTime();
@@ -226,26 +276,22 @@
             }); 
 	}
     function GetFinalDataObj(){
-        return GetPageDataObj();
+        return ServerMachineObj;
     }
-    function GetPageDataObj(){
-        var SubmitData=[];
-        if(MachineArray!=null && MachineArray.length!=0)
-        {
-            SubmitData=[{
-            
-                            "endPoint": {
-                                    "host": $("#Host").val(),
-                                    "port": parseInt($("#Port").val())
-                            },
-                            "equipments": MachineArray,
-                            "pollingPeriodMS": parseInt($("#PollingPeriodMS").val()),
-                            "requestTimeoutMS": parseInt($("#RequestTimeoutMS").val())
-                        }];
-        }
-        
-        return SubmitData;
-    }
+    function EditEndpointByID(Index) {
+        ResetEditForm();
+        EditMachineObj=ServerMachineObj[Index];
+        MachineArray=EditMachineObj.equipments;
+        $("#Host").val(EditMachineObj.endPoint.host);
+        $("#Port").val(EditMachineObj.endPoint.port);
+        $("#PollingPeriodMS").val(EditMachineObj.pollingPeriodMS);
+        $("#RequestTimeoutMS").val(EditMachineObj.requestTimeoutMS);
+        DrawSubMachineTable();
+        $("#DivUpdateButton").show();
+        $("#DivCreateButton").hide();
+        $("#editinfo").show();
+        $('html, body').animate({ scrollTop: $('#editinfo').offset().top }, 'slow');
+	}
     function EditSubMachineArrayByID(Id) {
         $("#EditEquipmentId").val(Id);
         for(var i=0;i<MachineArray.length;i++){
@@ -260,6 +306,10 @@
         $("#DivCreateButton").hide();
         $("#editinfo").show();
         $('html, body').animate({ scrollTop: $('#editinfo').offset().top }, 'slow');
+    }
+    function RemoveEndpointByIndex(index) {
+        ServerMachineObj.splice(index,1);
+		DrawMachineTable();
 	}
     function RemoveSubMachineArrayByID(ID) {
 		var selectIndex=-1;
@@ -272,19 +322,28 @@
 		if(selectIndex>-1)
 		{
 			MachineArray.splice(selectIndex,1);
-			DrawMachineTable();
+			DrawSubMachineTable();
 		}
-        ResetEditForm();
+        DrawSubMachineTable();
+        ResetEquipmentForm();
 	}
     function DrawMachineTable() {
-        MachineArray=MachineArray.sort(function(a, b) {
-            if (a.equipmentId < b.equipmentId)
-                return -1
-            if ( a.equipmentId > b.equipmentId)
-                return 1
-            return 0
-        });
 		var TbodyHtml="";
+		for(var i=0;i<ServerMachineObj.length;i++){
+			TbodyHtml+="<tr>"+
+				"<td>"+ServerMachineObj[i].endPoint.host+"</td>"+
+				"<td>"+ServerMachineObj[i].endPoint.port+"</td>"+
+				"<td>"+JsonToTableRunner(ServerMachineObj[i])+"</td>"+
+				"<td>"+
+                    "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"EditEndpointByID('"+i+"')\">編輯</a>"+
+                    "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveEndpointByIndex('"+i+"')\">刪除</a>"+
+                "</td>"+
+			"</tr>";
+		}
+		$("#MachineTbody").html(TbodyHtml);
+    }
+    function DrawSubMachineTable() {
+        var TbodyHtml="";
 		for(var i=0;i<MachineArray.length;i++){
 			TbodyHtml+="<tr>"+
 				"<td>"+MachineArray[i].id+"</td>"+
@@ -296,6 +355,6 @@
                 "</td>"+
 			"</tr>";
 		}
-		$("#MachineTbody").html(TbodyHtml);
+		$("#SubMachineTbody").html(TbodyHtml);
 	}
 </script>
