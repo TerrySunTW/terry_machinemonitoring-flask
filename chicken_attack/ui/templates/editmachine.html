@@ -78,15 +78,18 @@
 						}
 						else if(DataResult[DataResultIndex].equipments)
 						{
-							if(DataResult[DataResultIndex].equipments[0].equipmentId==EditMachineID)
-							{
-								ServerMachineObj=response.data;
-								EditMachinePotocolType=response.config.params.protocoltype;
-								CurrentProtocolType=EditMachinePotocolType;
-								EditMachineObj=DataResult[DataResultIndex];
-								SetupEditUI();
-								break;
+							for (let index = 0; index < DataResult[DataResultIndex].equipments.length; index++) {
+								if(DataResult[DataResultIndex].equipments[index].equipmentId==EditMachineID)
+								{
+									ServerMachineObj=response.data;
+									EditMachinePotocolType=response.config.params.protocoltype;
+									CurrentProtocolType=EditMachinePotocolType;
+									EditMachineObj=DataResult[DataResultIndex];
+									SetupEditUI();
+									break;
+								}
 							}
+							
 						}
 					}
 				});
