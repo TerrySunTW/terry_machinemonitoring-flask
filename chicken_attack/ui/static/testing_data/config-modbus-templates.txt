@@ -1,6 +1,90 @@
 [
   {
-    "templateId": "agile-metech-baw",
+    "templateId": "agile-metech-baw111",
+    "commands": [
+      {
+        "command": "read-input-registers",
+        "address": 0,
+        "quantity": 9
+      }
+    ],
+    "channels": [
+      {
+        "channelId": "current_A",
+        "channelName": "電流(A)",
+        "raw": {
+          "reference": 300002,
+          "quantity": 1
+        },
+        "conversion": {
+          "asType": "uint16",
+          "multiplier": 0.1
+        }
+      },
+      {
+        "channelId": "frequency_Hz",
+        "channelName": "頻率",
+        "raw": {
+          "reference": 300003,
+          "quantity": 1
+        },
+        "conversion": {
+          "asType": "uint16",
+          "multiplier": 0.01
+        }
+      },
+      {
+        "channelId": "power_kW",
+        "channelName": "功率",
+        "raw": {
+          "reference": 300004,
+          "quantity": 1
+        },
+        "conversion": {
+          "asType": "uint16",
+          "multiplier": 0.01
+        }
+      },
+      {
+        "channelId": "apparent_power_kVA",
+        "channelName": "視在功率",
+        "raw": {
+          "reference": 300006,
+          "quantity": 1
+        },
+        "conversion": {
+          "asType": "uint16",
+          "multiplier": 0.01
+        }
+      },
+      {
+        "channelId": "power_factor",
+        "channelName": "功率因数",
+        "raw": {
+          "reference": 300007,
+          "quantity": 1
+        },
+        "conversion": {
+          "asType": "uint16",
+          "multiplier": 0.001
+        }
+      },
+      {
+        "channelId": "usage_kWh",
+        "channelName": "用量",
+        "raw": {
+          "reference": 300008,
+          "quantity": 2
+        },
+        "conversion": {
+          "asType": "uint32",
+          "multiplier": 0.01
+        }
+      }
+    ]
+  },
+  {
+    "templateId": "agile-metech-baw2222",
     "commands": [
       {
         "command": "read-input-registers",

@@ -35,6 +35,7 @@
                     <th>ID</th>
                     <th>equipmentId</th>
                     <th>equipmentName</th>
+                    <th>templateId</th>
                     <th>刪除</th>
                 </tr>
             </thead>
@@ -64,6 +65,21 @@
     <div class="product_text">
         <div class="span5"><span style="padding-right:18px;">EquipmentName:</span>
             <input id="EquipmentName" type="text" class="form-control" placeholder="">
+        </div>
+    </div>
+</div>
+<div class="row height3">
+    <div class="product_text">
+        <div class="span5"><span style="padding-right:18px;">Template:</span>
+            <div class="btn-group margain-left1">
+                <button id="ModbusTemplateID" type="button" class="btn btn-primary" style="width:250px;" data-toggle="dropdown">&nbsp;</button>
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </button>
+                <span class="dropdown-arrow"></span>
+                <ul id="ModbusTemplateIDWapper" class="dropdown-menu" style="width:250px;text-align:center;" role="menu">
+                </ul>
+            </div>
         </div>
     </div>
 </div>
@@ -153,7 +169,7 @@
             var NewEquipment=
 			{
 				"id": parseInt($("#EID").val()),
-				"templateId": $("#TemplateID")[0].innerText,
+				"templateId": $("#ModbusTemplateID")[0].innerText,
 				"equipmentId": $("#EquipmentId").val(),
 				"equipmentName": $("#EquipmentName").val()
             };
@@ -211,11 +227,36 @@
         $("#ResetForm").click(function(){
             ResetEditForm();
         });
+
+        SetupTemplateList();
     });
+    function SetupTemplateList(){
+        var URL=EquipmentTemplateList.replace('{protocoltype}','modbus')+'?'+d.getTime();
+        axios.get(URL,{params: {protocoltype: 'modbus'},
+        headers: {
+        "Authorization" : "JWT " + Cookies.get('access_token')
+        }})
+        .then(function (response) {
+           if(response.data && response.data.length>0)
+           {
+                var TemplateSelectionHTML='';
+                for(var i=0;i<response.data.length;i++)
+                {
+                    TemplateSelectionHTML+="<li><a ProtocolType='"+response.data[i].templateId+"' name='ModbusTemplateIDOption' href='javascript:void(0)'>"+response.data[i].templateId+"</a></li>";
+                }
+                $("#ModbusTemplateIDWapper").html(TemplateSelectionHTML);
+                $("a[name='ModbusTemplateIDOption']").bind('click', function (event) {
+                    $("#ModbusTemplateID").html(this.innerText);
+                });
+           }
+            
+        });
+    }
     function ResetEquipmentForm(){
         $("#EID").val('');
         $("#EquipmentId").val('');
         $("#EquipmentName").val('');
+        $("#ModbusTemplateID").html($("a[name='ModbusTemplateIDOption']")[0].innerText);
     }
     function ResetEditForm(){
         EditMachineObj=undefined;
@@ -246,6 +287,7 @@
                 $("#EID").val(EditMachineObj.equipments[i].id);
                 $("#EquipmentId").val(EditMachineObj.equipments[i].equipmentId);
                 $("#EquipmentName").val(EditMachineObj.equipments[i].equipmentName);
+                $("#ModbusTemplateID").html(EditMachineObj.equipments[i].templateId);
             }
         }    
         
@@ -264,7 +306,12 @@
                 var TemplateSelectionHTML='';
                 for(var i=0;i<DataResult.length;i++)
                 {
-                    TemplateSelectionHTML+="<li><a ProtocolType='"+DataResult[i].ProtocolType+"' name='TemplateIDOption' href='#'>"+TemplateList[i].templateId+"</a></li>";
+                    var select="";
+                    if(i==1)
+                    {
+                        select='Selected';
+                    }
+                    TemplateSelectionHTML+="<li><a ProtocolType='"+DataResult[i].ProtocolType+"' name='TemplateIDOption' href='#' "+select+">"+TemplateList[i].templateId+"</a></li>";
                 }
                 $("#TemplateIDWapper").html(TemplateSelectionHTML);
                 $("a[name='TemplateIDOption']").bind('click', function (event) {
@@ -299,7 +346,8 @@
 			{
 				$("#EID").val(MachineArray[i].id);
 				$("#EquipmentId").val(MachineArray[i].equipmentId);
-				$("#EquipmentName").val(MachineArray[i].equipmentName);
+                $("#EquipmentName").val(MachineArray[i].equipmentName);
+                $("#ModbusTemplateID").html(MachineArray[i].templateId);
 			}
         }
         $("#DivUpdateButton").show();
@@ -348,7 +396,8 @@
 			TbodyHtml+="<tr>"+
 				"<td>"+MachineArray[i].id+"</td>"+
 				"<td>"+MachineArray[i].equipmentId+"</td>"+
-				"<td>"+MachineArray[i].equipmentName+"</td>"+
+                "<td>"+MachineArray[i].equipmentName+"</td>"+
+                "<td>"+MachineArray[i].templateId+"</td>"+
 				"<td>"+
                     "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"EditSubMachineArrayByID('"+MachineArray[i].id+"')\">編輯</a>"+
                     "<a href='' role='button' data-toggle='modal' class='btn btn-inverse' onclick=\"RemoveSubMachineArrayByID('"+MachineArray[i].id+"')\">刪除</a>"+
